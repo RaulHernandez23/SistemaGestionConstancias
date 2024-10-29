@@ -7,4 +7,6 @@ module org.lossuperconocidos.sistemagestionconstancias {
 
     opens org.lossuperconocidos.sistemagestionconstancias to javafx.fxml;
     exports org.lossuperconocidos.sistemagestionconstancias;
+    exports org.lossuperconocidos.sistemagestionconstancias.controladores;
+    opens org.lossuperconocidos.sistemagestionconstancias.controladores to javafx.fxml;
 }

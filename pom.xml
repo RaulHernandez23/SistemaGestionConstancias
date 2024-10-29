@@ -18,12 +18,12 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>21</version>
+            <version>17.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>21</version>
+            <version>17.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.controlsfx</groupId>
@@ -53,6 +53,14 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>9.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx-fontawesome</artifactId>
+            <version>4.7.0-9.1.2</version>
+        </dependency>
+
+
+
     </dependencies>
 
     <build>
@@ -76,7 +84,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.lossuperconocidos.sistemagestionconstancias/org.lossuperconocidos.sistemagestionconstancias.HelloApplication
+                                org.lossuperconocidos.sistemagestionconstancias/org.lossuperconocidos.sistemagestionconstancias.Inicio
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
