@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLRegistrarDocente">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLRegistrarDocente">
    <top>
           <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnSalir" style="-fx-background-color: transparent;" textAlignment="RIGHT" BorderPane.alignment="TOP_RIGHT">
               <graphic>
@@ -32,6 +32,9 @@
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
+               <font>
+                  <Font size="21.0" />
+               </font>
             </Label>
             <GridPane GridPane.rowIndex="1">
               <columnConstraints>
@@ -47,7 +50,7 @@
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin></Label>
-                  <TextField GridPane.rowIndex="1">
+                  <TextField fx:id="tfNombre" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin></TextField>
@@ -72,9 +75,9 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox prefHeight="26.4" prefWidth="320.0" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <ComboBox fx:id="cbTipoContratación" maxWidth="1.7976931348623157E308" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <GridPane.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0" right="20.0" />
                      </GridPane.margin>
                   </ComboBox>
                </children>
@@ -94,7 +97,7 @@
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField GridPane.rowIndex="1">
+                  <TextField fx:id="tfNumeroPersonal" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin>
@@ -121,7 +124,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField GridPane.rowIndex="1">
+                  <TextField fx:id="tfCorreoElectronico" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" right="20.0" />
                      </GridPane.margin>
@@ -148,7 +151,7 @@
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox prefHeight="26.0" prefWidth="315.2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <ComboBox fx:id="cbCategoria" maxWidth="1.7976931348623157E308" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin>
@@ -170,7 +173,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField GridPane.rowIndex="1">
+                  <TextField fx:id="tfPassword" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" right="20.0" />
                      </GridPane.margin>
@@ -191,10 +194,18 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Registrar" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button layoutX="66.0" layoutY="45.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Cancelar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnRegistrar" mnemonicParsing="false" onAction="#clicRegistrar" prefHeight="26.0" prefWidth="130.0" text="Registrar" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnCancelar" layoutX="66.0" layoutY="45.0" mnemonicParsing="false" onAction="#clicCancelar" prefHeight="26.0" prefWidth="130.0" text="Cancelar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets bottom="35.0" left="20.0" right="20.0" />
+               </GridPane.margin>
+               <center>
+                  <Label text="Error, el profesor ya existe en el sistema" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
          </children>
       </GridPane>
    </center>

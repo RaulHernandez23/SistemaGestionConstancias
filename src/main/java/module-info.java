@@ -4,6 +4,7 @@ module org.lossuperconocidos.sistemagestionconstancias {
 
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
+    requires java.desktop;
 
     opens org.lossuperconocidos.sistemagestionconstancias to javafx.fxml;
     exports org.lossuperconocidos.sistemagestionconstancias;
