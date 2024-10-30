@@ -7,10 +7,11 @@ import javafx.stage.Stage;
 
 public class FXMLLogIn
 {
+
     @javafx.fxml.FXML
-    private TextField txtUsuario;
+    private PasswordField pfPassword;
     @javafx.fxml.FXML
-    private PasswordField txtPassword;
+    private TextField tfUsuario;
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -25,5 +26,6 @@ public class FXMLLogIn
     @javafx.fxml.FXML
     public void btnEntrar(ActionEvent actionEvent) {
         //TODO
+
     }
 }
