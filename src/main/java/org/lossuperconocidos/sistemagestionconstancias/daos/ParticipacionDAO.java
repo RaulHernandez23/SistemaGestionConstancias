@@ -41,25 +41,16 @@ public class ParticipacionDAO {
                     respuesta.put("mensaje", "Participación registrada correctamente");
 
                 } else {
-
                     respuesta.put("mensaje", "No se pudo registrar la participación");
                 }
-                
             } catch (SQLException sqlEx) {
-
                 respuesta.put("mensaje", "Error: " + sqlEx.getMessage());
-
             } finally {
-
                 ConectorBD.cerrarConexion(conexion);
-
             }
-
         } else {
-
-            respuesta.put("mensaje", "No se pudo establecer la conexión con la base de datos");
+            respuesta.put("mensaje", "No se pudo conectar a la red, por favor revise su conexión");
         }
-
         return respuesta;
 
     }
