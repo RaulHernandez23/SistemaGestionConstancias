@@ -31,7 +31,7 @@ public class UsuarioDAO {
 
                 ResultSet resultadoConsulta = sentencia.executeQuery();
 
-                if(resultadoConsulta != null) {
+                if(resultadoConsulta.next()) {
 
                     Usuario usuario = new Usuario();
 
