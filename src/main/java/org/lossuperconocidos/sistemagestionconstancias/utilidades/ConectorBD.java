@@ -20,14 +20,15 @@ public class ConectorBD {
         Connection conexion = null;
 
         try {
+
             Class.forName(driver);
 
             conexion = java.sql.DriverManager.getConnection(URL_CONEXION, usuario, clave);
 
-        } catch (ClassNotFoundException cnfEx) {
+        } catch (ClassNotFoundException | SQLException cnfEx) {
+
             cnfEx.printStackTrace();
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
+
         }
 
         return conexion;
@@ -38,9 +39,13 @@ public class ConectorBD {
         if(conexion != null) {
 
             try {
+
                 conexion.close();
+
             } catch (SQLException sqlEx) {
+
                 sqlEx.printStackTrace();
+
             }
         }
     }
