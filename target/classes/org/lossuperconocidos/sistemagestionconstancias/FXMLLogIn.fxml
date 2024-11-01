@@ -13,13 +13,13 @@
    <right>
       <AnchorPane prefHeight="500.0" prefWidth="348.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="txtUsuario" layoutX="83.0" layoutY="183.0" prefHeight="25.0" prefWidth="180.0" promptText="Usuario" style="-fx-background-color: transparent; -fx-border-color: #009eff; -fx-border-width: 0px 0px 2px 0px;">
+            <TextField fx:id="tfNoPersonal" layoutX="83.0" layoutY="183.0" prefHeight="25.0" prefWidth="180.0" promptText="Numero de personal" style="-fx-background-color: transparent; -fx-border-color: #009eff; -fx-border-width: 0px 0px 2px 0px;">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font></TextField>
             <FontAwesomeIconView fill="#009eff" glyphName="USER" layoutX="58.0" layoutY="202.0" size="20" text="" />
             <FontAwesomeIconView fill="#009eff" glyphName="KEY" layoutX="55.0" layoutY="263.0" size="20.0" />
-            <Button layoutX="134.0" layoutY="326.0" mnemonicParsing="false" onAction="#btnEntrar" prefHeight="31.0" prefWidth="80.0" style="-fx-background-color: #009eff;" text="Entrar" textFill="WHITE">
+            <Button fx:id="btnEntrar" disable="true" layoutX="134.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionEntrar" prefHeight="31.0" prefWidth="80.0" style="-fx-background-color: #009eff;" text="Entrar" textFill="WHITE">
                <font>
                   <Font name="Roboto Black" size="12.0" />
                </font>
@@ -30,7 +30,7 @@
                   <Font name="Roboto Bold" size="22.0" />
                </font>
             </Text>
-            <PasswordField fx:id="txtPassword" layoutX="83.0" layoutY="244.0" prefHeight="25.0" prefWidth="181.0" promptText="Contraseña" style="-fx-background-color: transparent; -fx-border-color: #009eff; -fx-border-width: 0px 0px 2px 0px;">
+            <PasswordField fx:id="pfPassword" layoutX="83.0" layoutY="244.0" prefHeight="25.0" prefWidth="181.0" promptText="Contraseña" style="-fx-background-color: transparent; -fx-border-color: #009eff; -fx-border-width: 0px 0px 2px 0px;">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
