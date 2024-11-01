@@ -45,10 +45,10 @@ public class UsuarioDAO {
                     usuario.setTipoContratacion(resultadoConsulta.getString("tipo_contratacion"));
 
                     respuesta.put("error", false);
-                    respuesta.put("mensaje", "Inicio de sesión correcto");
+                    respuesta.put("mensaje", "Inicio de sesión exitoso");
                     respuesta.put("usuario", usuario);
                 } else {
-                    respuesta.put("mensaje", "No se encontró el usuario");
+                    respuesta.put("mensaje", "Usuario y/o contraseña incorrectos. Por favor, verifique sus datos");
                 }
             } catch (SQLException sqlEx){
                 respuesta.put("mensaje", "Error: " + sqlEx.getMessage());
