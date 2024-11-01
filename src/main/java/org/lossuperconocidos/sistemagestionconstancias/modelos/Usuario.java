@@ -2,7 +2,7 @@ package org.lossuperconocidos.sistemagestionconstancias.modelos;
 
 public class Usuario {
 
-    private int no_personal;
+    private String no_personal;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -16,7 +16,7 @@ public class Usuario {
     }
 
     public Usuario(
-            int no_personal,
+            String no_personal,
             String nombre,
             String apellidoPaterno,
             String apellidoMaterno,
@@ -37,11 +37,11 @@ public class Usuario {
         this.tipoContratacion = tipoContratacion;
     }
 
-    public int getNo_personal() {
+    public String getNo_personal() {
         return no_personal;
     }
 
-    public void setNo_personal(int no_personal) {
+    public void setNo_personal(String no_personal) {
         this.no_personal = no_personal;
     }
 
