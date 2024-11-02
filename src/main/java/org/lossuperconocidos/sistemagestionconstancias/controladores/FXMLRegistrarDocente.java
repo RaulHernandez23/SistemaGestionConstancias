@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.lossuperconocidos.sistemagestionconstancias.daos.DocenteDAO;
@@ -58,6 +59,8 @@ public class FXMLRegistrarDocente implements Initializable {
     private Label lbErrorNumero;
     @FXML
     private Label lbErrorDocenteExistente;
+    @FXML
+    private BorderPane bpErrorDocenteExistente;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -65,11 +68,12 @@ public class FXMLRegistrarDocente implements Initializable {
         configurarListenerACampos();
         cargarCategorias();
         cargarTiposContratacion();
+        limpiarMensajesDeError();
     }
 
     @FXML
     void clicRegistrar(ActionEvent event) {
-        if(validarCampos()){
+        if(validarCampos() && verificarDocenteNoExistente()){
             registrarDocente();
         }
     }
@@ -94,7 +98,25 @@ public class FXMLRegistrarDocente implements Initializable {
         escenario.close();
     }
 
+    private void limpiarMensajesDeError() {
+        lbErrorCorreo.setText("");
+        lbErrorPassword.setText("");
+        lbErrorNumero.setText("");
+        lbErrorNombre.setText("");
+        lbErrorAPaterno.setText("");
+        lbErrorAMaterno.setText("");
+        lbErrorDocenteExistente.setText("");
+
+        tfCorreoElectronico.setStyle(null);
+        tfPassword.setStyle(null);
+        tfNumeroPersonal.setStyle(null);
+        tfNombre.setStyle(null);
+        tfApellidoPaterno.setStyle(null);
+        tfApellidoMaterno.setStyle(null);
+    }
+
     private boolean validarCampos() {
+        limpiarMensajesDeError();
         boolean esValido = true;
 
         // Validación del campo de correo electrónico
@@ -121,7 +143,7 @@ public class FXMLRegistrarDocente implements Initializable {
 
         // Validación del campo de número personal
         String numeroPersonal = tfNumeroPersonal.getText().trim();
-        if (numeroPersonal.isEmpty() || !numeroPersonal.matches("^\\d{5,10}$")) {
+        if (numeroPersonal.isEmpty() || !numeroPersonal.matches("^[a-zA-Z\\d]{5,10}$")) {
             tfNumeroPersonal.setStyle("-fx-border-color: red;");
             lbErrorNumero.setText("Número personal no válido.");
             esValido = false;
@@ -201,7 +223,7 @@ public class FXMLRegistrarDocente implements Initializable {
 
         btnRegistrar.setDisable(camposVacios || categoriaNoSeleccionada || tipoContratacionNoSeleccionado);
     }
-    //Metodo Incompleto
+
     private void registrarDocente(){
         Usuario docente = new Usuario();
         Categoria categoriaSeleccionada = cbCategoria.getSelectionModel().getSelectedItem();
@@ -283,5 +305,20 @@ public class FXMLRegistrarDocente implements Initializable {
         } catch (Exception e) {
             Alertas.mostrarAlertaError("Error de conexión", Constantes.MENSAJE_ERROR_DE_CONEXION);
         }
+    }
+
+    private boolean verificarDocenteNoExistente(){
+        String no_personal = tfNumeroPersonal.getText();
+        boolean docenteNoExistente = false;
+        HashMap<String, Object> respuestaDocenteNoExistente = DocenteDAO.verificarDocente(no_personal);
+
+        if (!(Boolean) respuestaDocenteNoExistente.get("error")) {
+            docenteNoExistente = true;
+        }else {
+            lbErrorDocenteExistente.setText("El docente ya se encuentra registrado");
+            lbErrorDocenteExistente.setStyle("-fx-border-color: red;");
+            bpErrorDocenteExistente.setStyle("-fx-border-color: red; -fx-border-width: 3; -fx-border-insets: 0; -fx-border-radius: 5;");
+        }
+        return docenteNoExistente;
     }
 }

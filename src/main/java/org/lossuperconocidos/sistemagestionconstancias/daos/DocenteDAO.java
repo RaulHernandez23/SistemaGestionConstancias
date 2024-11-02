@@ -6,6 +6,7 @@ import org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -21,7 +22,7 @@ public class DocenteDAO {
                 // Desactiva el auto-commit para gestionar la transacción
                 conexionBD.setAutoCommit(false);
 
-                String consulta = "INSERT INTO USUARIO (no_personal,nombre, apellido_paterno, apellido_materno," +
+                String consulta = "INSERT INTO USUARIO (no_personal, nombre, apellido_paterno, apellido_materno," +
                         " correo_electronico, password, id_tipo_usuario, id_categoria, id_tipo_contratacion) " +
                         "VALUES (?, ?, ?, ?, ?, ?, 2, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
@@ -66,6 +67,38 @@ public class DocenteDAO {
                 e.printStackTrace();
             } finally {
                 ConectorBD.cerrarConexion(conexionBD);
+            }
+        } else {
+            respuesta.put("mensaje", Constantes.MENSAJE_ERROR_DE_CONEXION);
+        }
+
+        return respuesta;
+    }
+
+    public static HashMap<String, Object> verificarDocente(String noPersonal) {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if (conexion != null) {
+            try {
+                String consulta = "SELECT * FROM USUARIO WHERE no_personal = ?";
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+                sentencia.setString(1, noPersonal);
+
+                ResultSet resultadoConsulta = sentencia.executeQuery();
+
+                if (resultadoConsulta.next()) {
+                    respuesta.put("mensaje", "El docente ya se encuentra registrado.");
+                } else {
+                    respuesta.put("error", false);
+                    respuesta.put("mensaje", "El usuario no está registrado.");
+                }
+            } catch (SQLException sqlEx) {
+                respuesta.put("mensaje", "Error: " + sqlEx.getMessage());
+            } finally {
+                ConectorBD.cerrarConexion(conexion);
             }
         } else {
             respuesta.put("mensaje", Constantes.MENSAJE_ERROR_DE_CONEXION);
