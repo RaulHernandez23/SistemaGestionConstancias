@@ -11,6 +11,9 @@ public class Usuario {
     private String tipoUsuario;
     private String categoria;
     private String tipoContratacion;
+    private Integer idCategoria;
+    private Integer idTipoUsuario;
+    private Integer idTipoContratacion;
 
     public Usuario() {
     }
@@ -24,7 +27,11 @@ public class Usuario {
             String contrasena,
             String tipoUsuario,
             String categoria,
-            String tipoContratacion
+            String tipoContratacion,
+            Integer idCategoria,
+            Integer idTipoUsuario,
+            Integer idTipoContratacion
+
     ) {
         this.no_personal = no_personal;
         this.nombre = nombre;
@@ -35,6 +42,9 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
         this.categoria = categoria;
         this.tipoContratacion = tipoContratacion;
+        this.idCategoria = idCategoria;
+        this.idTipoUsuario = idTipoUsuario;
+        this.idTipoContratacion = idTipoContratacion;
     }
 
     public String getNo_personal() {
@@ -108,5 +118,17 @@ public class Usuario {
     public void setTipoContratacion(String tipoContratacion) {
         this.tipoContratacion = tipoContratacion;
     }
+
+    public Integer getIdCategoria() { return idCategoria; }
+
+    public void setIdCategoria(Integer idCategoria) { this.idCategoria = idCategoria; }
+
+    public Integer getIdTipoUsuario() { return idTipoUsuario; }
+
+    public void setIdTipoUsuario(Integer idTipoUsuario) { this.idTipoUsuario = idTipoUsuario; }
+
+    public Integer getIdTipoContratacion() { return idTipoContratacion; }
+
+    public void setIdTipoContratacion(Integer idTipoContratacion) { this.idTipoContratacion = idTipoContratacion; }
 
 }

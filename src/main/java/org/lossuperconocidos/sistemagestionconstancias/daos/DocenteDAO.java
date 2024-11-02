@@ -1,6 +1,8 @@
 package org.lossuperconocidos.sistemagestionconstancias.daos;
 
+import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.ConectorBD;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,14 +10,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class DocenteDAO {
-    public static HashMap<String, Object> registrarDocente(String nombre, String apellidoPaterno,
-                                                           String apellidoMaterno, String correoElectronico,
-                                                           String password, Integer idCategoria,
-                                                           Integer idTipoContratacion) {
+    public static HashMap<String, Object> registrarDocente(Usuario docente) {
         HashMap<String, Object> respuesta = new HashMap<>();
         respuesta.put("error", true);
 
-        // Obtención de la conexión a la base de datos
         Connection conexionBD = ConectorBD.obtenerConexion();
 
         if (conexionBD != null) {
@@ -35,22 +33,22 @@ public class DocenteDAO {
                         "id_categoria = VALUES(id_categoria), " +
                         "id_tipo_contratacion = VALUES(id_tipo_contratacion)";
 
-                // Preparación de la sentencia
                 PreparedStatement sentenciaUsuario = conexionBD.prepareStatement(consulta);
-                sentenciaUsuario.setString(1, nombre);
-                sentenciaUsuario.setString(2, apellidoPaterno);
-                sentenciaUsuario.setString(3, apellidoMaterno);
-                sentenciaUsuario.setString(4, correoElectronico);
-                sentenciaUsuario.setString(5, password);
-                sentenciaUsuario.setObject(6, idCategoria);
-                sentenciaUsuario.setObject(7, idTipoContratacion);
+                sentenciaUsuario.setString(1, docente.getNombre());
+                sentenciaUsuario.setString(2, docente.getApellidoPaterno());
+                sentenciaUsuario.setString(3, docente.getApellidoMaterno());
+                sentenciaUsuario.setString(4, docente.getCorreoElectronico());
+                sentenciaUsuario.setString(5, docente.getContrasena());
+                sentenciaUsuario.setObject(6, docente.getIdCategoria());
+                sentenciaUsuario.setObject(7, docente.getIdTipoContratacion());
 
                 int filasAfectadas = sentenciaUsuario.executeUpdate();
 
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.put("error", false);
-                    respuesta.put("mensaje", "Docente registrado correctamente.");
+                    respuesta.put("mensaje", "La información del docente " + docente.getNombre()
+                            + " se ha registrado correctamente.");
                 } else {
                     conexionBD.rollback();
                     respuesta.put("mensaje", "No se pudo registrar el docente.");
@@ -62,13 +60,13 @@ public class DocenteDAO {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                respuesta.put("mensaje", "Error en la operación de registro: " + e.getMessage());
+                respuesta.put("mensaje", "Error en la operación de registro");
                 e.printStackTrace();
             } finally {
                 ConectorBD.cerrarConexion(conexionBD);
             }
         } else {
-            respuesta.put("mensaje", "Error al conectar con la base de datos.");
+            respuesta.put("mensaje", Constantes.MENSAJE_ERROR_DE_CONEXION);
         }
 
         return respuesta;

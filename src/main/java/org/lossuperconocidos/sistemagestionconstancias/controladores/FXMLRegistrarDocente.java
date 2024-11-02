@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import org.lossuperconocidos.sistemagestionconstancias.daos.DocenteDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.UsuarioDAO;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Categoria;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.TipoContratacion;
@@ -69,7 +70,7 @@ public class FXMLRegistrarDocente implements Initializable {
     @FXML
     void clicRegistrar(ActionEvent event) {
         if(validarCampos()){
-            System.out.println("Paso la prueba");
+            registrarDocente();
         }
     }
 
@@ -177,19 +178,34 @@ public class FXMLRegistrarDocente implements Initializable {
         tfCorreoElectronico.textProperty().addListener(cambiosEnCampos);
         tfPassword.textProperty().addListener(cambiosEnCampos);
 
+        // Listener para el ComboBox de categoría
+        cbCategoria.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            verificarCamposLlenos();
+        });
+
+        // Listener para el ComboBox de tipo de contratación
+        cbTipoContratacion.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            verificarCamposLlenos();
+        });
     }
 
     private void verificarCamposLlenos() {
-        btnRegistrar.setDisable(
-                tfNombre.getText().isEmpty()
-                        || tfApellidoPaterno.getText().isEmpty()
-                        || tfNumeroPersonal.getText().isEmpty()
-                        || tfCorreoElectronico.getText().isEmpty()
-                        || tfPassword.getText().isEmpty());
-    }
+        boolean camposVacios = tfNombre.getText().isEmpty()
+                || tfApellidoPaterno.getText().isEmpty()
+                || tfNumeroPersonal.getText().isEmpty()
+                || tfCorreoElectronico.getText().isEmpty()
+                || tfPassword.getText().isEmpty();
 
-    private void registrarUsuario(){
+        boolean categoriaNoSeleccionada = cbCategoria.getSelectionModel().getSelectedIndex() == 0;
+        boolean tipoContratacionNoSeleccionado = cbTipoContratacion.getSelectionModel().getSelectedIndex() == 0;
+
+        btnRegistrar.setDisable(camposVacios || categoriaNoSeleccionada || tipoContratacionNoSeleccionado);
+    }
+    //Metodo Incompleto
+    private void registrarDocente(){
         Usuario docente = new Usuario();
+        Categoria categoriaSeleccionada = cbCategoria.getSelectionModel().getSelectedItem();
+        TipoContratacion tipoContratacionSeleccionada = cbTipoContratacion.getSelectionModel().getSelectedItem();
 
         docente.setNombre(tfNombre.getText());
         docente.setApellidoPaterno(tfApellidoPaterno.getText());
@@ -197,7 +213,25 @@ public class FXMLRegistrarDocente implements Initializable {
         docente.setCorreoElectronico(tfCorreoElectronico.getText());
         docente.setNo_personal(tfNumeroPersonal.getText());
         docente.setContrasena(tfPassword.getText());
-        //Falta implementación
+        docente.setIdCategoria(categoriaSeleccionada.getIdCategoria());
+        docente.setIdTipoContratacion(tipoContratacionSeleccionada.getIdTipoContratacion());
+
+        try{
+            HashMap<String, Object> respuesta = DocenteDAO.registrarDocente(docente);
+            if (!(Boolean) respuesta.get("error")) {
+
+                Alertas.mostrarAlertaInformacion("Registro exitoso",
+                        (String) respuesta.get("mensaje"));
+            } else {
+
+                Alertas.mostrarAlertaError("Error en el registro",
+                        (String) respuesta.get("mensaje"));
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void cargarCategorias() {
@@ -212,7 +246,8 @@ public class FXMLRegistrarDocente implements Initializable {
                 ningunaCategoriaSeleccionada.setNombreCategoria("Seleccione una categoría");
                 ningunaCategoriaSeleccionada.setIdCategoria(null);
                 categorias.add(ningunaCategoriaSeleccionada);
-                categorias = FXCollections.observableArrayList(listaCategorias);
+                categorias.addAll(listaCategorias);
+
                 cbCategoria.setItems(categorias);
                 cbCategoria.getSelectionModel().select(ningunaCategoriaSeleccionada);
             } else {
