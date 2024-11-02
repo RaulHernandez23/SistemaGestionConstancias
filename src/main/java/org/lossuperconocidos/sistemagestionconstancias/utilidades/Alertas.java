@@ -4,7 +4,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 public class Alertas {
-    public void mostrarAlertaInformacion(String titulo, String mensaje) {
+    public static void mostrarAlertaInformacion(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
@@ -13,7 +13,7 @@ public class Alertas {
     }
 
     // Alerta de Advertencia
-    public void mostrarAlertaAdvertencia(String titulo, String mensaje) {
+    public static void mostrarAlertaAdvertencia(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.WARNING);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
@@ -22,7 +22,7 @@ public class Alertas {
     }
 
     // Alerta de Error
-    public void mostrarAlertaError(String titulo, String mensaje) {
+    public static void mostrarAlertaError(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
@@ -31,7 +31,7 @@ public class Alertas {
     }
 
     // Alerta de Confirmación
-    public boolean mostrarAlertaConfirmacion(String titulo, String mensaje) {
+    public static boolean mostrarAlertaConfirmacion(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);

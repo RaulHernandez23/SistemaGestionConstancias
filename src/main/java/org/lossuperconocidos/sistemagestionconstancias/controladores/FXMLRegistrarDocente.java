@@ -1,13 +1,24 @@
 package org.lossuperconocidos.sistemagestionconstancias.controladores;
 
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import org.lossuperconocidos.sistemagestionconstancias.daos.UsuarioDAO;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.Categoria;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.TipoContratacion;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class FXMLRegistrarDocente implements Initializable {
@@ -15,7 +26,7 @@ public class FXMLRegistrarDocente implements Initializable {
     @FXML
     private Label lbErrorCorreo;
     @FXML
-    private ComboBox<String> cbCategoria;
+    private ComboBox<Categoria> cbCategoria;
     @FXML
     private TextField tfCorreoElectronico;
     @FXML
@@ -29,7 +40,7 @@ public class FXMLRegistrarDocente implements Initializable {
     @FXML
     private TextField tfApellidoMaterno;
     @FXML
-    private ComboBox<String> cbTipoContratación;
+    private ComboBox<TipoContratacion> cbTipoContratacion;
     @FXML
     private Label lbErrorNombre;
     @FXML
@@ -51,6 +62,8 @@ public class FXMLRegistrarDocente implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         btnRegistrar.setDisable(true);
         configurarListenerACampos();
+        cargarCategorias();
+        cargarTiposContratacion();
     }
 
     @FXML
@@ -62,7 +75,11 @@ public class FXMLRegistrarDocente implements Initializable {
 
     @FXML
     void clicCancelar(ActionEvent event) {
-        cerrarVentana();
+        boolean confirmacion = Alertas.mostrarAlertaConfirmacion("Advertencia",
+                        "¿Estas seguro de cancelar el registro? ");
+        if (confirmacion) {
+            cerrarVentana();
+        }
     }
 
     @javafx.fxml.FXML
@@ -169,5 +186,67 @@ public class FXMLRegistrarDocente implements Initializable {
                         || tfNumeroPersonal.getText().isEmpty()
                         || tfCorreoElectronico.getText().isEmpty()
                         || tfPassword.getText().isEmpty());
+    }
+
+    private void registrarUsuario(){
+        Usuario docente = new Usuario();
+
+        docente.setNombre(tfNombre.getText());
+        docente.setApellidoPaterno(tfApellidoPaterno.getText());
+        docente.setApellidoMaterno(tfApellidoMaterno.getText());
+        docente.setCorreoElectronico(tfCorreoElectronico.getText());
+        docente.setNo_personal(tfNumeroPersonal.getText());
+        docente.setContrasena(tfPassword.getText());
+        //Falta implementación
+    }
+
+    private void cargarCategorias() {
+        try {
+            HashMap<String, Object> respuestaCategorias = UsuarioDAO.consultarCategorias();
+
+            if (!(Boolean) respuestaCategorias.get("error")) {
+                ArrayList<Categoria> listaCategorias = (ArrayList<Categoria>) respuestaCategorias.get("categorias");
+                ObservableList<Categoria> categorias = FXCollections.observableArrayList();
+                
+                Categoria ningunaCategoriaSeleccionada = new Categoria();
+                ningunaCategoriaSeleccionada.setNombreCategoria("Seleccione una categoría");
+                ningunaCategoriaSeleccionada.setIdCategoria(null);
+                categorias.add(ningunaCategoriaSeleccionada);
+                categorias = FXCollections.observableArrayList(listaCategorias);
+                cbCategoria.setItems(categorias);
+                cbCategoria.getSelectionModel().select(ningunaCategoriaSeleccionada);
+            } else {
+                Alertas.mostrarAlertaError("Error de conexión", Constantes.MENSAJE_ERROR_DE_CONEXION);
+            }
+        } catch (Exception e) {
+            Alertas.mostrarAlertaError("Error de conexión", Constantes.MENSAJE_ERROR_DE_CONEXION);
+        }
+    }
+
+    private void cargarTiposContratacion() {
+        try {
+            HashMap<String, Object> respuestaTiposContratacion = UsuarioDAO.consultarTiposContratacion();
+
+            if (!(Boolean) respuestaTiposContratacion.get("error")) {
+                ArrayList<TipoContratacion> listaTiposContratacion =
+                        (ArrayList<TipoContratacion>) respuestaTiposContratacion.get("tiposContratacion");
+
+                ObservableList<TipoContratacion> tiposContratacion = FXCollections.observableArrayList();
+
+                TipoContratacion ningunTipoSeleccionado = new TipoContratacion();
+                ningunTipoSeleccionado.setNombreTipoContratacion("Seleccione un tipo de contratación");
+                ningunTipoSeleccionado.setIdTipoContratacion(null);
+                tiposContratacion.add(ningunTipoSeleccionado);
+
+                tiposContratacion.addAll(listaTiposContratacion);
+
+                cbTipoContratacion.setItems(tiposContratacion);
+                cbTipoContratacion.getSelectionModel().select(ningunTipoSeleccionado);
+            } else {
+                Alertas.mostrarAlertaError("Error de conexión", Constantes.MENSAJE_ERROR_DE_CONEXION);
+            }
+        } catch (Exception e) {
+            Alertas.mostrarAlertaError("Error de conexión", Constantes.MENSAJE_ERROR_DE_CONEXION);
+        }
     }
 }

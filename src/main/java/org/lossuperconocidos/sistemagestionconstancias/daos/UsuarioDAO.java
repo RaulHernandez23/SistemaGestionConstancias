@@ -1,12 +1,16 @@
 package org.lossuperconocidos.sistemagestionconstancias.daos;
 
+import org.lossuperconocidos.sistemagestionconstancias.modelos.Categoria;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.TipoContratacion;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.ConectorBD;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UsuarioDAO {
@@ -62,5 +66,74 @@ public class UsuarioDAO {
         return respuesta;
     }
 
+    public static HashMap<String, Object> consultarCategorias() {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConectorBD.obtenerConexion();
+
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT id, nombre FROM categoria";
+                PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultadoConsulta = sentencia.executeQuery();
+
+                ArrayList<Categoria> categorias = new ArrayList<>();
+
+                while (resultadoConsulta.next()) {
+                    Categoria categoria = new Categoria();
+                    categoria.setIdCategoria(resultadoConsulta.getInt("id"));
+                    categoria.setNombreCategoria(resultadoConsulta.getString("nombre"));
+                    categorias.add(categoria);
+                }
+
+                respuesta.put("error", false);
+                respuesta.put("categorias", categorias);
+
+            } catch (SQLException se) {
+                respuesta.put("mensaje", Constantes.MENSAJE_ERROR_REGISTRO);
+                se.printStackTrace();
+            } finally {
+                ConectorBD.cerrarConexion(conexionBD);
+            }
+        } else {
+            respuesta.put("mensaje", Constantes.MENSAJE_ERROR_REGISTRO);
+        }
+        return respuesta;
+    }
+
+    public static HashMap<String, Object> consultarTiposContratacion() {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConectorBD.obtenerConexion();
+
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT id, nombre FROM tipo_contratacion";
+                PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultadoConsulta = sentencia.executeQuery();
+
+                ArrayList<TipoContratacion> tiposContratacion = new ArrayList<>();
+
+                while (resultadoConsulta.next()) {
+                    TipoContratacion tipoContratacion = new TipoContratacion();
+                    tipoContratacion.setIdTipoContratacion(resultadoConsulta.getInt("id"));
+                    tipoContratacion.setNombreTipoContratacion(resultadoConsulta.getString("nombre"));
+                    tiposContratacion.add(tipoContratacion);
+                }
+
+                respuesta.put("error", false);
+                respuesta.put("tiposContratacion", tiposContratacion);
+
+            } catch (SQLException se) {
+                respuesta.put("mensaje", Constantes.MENSAJE_ERROR_REGISTRO);
+            } finally {
+                ConectorBD.cerrarConexion(conexionBD);
+            }
+        } else {
+            respuesta.put("mensaje", Constantes.MENSAJE_ERROR_REGISTRO);
+        }
+
+        return respuesta;
+    }
 
 }
