@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLRegistrarDocente">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLRegistrarDocente">
    <top>
           <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnSalir" style="-fx-background-color: transparent;" textAlignment="RIGHT" BorderPane.alignment="TOP_RIGHT">
               <graphic>
@@ -29,7 +30,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Registrar información de docente:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+            <Label styleClass="titulo" text="Registrar información de docente:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
@@ -47,15 +48,15 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Nombre:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                  <Label styleClass="subtitulo" text="Nombre:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin></Label>
-                  <TextField fx:id="tfNombre" styleClass="text-field" GridPane.rowIndex="1">
+                  <TextField fx:id="tfNombre" styleClass="campoRellenable" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin></TextField>
-                  <Label fx:id="lbErrorNombre" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                  <Label fx:id="lbErrorNombre" styleClass="label.error" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin></Label>
@@ -71,12 +72,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Tipo de contratación:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                  <Label styleClass="subtitulo" text="Tipo de contratación:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox fx:id="cbTipoContratacion" maxWidth="1.7976931348623157E308" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <ComboBox fx:id="cbTipoContratacion" maxWidth="1.7976931348623157E308" styleClass="listaDesplegable" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="10.0" right="20.0" />
                      </GridPane.margin>
@@ -93,12 +94,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Número de personal:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                  <Label styleClass="subtitulo" text="Número de personal:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="tfNumeroPersonal" GridPane.rowIndex="1">
+                  <TextField fx:id="tfNumeroPersonal" styleClass="campoRellenable" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin>
@@ -120,12 +121,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Correo electronico:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                  <Label styleClass="subtitulo" text="Correo electronico:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="tfCorreoElectronico" GridPane.rowIndex="1">
+                  <TextField fx:id="tfCorreoElectronico" styleClass="campoRellenable" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" right="20.0" />
                      </GridPane.margin>
@@ -147,12 +148,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Categoría:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                  <Label styleClass="subtitulo" text="Categoría:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox fx:id="cbCategoria" maxWidth="1.7976931348623157E308" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <ComboBox fx:id="cbCategoria" maxWidth="1.7976931348623157E308" styleClass="listaDesplegable" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="10.0" right="20.0" />
                      </GridPane.margin>
@@ -169,12 +170,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Contraseña:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                  <Label styleClass="subtitulo" text="Contraseña:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="tfPassword" GridPane.rowIndex="1">
+                  <TextField fx:id="tfPassword" styleClass="campoRellenable" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" right="20.0" />
                      </GridPane.margin>
@@ -195,8 +196,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btnRegistrar" mnemonicParsing="false" onAction="#clicRegistrar" prefHeight="26.0" prefWidth="130.0" text="Registrar" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button fx:id="btnCancelar" layoutX="66.0" layoutY="45.0" mnemonicParsing="false" onAction="#clicCancelar" prefHeight="26.0" prefWidth="130.0" text="Cancelar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnRegistrar" mnemonicParsing="false" onAction="#clicRegistrar" prefHeight="26.0" prefWidth="130.0" styleClass="botonRegistrar" text="Registrar" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnCancelar" layoutX="66.0" layoutY="45.0" mnemonicParsing="false" onAction="#clicCancelar" prefHeight="26.0" prefWidth="130.0" styleClass="botonCancelar" text="Cancelar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             <BorderPane fx:id="bpErrorDocenteExistente" prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
@@ -209,12 +210,12 @@
             </BorderPane>
             <GridPane layoutX="10.0" layoutY="76.0" GridPane.rowIndex="2">
                <children>
-                  <Label text="Apellido paterno:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                  <Label styleClass="subtitulo" text="Apellido paterno:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="tfApellidoPaterno" GridPane.rowIndex="1">
+                  <TextField fx:id="tfApellidoPaterno" styleClass="campoRellenable" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin>
@@ -236,12 +237,12 @@
             </GridPane>
             <GridPane layoutX="10.0" layoutY="157.0" GridPane.rowIndex="3">
                <children>
-                  <Label text="Apellido materno:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                  <Label styleClass="subtitulo" text="Apellido materno:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="tfApellidoMaterno" GridPane.rowIndex="1">
+                  <TextField fx:id="tfApellidoMaterno" styleClass="campoRellenable" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin>

@@ -5,7 +5,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -18,6 +21,7 @@ import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +73,7 @@ public class FXMLRegistrarDocente implements Initializable {
         cargarCategorias();
         cargarTiposContratacion();
         limpiarMensajesDeError();
+        //inicializarCSS();
     }
 
     @FXML
@@ -321,4 +326,17 @@ public class FXMLRegistrarDocente implements Initializable {
         }
         return docenteNoExistente;
     }
+
+    private void inicializarCSS() {
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = FXMLLoader.load(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLRegistrarDocente.fxml"));
+            Parent vista = fxmlLoader.load();
+            Scene escena = new Scene(vista);
+            escena.getStylesheets().add(getClass().getResource("/css/estilos.css").toExternalForm());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
