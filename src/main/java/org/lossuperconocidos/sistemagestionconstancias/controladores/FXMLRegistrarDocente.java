@@ -8,47 +8,42 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class FXMLRegistrarDocente implements Initializable {
 
     @FXML
     private Label lbErrorCorreo;
-
     @FXML
     private ComboBox<String> cbCategoria;
-
     @FXML
     private TextField tfCorreoElectronico;
-
     @FXML
     private TextField tfPassword;
-
     @FXML
     private TextField tfNumeroPersonal;
-
     @FXML
     private TextField tfNombre;
-
+    @FXML
+    private TextField tfApellidoPaterno;
+    @FXML
+    private TextField tfApellidoMaterno;
     @FXML
     private ComboBox<String> cbTipoContratación;
-
     @FXML
     private Label lbErrorNombre;
-
+    @FXML
+    private Label lbErrorAPaterno;
+    @FXML
+    private Label lbErrorAMaterno;
     @FXML
     private Button btnCancelar;
-
     @FXML
     private Label lbErrorPassword;
-
     @FXML
     private Button btnRegistrar;
-
     @FXML
     private Label lbErrorNumero;
-
     @FXML
     private Label lbErrorDocenteExistente;
 
@@ -128,6 +123,28 @@ public class FXMLRegistrarDocente implements Initializable {
             lbErrorNombre.setText("");
         }
 
+        // Validación del campo de apellido paterno
+        String apellidoPaterno = tfApellidoPaterno.getText().trim();
+        if (apellidoPaterno.isEmpty() || !apellidoPaterno.matches("^[a-zA-ZáéíóúÁÉÍÓÚüÜ\\s]{3,40}$")) {
+            tfApellidoPaterno.setStyle("-fx-border-color: red;");
+            lbErrorAPaterno.setText("Apellido paterno no válido.");
+            esValido = false;
+        } else {
+            tfApellidoPaterno.setStyle(null);
+            lbErrorAPaterno.setText("");
+        }
+
+        // Validación del campo de apellido materno (opcional)
+        String apellidoMaterno = tfApellidoMaterno.getText().trim();
+        if (!apellidoMaterno.isEmpty() && !apellidoMaterno.matches("^[a-zA-ZáéíóúÁÉÍÓÚüÜ\\s]{0,40}$")) {
+            tfApellidoMaterno.setStyle("-fx-border-color: red;");
+            lbErrorAMaterno.setText("Apellido materno no válido.");
+            esValido = false;
+        } else {
+            tfApellidoMaterno.setStyle(null);
+            lbErrorAMaterno.setText("");
+        }
+
         return esValido;
     }
 
@@ -138,6 +155,7 @@ public class FXMLRegistrarDocente implements Initializable {
                                                   newValue) -> verificarCamposLlenos();
 
         tfNombre.textProperty().addListener(cambiosEnCampos);
+        tfApellidoPaterno.textProperty().addListener(cambiosEnCampos);
         tfNumeroPersonal.textProperty().addListener(cambiosEnCampos);
         tfCorreoElectronico.textProperty().addListener(cambiosEnCampos);
         tfPassword.textProperty().addListener(cambiosEnCampos);
@@ -145,14 +163,11 @@ public class FXMLRegistrarDocente implements Initializable {
     }
 
     private void verificarCamposLlenos() {
-
         btnRegistrar.setDisable(
                 tfNombre.getText().isEmpty()
-                        || tfNombre.getText().isEmpty()
+                        || tfApellidoPaterno.getText().isEmpty()
                         || tfNumeroPersonal.getText().isEmpty()
                         || tfCorreoElectronico.getText().isEmpty()
                         || tfPassword.getText().isEmpty());
-
     }
-
 }
