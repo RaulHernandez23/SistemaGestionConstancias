@@ -52,6 +52,7 @@ public class FXMLLogIn
 
             Usuario usuario = (Usuario) respuesta.get("usuario");
             alerta.mostrarAlertaInformacion("Éxito", respuesta.get("mensaje").toString());
+            cargarMenuPrincipal(usuario);
 
         }
 
@@ -75,12 +76,15 @@ public class FXMLLogIn
     private void cargarMenuPrincipal(Usuario usuario) {
         if (usuario.getTipoUsuario().equals("Administrador")) {
             // Cargar menú principal de administrador
+            System.out.println("Menu principal de administrador");
         }
         if (usuario.getTipoUsuario().equals("Docente")) {
             // Cargar menú principal de docente
+            System.out.println("Menu principal de docente");
         }
-        if (usuario.getTipoUsuario().equals("Alumno")) {
-            // Cargar menú principal de alumno
+        if (usuario.getTipoUsuario().equals("Personal administrativo")) {
+            // Cargar menú principal de personal administrativo
+            System.out.println("Menu principal de personal administrativo");
         }
     }
 
