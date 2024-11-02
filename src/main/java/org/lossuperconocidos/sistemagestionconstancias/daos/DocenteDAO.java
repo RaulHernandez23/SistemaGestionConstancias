@@ -21,10 +21,11 @@ public class DocenteDAO {
                 // Desactiva el auto-commit para gestionar la transacción
                 conexionBD.setAutoCommit(false);
 
-                String consulta = "INSERT INTO USUARIO (nombre, apellido_paterno, apellido_materno," +
+                String consulta = "INSERT INTO USUARIO (no_personal,nombre, apellido_paterno, apellido_materno," +
                         " correo_electronico, password, id_tipo_usuario, id_categoria, id_tipo_contratacion) " +
-                        "VALUES (?, ?, ?, ?, ?, 2, ?, ?) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, 2, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
+                        "no_personal = VALUES(no_personal),"+
                         "nombre = VALUES(nombre), " +
                         "apellido_paterno = VALUES(apellido_paterno), " +
                         "apellido_materno = VALUES(apellido_materno), " +
@@ -34,13 +35,14 @@ public class DocenteDAO {
                         "id_tipo_contratacion = VALUES(id_tipo_contratacion)";
 
                 PreparedStatement sentenciaUsuario = conexionBD.prepareStatement(consulta);
-                sentenciaUsuario.setString(1, docente.getNombre());
-                sentenciaUsuario.setString(2, docente.getApellidoPaterno());
-                sentenciaUsuario.setString(3, docente.getApellidoMaterno());
-                sentenciaUsuario.setString(4, docente.getCorreoElectronico());
-                sentenciaUsuario.setString(5, docente.getContrasena());
-                sentenciaUsuario.setObject(6, docente.getIdCategoria());
-                sentenciaUsuario.setObject(7, docente.getIdTipoContratacion());
+                sentenciaUsuario.setString(1, docente.getNo_personal());
+                sentenciaUsuario.setString(2, docente.getNombre());
+                sentenciaUsuario.setString(3, docente.getApellidoPaterno());
+                sentenciaUsuario.setString(4, docente.getApellidoMaterno());
+                sentenciaUsuario.setString(5, docente.getCorreoElectronico());
+                sentenciaUsuario.setString(6, docente.getContrasena());
+                sentenciaUsuario.setObject(7, docente.getIdCategoria());
+                sentenciaUsuario.setObject(8, docente.getIdTipoContratacion());
 
                 int filasAfectadas = sentenciaUsuario.executeUpdate();
 
