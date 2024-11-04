@@ -32,10 +32,15 @@ CREATE TABLE `PLADEA`(
 CREATE TABLE `PARTICIPACION`(
     `id` INT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `constatacion` VARCHAR(255) NOT NULL,
+    `tipo_participacion` VARCHAR(255) NOT NULL,
+    `id_periodo_escolar` INT NOT NULL,
+    `id_docente` INT NOT NULL
+);
+CREATE TABLE `PERIODO_ESCOLAR`(
+    `id` INT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `fecha_inicio` DATE NOT NULL,
     `fecha_fin` DATE NOT NULL,
-    `tipo_participacion` VARCHAR(255) NOT NULL,
-    `id_docente` INT NOT NULL
+    `nombre` VARCHAR(255) NOT NULL
 );
 CREATE TABLE `TIPO_CONTRATACION`(
     `id` INT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -58,8 +63,12 @@ CREATE TABLE `USUARIO`(
     `password` VARCHAR(255) NOT NULL,
     `firma_digital` VARCHAR(255) NULL,
     `id_tipo_usuario` INT NOT NULL,
-    `id_categoria` INT NULL,
-    `id_tipo_contratacion` INT NULL
+    `id_categoria` INT NULL
+);
+CREATE TABLE `USUARIO_TIPO_CONTRATACION` (
+    `id` INT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id_usuario` INT NOT NULL,
+    `id_tipo_contratacion` INT NOT NULL
 );
 CREATE TABLE `JURADO`(
     `id_participacion` INT NOT NULL,
@@ -82,6 +91,10 @@ ALTER TABLE
 ALTER TABLE
     `JURADO` ADD CONSTRAINT `jurado_id_participacion_foreign` FOREIGN KEY(`id_participacion`) REFERENCES `PARTICIPACION`(`id`);
 ALTER TABLE
-    `USUARIO` ADD CONSTRAINT `usuario_id_tipo_contratacion_foreign` FOREIGN KEY(`id_tipo_contratacion`) REFERENCES `TIPO_CONTRATACION`(`id`);
-ALTER TABLE
     `PROYECTO_CAMPO` ADD CONSTRAINT `proyecto_campo_id_participacion_foreign` FOREIGN KEY(`id_participacion`) REFERENCES `PARTICIPACION`(`id`);
+ALTER TABLE
+    `USUARIO_TIPO_CONTRATACION` ADD CONSTRAINT `usuario_tipo_contratacion_id_usuario_foreign` FOREIGN KEY(`id_usuario`) REFERENCES `USUARIO`(`id`);
+ALTER TABLE
+    `USUARIO_TIPO_CONTRATACION` ADD CONSTRAINT `usuario_tipo_contratacion_id_tipo_contratacion_foreign` FOREIGN KEY(`id_tipo_contratacion`) REFERENCES `TIPO_CONTRATACION`(`id`);
+ALTER TABLE
+    `PARTICIPACION` ADD CONSTRAINT `participacion_id_periodo_escolar_foreign` FOREIGN KEY(`id_periodo_escolar`) REFERENCES `PERIODO_ESCOLAR`(`id`);
