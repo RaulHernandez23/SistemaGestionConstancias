@@ -1,5 +1,6 @@
 package org.lossuperconocidos.sistemagestionconstancias;
 
+import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +12,10 @@ import java.io.IOException;
 public class Inicio extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("LogIn.fxml"));
+        //TODO:Considerar este tipo de temas
+        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("FXMLLogin.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);

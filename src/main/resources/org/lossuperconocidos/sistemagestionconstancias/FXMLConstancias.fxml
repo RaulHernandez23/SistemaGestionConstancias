@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="583.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLConstancias">
+   <children>
+      <DatePicker layoutX="60.0" layoutY="80.0" prefHeight="25.0" prefWidth="129.0" />
+      <RadioButton layoutX="323.0" layoutY="84.0" mnemonicParsing="false" text="RadioButton">
+         <toggleGroup>
+            <ToggleGroup fx:id="criteriosBusqueda" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="584.0" layoutY="84.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$criteriosBusqueda" />
+      <RadioButton layoutX="452.0" layoutY="84.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$criteriosBusqueda" />
+      <RadioButton layoutX="214.0" layoutY="84.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$criteriosBusqueda" />
+      <Button layoutX="693.0" layoutY="527.0" mnemonicParsing="false" styleClass="button-primary" text="Button" />
+      <ListView fx:id="listaContancias" layoutX="60.0" layoutY="116.0" prefHeight="401.0" prefWidth="715.0" />
+   </children>
+</AnchorPane>

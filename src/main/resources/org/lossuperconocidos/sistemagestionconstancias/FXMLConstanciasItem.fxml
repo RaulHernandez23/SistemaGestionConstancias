@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="182.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLConstanciaItem">
+   <children>
+      <Text fx:id="lbFecha" layoutX="40.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ejemplo constancia" wrappingWidth="152.13671875" />
+   </children>
+</AnchorPane>
