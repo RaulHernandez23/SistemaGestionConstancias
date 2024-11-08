@@ -1,15 +1,20 @@
 package org.lossuperconocidos.sistemagestionconstancias.controladores;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.lossuperconocidos.sistemagestionconstancias.daos.UsuarioDAO;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Utilidades;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class FXMLLogIn
@@ -79,12 +84,34 @@ public class FXMLLogIn
             System.out.println("Menu principal de administrador");
         }
         if (usuario.getTipoUsuario().equals("Docente")) {
-            // Cargar menú principal de docente
-            System.out.println("Menu principal de docente");
+            inicializarmenuDocente(usuario);
         }
         if (usuario.getTipoUsuario().equals("Personal administrativo")) {
             // Cargar menú principal de personal administrativo
             System.out.println("Menu principal de personal administrativo");
+        }
+    }
+
+    private void inicializarmenuDocente(Usuario usuario) {
+        Stage escenario = (Stage) btnEntrar.getScene().getWindow();
+
+        try {
+
+            FXMLLoader fxmlLoader = Utilidades.getFXMLLoader(
+                    "/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml");
+            Pane vista = fxmlLoader.load();
+            Scene escena = new Scene(vista);
+            FXMLMenuDocente controlador = fxmlLoader
+                    .getController();
+
+            controlador.inicializarVentana(usuario);
+            escenario.setScene(escena);
+            escenario.setTitle("Menu Estudiante");
+            escenario.setResizable(false);
+            escenario.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

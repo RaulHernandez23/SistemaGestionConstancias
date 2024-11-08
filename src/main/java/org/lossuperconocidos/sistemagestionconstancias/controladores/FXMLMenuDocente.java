@@ -3,11 +3,13 @@ package org.lossuperconocidos.sistemagestionconstancias.controladores;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Utilidades;
 
 import java.net.URL;
@@ -22,6 +24,11 @@ public class FXMLMenuDocente implements Initializable {
 
     @FXML
     private ImageView ivSalir;
+
+    @FXML
+    private Label lblNombreUsuario;
+
+    Usuario usuario;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,6 +65,16 @@ public class FXMLMenuDocente implements Initializable {
         Utilidades.inicializarVentana(
                 "/org/lossuperconocidos/sistemagestionconstancias/FXMLLogIn.fxml", false);
 
+    }
+
+    public void inicializarVentana(Usuario usuario) {
+        this.usuario = usuario;
+
+        lblNombreUsuario.setText(
+                "Bienvenido "
+                + usuario.getNombre() + " "
+                + usuario.getApellidoPaterno() + " "
+                + usuario.getApellidoMaterno());
     }
 
     public void hoverInSalir(javafx.scene.input.MouseEvent mouseEvent) {

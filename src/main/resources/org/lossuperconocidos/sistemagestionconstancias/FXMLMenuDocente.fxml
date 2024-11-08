@@ -139,7 +139,7 @@
                 </GridPane>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #009eff;" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <children>
-                        <Label layoutX="10.0" prefHeight="65.0" prefWidth="590.0" text="Bienvenido &lt;Docente&gt;" textFill="WHITE">
+                        <Label fx:id="lblNombreUsuario" layoutX="10.0" prefHeight="65.0" prefWidth="590.0" text="Bienvenido" textFill="WHITE">
                             <font>
                                 <Font size="18.0" />
                             </font>

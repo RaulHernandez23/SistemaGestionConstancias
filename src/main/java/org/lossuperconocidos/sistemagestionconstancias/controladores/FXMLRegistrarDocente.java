@@ -73,7 +73,6 @@ public class FXMLRegistrarDocente implements Initializable {
         cargarCategorias();
         cargarTiposContratacion();
         limpiarMensajesDeError();
-        //inicializarCSS();
     }
 
     @FXML
@@ -325,18 +324,6 @@ public class FXMLRegistrarDocente implements Initializable {
             bpErrorDocenteExistente.setStyle("-fx-border-color: red; -fx-border-width: 3; -fx-border-insets: 0; -fx-border-radius: 5;");
         }
         return docenteNoExistente;
-    }
-
-    private void inicializarCSS() {
-        FXMLLoader fxmlLoader = null;
-        try {
-            fxmlLoader = FXMLLoader.load(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLRegistrarDocente.fxml"));
-            Parent vista = fxmlLoader.load();
-            Scene escena = new Scene(vista);
-            escena.getStylesheets().add(getClass().getResource("/css/estilos.css").toExternalForm());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }
