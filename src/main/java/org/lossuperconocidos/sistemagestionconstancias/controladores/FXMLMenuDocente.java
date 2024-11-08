@@ -5,19 +5,58 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Utilidades;
 
-import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class FXMLMenuDocente implements Initializable {
+    @FXML
+    private BorderPane bpRegistrarDocente;
+
+    @FXML
+    private BorderPane bpRegistrarParticipacion;
 
     @FXML
     private ImageView ivSalir;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    @FXML
+    void clicSolicitarConstancia(ActionEvent event) {
+        System.out.println("botón solicitar constancia");
+    }
+
+    @FXML
+    void clicConsultarHistorial(ActionEvent event) {
+        System.out.println("botón consultar historial");
+    }
+
+    @FXML
+    void clicRegistrarDocente(ActionEvent event) {
+        Stage escenario = (Stage) ivSalir.getScene().getWindow();
+
+        Utilidades.inicializarVentana(
+                "/org/lossuperconocidos/sistemagestionconstancias/FXMLRegistrarDocente.fxml", false);
+    }
+
+    @FXML
+    void clicRegistrarParticipacion(ActionEvent event) {
+        System.out.println("botón registrar participación");
+    }
+
+    @FXML
+    void btnSalir(MouseEvent event) {
+        Stage escenario = (Stage) ivSalir.getScene().getWindow();
+        escenario.close();
+        Utilidades.inicializarVentana(
+                "/org/lossuperconocidos/sistemagestionconstancias/FXMLLogIn.fxml", false);
 
     }
 
@@ -32,4 +71,5 @@ public class FXMLMenuDocente implements Initializable {
                 getClass().getResource("/imagenes/logoSalir.png").toExternalForm()
         ));
     }
+
 }

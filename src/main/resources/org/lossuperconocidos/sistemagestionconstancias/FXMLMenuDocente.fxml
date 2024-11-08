@@ -33,7 +33,7 @@
                     <children>
                   <BorderPane>
                      <center>
-                        <Button mnemonicParsing="false" BorderPane.alignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#clicSolicitarConstancia" BorderPane.alignment="CENTER">
                            <graphic>
                               <BorderPane prefHeight="100.0" prefWidth="100.0">
                                  <center>
@@ -65,7 +65,7 @@
                            </font></Label>
                      </bottom>
                      <center>
-                        <Button mnemonicParsing="false" BorderPane.alignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#clicConsultarHistorial" BorderPane.alignment="CENTER">
                            <graphic>
                               <BorderPane prefHeight="100.0" prefWidth="100.0">
                                  <center>
@@ -85,9 +85,9 @@
                         </Button>
                      </center>
                   </BorderPane>
-                  <BorderPane layoutX="10.0" layoutY="10.0" GridPane.columnIndex="2">
+                  <BorderPane fx:id="bpRegistrarDocente" layoutX="10.0" layoutY="10.0" GridPane.columnIndex="2">
                      <center>
-                        <Button mnemonicParsing="false" BorderPane.alignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#clicRegistrarDocente" BorderPane.alignment="CENTER">
                            <graphic>
                               <BorderPane prefHeight="100.0" prefWidth="100.0">
                                  <center>
@@ -110,9 +110,9 @@
                            </font></Label>
                      </bottom>
                   </BorderPane>
-                  <BorderPane layoutX="160.0" layoutY="10.0" GridPane.columnIndex="3">
+                  <BorderPane fx:id="bpRegistrarParticipacion" layoutX="160.0" layoutY="10.0" GridPane.columnIndex="3">
                      <center>
-                        <Button mnemonicParsing="false" BorderPane.alignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#clicRegistrarParticipacion" BorderPane.alignment="CENTER">
                            <graphic>
                               <BorderPane prefHeight="100.0" prefWidth="100.0">
                                  <center>
@@ -139,12 +139,12 @@
                 </GridPane>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #009eff;" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <children>
-                        <Label layoutX="10.0" prefHeight="65.0" prefWidth="590.0" text="bienvenido &lt;Docente&gt;" textFill="WHITE">
+                        <Label layoutX="10.0" prefHeight="65.0" prefWidth="590.0" text="Bienvenido &lt;Docente&gt;" textFill="WHITE">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Label>
-                  <ImageView fx:id="ivSalir" fitHeight="35.0" fitWidth="35.0" layoutX="551.0" layoutY="15.0" onMouseEntered="#hoverInSalir" onMouseExited="#hoverOutSalir" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ivSalir" fitHeight="35.0" fitWidth="35.0" layoutX="551.0" layoutY="15.0" onMouseClicked="#btnSalir" onMouseEntered="#hoverInSalir" onMouseExited="#hoverOutSalir" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../imagenes/logoSalir.png" />
                      </image>
