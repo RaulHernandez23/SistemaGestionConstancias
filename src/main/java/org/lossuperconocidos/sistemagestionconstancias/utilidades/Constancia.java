@@ -53,7 +53,7 @@ public class Constancia {
             Map<String, String> tagValues = new HashMap<>();
             tagValues.put("NombreDirector", "Juan Pérez");
             tagValues.put("NombreAcademico", "Nombre real de académico Innovador");
-            tagValues.put("Duracion", "01/01/2024 - 1999");
+            tagValues.put("-", "01/01/2024 - 1999");
 
             // Reemplazo de texto
             for (XWPFParagraph paragraph : document.getParagraphs()) {
