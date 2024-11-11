@@ -2,6 +2,7 @@ package org.lossuperconocidos.sistemagestionconstancias.controladores;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
@@ -81,5 +82,7 @@ public class FXMLConstancias implements Initializable {
     }
 
 
+    public void clicBtnEjemplo(ActionEvent actionEvent) {
 
+    }
 }

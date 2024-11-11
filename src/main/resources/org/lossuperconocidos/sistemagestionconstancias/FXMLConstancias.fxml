@@ -20,5 +20,6 @@
       <RadioButton layoutX="214.0" layoutY="84.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$criteriosBusqueda" />
       <Button layoutX="693.0" layoutY="527.0" mnemonicParsing="false" styleClass="button-primary" text="Button" />
       <ListView fx:id="listaContancias" layoutX="60.0" layoutY="116.0" prefHeight="401.0" prefWidth="715.0" />
+      <Button layoutX="145.0" layoutY="527.0" mnemonicParsing="false" onAction="#clicBtnEjemplo" text="EJEMPLO DE CREAR UNA CONSTANCIA" />
    </children>
 </AnchorPane>
