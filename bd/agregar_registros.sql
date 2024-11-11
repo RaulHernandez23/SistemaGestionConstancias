@@ -38,6 +38,9 @@ INSERT INTO PARTICIPACION (`constatacion`, `fecha_inicio`, `fecha_fin`, `tipo_pa
                         ('El que suscribe, director de la Facultad de Estadística e Informática, de la Universidad Veracruzana HACE CONSTAR', '2024-10-10', '2024-10-19', 'Proyecto de campo', 2),
 						('El que suscribe, director de la Facultad de Estadística e Informática, de la Universidad Veracruzana HACE CONSTAR', '2024-10-10', '2024-10-19', 'Jurado', 2);
 
+INSERT INTO `PERIODO_ESCOLAR` (`fecha_inicio`, `fecha_fin`, `nombre`) VALUES
+    ('2024-01-01', '2024-06-30', 'Fe-Junio 2024'),
+    ('2024-07-01', '2024-12-31', 'Agosto-Diciembre 2024');
 
 INSERT INTO `PLADEA` (`id_participacion`, `acciones`, `eje_estrategico`, `metas`, `objetivos_generales`, `programa_estrategico`)
 VALUES
