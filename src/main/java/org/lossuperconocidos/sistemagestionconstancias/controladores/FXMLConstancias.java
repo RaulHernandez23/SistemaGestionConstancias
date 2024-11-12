@@ -10,10 +10,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.lossuperconocidos.sistemagestionconstancias.Inicio;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.ContanciaItem;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class FXMLConstancias implements Initializable {
@@ -29,39 +32,79 @@ public class FXMLConstancias implements Initializable {
     public ComboBox cbPeriodo;
     public RadioButton rbProyecto;
     private RadioButton lastSelectedRadioButton = null;
-
+    private Usuario usuario;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
 
     }
-    public void inicializar()
+    public void inicializar(Usuario usuario)
     {
+        this.usuario = usuario;
+        //TODO: falta el metodo de recuperar participaciones
+        recuperarParticipaciones();
+        //TODO:
+        // Lista de items que quieres cargar
+        List<ContanciaItem> items = Arrays.asList(
+                new ContanciaItem("FEB", "jurado"),
+                new ContanciaItem("JUN", "Pladea")
+        );
+        cargarParticipaciones(items);
+//        try {
+//            FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("FXMLConstanciasItem.fxml"));
+//            VBox anchorPane = fxmlLoader.load();
+//            FXMLConstanciaItem controller = fxmlLoader.getController();
+//
+//            controller.inicializarContanciaItem(new ContanciaItem("FEB", "jurado"));
+//
+//
+//            FXMLLoader fxmlLoader2 = new FXMLLoader(Inicio.class.getResource("FXMLConstanciasItem.fxml"));
+//            VBox anchorPane2 = fxmlLoader2.load() ;
+//            FXMLConstanciaItem controller2 = fxmlLoader.getController();
+//            controller2.inicializarContanciaItem(new ContanciaItem("Jun", "Pladea"));
+//
+//            ObservableList<VBox> dataList = FXCollections.observableArrayList(
+//                    anchorPane,
+//                    anchorPane2
+//            );
+//
+//            iniciarListView(dataList);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+        inicializarGrupoRadioBoton();
+        inicializarComboBox();
+    }
+
+    private void cargarParticipaciones(List<ContanciaItem> participaciones) {
+        ObservableList<VBox> dataList = FXCollections.observableArrayList();
+
+        for (ContanciaItem item : participaciones) {
+            VBox anchorPane = cargarConstanciaItem(item);
+            if (anchorPane != null) {
+                dataList.add(anchorPane);
+            }
+        }
+        iniciarListView(dataList);
+    }
+
+    private void recuperarParticipaciones() {
+        //TODO: Recuperar participaciones de BD
+    }
+
+    private VBox cargarConstanciaItem(ContanciaItem item) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("FXMLConstanciasItem.fxml"));
             VBox anchorPane = fxmlLoader.load();
             FXMLConstanciaItem controller = fxmlLoader.getController();
-
-            controller.inicializarContanciaItem(new ContanciaItem("FEB", "jurado"));
-
-
-            FXMLLoader fxmlLoader2 = new FXMLLoader(Inicio.class.getResource("FXMLConstanciasItem.fxml"));
-            VBox anchorPane2 = fxmlLoader2.load() ;
-            FXMLConstanciaItem controller2 = fxmlLoader.getController();
-            controller2.inicializarContanciaItem(new ContanciaItem("Jun", "Pladea"));
-
-            ObservableList<VBox> dataList = FXCollections.observableArrayList(
-                    anchorPane,
-                    anchorPane2
-            );
-
-            iniciarListView(dataList);
+            controller.inicializarContanciaItem(item);
+            return anchorPane;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error al cargar el item: " + item);
+            e.printStackTrace();
+            return null;
         }
-        inicializarGrupoRadioBoton();
-        inicializarComboBox();
     }
 
     private void inicializarComboBox() {

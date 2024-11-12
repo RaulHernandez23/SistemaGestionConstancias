@@ -26,8 +26,11 @@ public class UsuarioDAO {
         if (conexion != null) {
 
             try {
-
-                String consulta = "SELECT * FROM vista_usuarios WHERE no_personal = ? AND password = ?";
+                //TODO: La vista ya no tiene el password, verificar si la nueva implementacion esta bien
+                //String consulta = "SELECT * FROM vista_usuarios WHERE no_personal = ? AND password = ?";
+                String consulta = "SELECT v.*, u.password " +
+                        "FROM vista_usuarios v JOIN usuario u ON v.no_personal = u.no_personal " +
+                        "WHERE  u.no_personal = ? AND u.password = ?";
 
                 PreparedStatement sentencia = conexion.prepareStatement(consulta);
                 sentencia.setString(1, noPersonal);
