@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="60.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLConstanciaItem">
+      <Text text="Tipo:" />
+      <Label fx:id="lbTipo" text="{Tipo}" />
+      <Label text="Periodo: " />
+      <Label fx:id="lbPeriodo" text="{Periodo}" />
+   <padding>
+      <Insets bottom="5.0" top="5.0" />
+   </padding>
+</VBox>

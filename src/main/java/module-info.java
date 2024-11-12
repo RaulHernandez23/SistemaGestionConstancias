@@ -6,6 +6,9 @@ module org.lossuperconocidos.sistemagestionconstancias {
     requires org.kordamp.ikonli.javafx;
     requires java.desktop;
     requires java.sql;
+    requires atlantafx.base;
+    requires org.apache.poi.ooxml;
+    requires com.aspose.words;
 
     opens org.lossuperconocidos.sistemagestionconstancias to javafx.fxml;
     exports org.lossuperconocidos.sistemagestionconstancias;
