@@ -1,18 +1,6 @@
 package org.lossuperconocidos.sistemagestionconstancias.utilidades;
-//import com.aspose.words.Document;
-//import com.aspose.words.SaveFormat;
-//import org.apache.poi.xwpf.usermodel.XWPFDocument;
-//import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-//import org.apache.poi.xwpf.usermodel.XWPFRun;
-
-
-
-
 import com.aspose.words.*;
-
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -28,18 +16,18 @@ public class GeneradorConstancia {
     public static final String NOMBRE_ARCHIVO_JURADO = "Jurado.docx";
     public static final String NOMBRE_ARCHIVO_PLADEA = "PLADEA.docx";
     public static final String NOMBRE_ARCHIVO_IMPARTICIONEE = "ImparticionEE.docx";
-    public boolean crearContancia(String rutaDeLaPlantilla, String pathDestination) throws FileAlreadyExistsException {
+    public boolean crearContancia(String rutaDeLaPlantilla, String rutaDestinoSelecionada) throws FileAlreadyExistsException {
         try {
             selectTemplate();
             //TODO: Si tuvieron las plantillas en una carpeta especifica
             //String pathTemplate = Paths.get(pathDirectory, "Pantillas", NOMBRE_ARCHIVO_PROYECTO).toString();
             String nuevoArchivoNombre = "Mi_plantilla.docx";
 
-            String rutaArchivoDestination = Paths.get(pathDestination, nuevoArchivoNombre).toString();
+            String rutaArchivoDestination = Paths.get(rutaDestinoSelecionada, nuevoArchivoNombre).toString();
             Files.copy(Paths.get(rutaDeLaPlantilla), Paths.get(rutaArchivoDestination), StandardCopyOption.REPLACE_EXISTING);
             System.out.println("Ruta del Word: " + rutaDeLaPlantilla);
-            System.out.println("Ruta destino del PDF: " + pathDestination);
-            changeValuesWord(rutaArchivoDestination , pathDestination);
+            System.out.println("Ruta destino del PDF: " + rutaDestinoSelecionada);
+            changeValuesWord(rutaArchivoDestination , rutaDestinoSelecionada);
             return true;
         }catch (FileAlreadyExistsException  e){
             throw e;
@@ -73,44 +61,8 @@ public class GeneradorConstancia {
 //            for (Map.Entry<String, String> entry : tagValues.entrySet()) {
 //                document.getRange().replace(entry.getKey(), entry.getValue(), new com.aspose.words.FindReplaceOptions());
 //            }
-            //IMPLEMENTACION 1
-            // Reemplazar las etiquetas en el documento
-//            for (StructuredDocumentTag sdt : (Iterable<StructuredDocumentTag>) document.getChildNodes(NodeType.STRUCTURED_DOCUMENT_TAG, true)) {
-//                String tag = sdt.getTag(); // Obtener el tag del control estructurado
-//                if (tag != null && tagValues.containsKey(tag)) {
-//                    String value = tagValues.get(tag);
-//
-//                    // Obtener los nodos hijos del SDT
-//                    NodeCollection childNodes = sdt.getChildNodes(NodeType.ANY, false);
-//                    if (childNodes.getCount() > 0) {
-//                        Node sdtContentNode = childNodes.get(0); // Obtener el primer nodo hijo
-//                        if (sdtContentNode != null && sdtContentNode.isComposite()) {
-//                            CompositeNode sdtContent = (CompositeNode) sdtContentNode;
-//
-//                            // Eliminar todos los nodos hijos existentes en sdtContent
-//                            sdtContent.removeAllChildren();
-//
-//                            // Crear el nuevo contenido según el tipo de SDT
-//                            if (sdt.getSdtType() == SdtType.PLAIN_TEXT) {
-//                                // Para texto plano, agregar un Run directamente
-//                                Run run = new Run(document, value);
-//                                sdtContent.appendChild(run);
-//                            } else if (sdt.getSdtType() == SdtType.RICH_TEXT) {
-//                                // Para texto enriquecido, agregar un Paragraph con un Run
-//                                Paragraph para = new Paragraph(document);
-//                                Run run = new Run(document, value);
-//                                para.appendChild(run);
-//                                sdtContent.appendChild(para);
-//                            }
-//                            // Manejar otros tipos de SDT si es necesario
-//                        }
-//                    }
-//                }
-//            }
-
             // Crear una lista para almacenar todos los SDT encontrados
             List<StructuredDocumentTag> allSdts = new ArrayList<>();
-
             // Recorrer todas las secciones del documento
             for (Section section : document.getSections()) {
                 // Añadir SDT en el cuerpo de la sección
@@ -121,45 +73,6 @@ public class GeneradorConstancia {
                     allSdts.addAll(getAllSdtsInCompositeNode(headerFooter));
                 }
             }
-
-//            // Recorrer todos los SDT y reemplazar las etiquetas
-//            for (StructuredDocumentTag sdt : allSdts) {
-//                String tag = sdt.getTag();
-//
-//                // Registro de depuración
-//                System.out.println("Procesando SDT con etiqueta: '" + tag + "'");
-//
-//                if (tag != null && tagValues.containsKey(tag)) {
-//                    String value = tagValues.get(tag);
-//                    System.out.println("Reemplazando etiqueta '" + tag + "' con el valor: '" + value + "'");
-//
-//                    // Obtener todos los nodos Run dentro del SDT
-//                    NodeCollection runs = sdt.getChildNodes(NodeType.RUN, true);
-//
-//                    // Crear una lista separada de los nodos Run
-//                    List<Run> runList = new ArrayList<>();
-//
-//                    for (int i = 0; i < runs.getCount(); i++) {
-//                        runList.add((Run) runs.get(i));
-//                    }
-//
-//                    // Actualizar el texto de cada nodo Run
-//                    if (!runList.isEmpty()) {
-//                        for (Run run : runList) {
-//                            run.setText(value);
-//                        }
-//                    } else {
-//                        // Si no hay nodos Run, crear un nuevo párrafo con un Run
-//                        Paragraph para = new Paragraph(document);
-//                        Run run = new Run(document, value);
-//                        para.appendChild(run);
-//                        sdt.appendChild(para);
-//                    }
-//                } else {
-//                    System.out.println("No se encontró valor para la etiqueta: '" + tag + "'");
-//                }
-//            }
-
             // Recorrer todos los SDT y reemplazar las etiquetas
             for (StructuredDocumentTag sdt : allSdts) {
                 String tag = sdt.getTag();
@@ -192,12 +105,7 @@ public class GeneradorConstancia {
                     System.out.println("No se encontró valor para la etiqueta: '" + tag + "'");
                 }
             }
-
-
-            // Guardar el documento Word modificado
             document.save(pathWord);
-
-            // Convertir el documento Word modificado a PDF
             useAsposeWords(pathOutput, pathWord);
         }catch (FileNotFoundException e){
             throw e;
