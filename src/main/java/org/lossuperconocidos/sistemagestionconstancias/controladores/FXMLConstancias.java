@@ -7,17 +7,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.lossuperconocidos.sistemagestionconstancias.Inicio;
+import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
+import org.lossuperconocidos.sistemagestionconstancias.daos.PeriodoEscolarDAO;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.ParticipacionCorregido;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.PeriodoEscolar;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.ContanciaItem;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class FXMLConstancias implements Initializable {
 
@@ -29,7 +31,7 @@ public class FXMLConstancias implements Initializable {
     public RadioButton rdImparticion;
     public RadioButton rdPladea;
     public RadioButton rbJurado;
-    public ComboBox cbPeriodo;
+    public ComboBox<PeriodoEscolar> cbPeriodo;
     public RadioButton rbProyecto;
     private RadioButton lastSelectedRadioButton = null;
     private Usuario usuario;
@@ -42,42 +44,16 @@ public class FXMLConstancias implements Initializable {
     public void inicializar(Usuario usuario)
     {
         this.usuario = usuario;
-        //TODO: falta el metodo de recuperar participaciones
-        recuperarParticipaciones();
-        //TODO:
-        // Lista de items que quieres cargar
-        List<ContanciaItem> items = Arrays.asList(
-                new ContanciaItem("FEB", "jurado"),
-                new ContanciaItem("JUN", "Pladea")
-        );
-        cargarParticipaciones(items);
-//        try {
-//            FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("FXMLConstanciasItem.fxml"));
-//            VBox anchorPane = fxmlLoader.load();
-//            FXMLConstanciaItem controller = fxmlLoader.getController();
-//
-//            controller.inicializarContanciaItem(new ContanciaItem("FEB", "jurado"));
-//
-//
-//            FXMLLoader fxmlLoader2 = new FXMLLoader(Inicio.class.getResource("FXMLConstanciasItem.fxml"));
-//            VBox anchorPane2 = fxmlLoader2.load() ;
-//            FXMLConstanciaItem controller2 = fxmlLoader.getController();
-//            controller2.inicializarContanciaItem(new ContanciaItem("Jun", "Pladea"));
-//
-//            ObservableList<VBox> dataList = FXCollections.observableArrayList(
-//                    anchorPane,
-//                    anchorPane2
-//            );
-//
-//            iniciarListView(dataList);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        cargarParticipaciones(recuperarParticipaciones());
         inicializarGrupoRadioBoton();
         inicializarComboBox();
     }
 
     private void cargarParticipaciones(List<ContanciaItem> participaciones) {
+        if (participaciones == null || participaciones.isEmpty()){
+            Alertas.mostrarAlertaInformacion("No se encontraron participaciones", "Por el momento tu usuario no tiene participaciones");
+            return;
+        }
         ObservableList<VBox> dataList = FXCollections.observableArrayList();
 
         for (ContanciaItem item : participaciones) {
@@ -89,8 +65,31 @@ public class FXMLConstancias implements Initializable {
         iniciarListView(dataList);
     }
 
-    private void recuperarParticipaciones() {
-        //TODO: Recuperar participaciones de BD
+    private List<ContanciaItem> recuperarParticipaciones() {
+        List<ContanciaItem> resultado;
+        try {
+            HashMap<String, Object> resultadoConsulta = ParticipacionDAO.recuperarParticipacionPorNoPerosnal(usuario.getNo_personal());
+            if (resultadoConsulta == null || (boolean)resultadoConsulta.get(ParticipacionDAO.ERROR_KEY)) {
+                throw new Exception("No se puede recuperar la participacion");
+            }
+            ArrayList<ParticipacionCorregido> participaciones= (ArrayList<ParticipacionCorregido>) resultadoConsulta.get(ParticipacionDAO.PARTICIPACIONES_KEY);
+
+            if (participaciones != null && !participaciones.isEmpty()) {
+                resultado = new ArrayList<>();
+                participaciones.forEach(participacion -> {
+                    ContanciaItem itemDeLista = new ContanciaItem(
+                            participacion.getPeriodoEscolarNombre(),
+                            participacion.getTipoParticipacion()
+                    );
+                    resultado.add(itemDeLista);
+                });
+                return  resultado;
+            }
+        } catch (Exception e) {
+            System.err.println("Error al recuperar las participaciones: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private VBox cargarConstanciaItem(ContanciaItem item) {
@@ -108,11 +107,23 @@ public class FXMLConstancias implements Initializable {
     }
 
     private void inicializarComboBox() {
-        cbPeriodo.getItems().addAll(
-                "FEB-JUN 2024", "AGOS-DIC 2024",
-                "FEB-JUN 2025", "AGOS-DIC 2025"
-                //TODO: Agregar más períodos según sea necesario en base a la BD
-        );
+        try {
+            HashMap<String, Object> resultadoConsulta = PeriodoEscolarDAO.recuperarPeriodosEscolares();
+            if (resultadoConsulta == null || (boolean)resultadoConsulta.get(ParticipacionDAO.ERROR_KEY)) {
+                throw new Exception("No se puede recuperar la participacion");
+            }
+            List<PeriodoEscolar> periodos = (List<PeriodoEscolar>) resultadoConsulta.get(PeriodoEscolarDAO.PERIODOS_KEY);
+            if (periodos != null && !periodos.isEmpty()) {
+                cbPeriodo.getItems().addAll(periodos);
+            } else {
+                throw new Exception("La lista de periodos escolares está vacía");
+            }
+        }catch (Exception e){
+            System.err.println("Error al inicializar el ComboBox de periodos escolares: " + e.getMessage());
+            e.printStackTrace();
+            Alertas.mostrarAlertaError("Error al cargar periodos", "No se pudo cargar la lista de periodos escolares.");
+
+        }
     }
 
     private void inicializarGrupoRadioBoton() {

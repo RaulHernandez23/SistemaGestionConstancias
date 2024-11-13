@@ -14,6 +14,7 @@ public class DocenteDAO {
     public static final String ERROR_KEY = "error";
     public static final String MESSAGE_KEY = "mensaje";
     public static HashMap<String, Object> registrarDocente(Usuario docente) {
+        validarUsuario(docente);
         HashMap<String, Object> respuesta = new HashMap<>();
         respuesta.put(ERROR_KEY, true);
 
@@ -23,7 +24,7 @@ public class DocenteDAO {
             try {
                 // Desactiva el auto-commit para gestionar la transacción
                 conexionBD.setAutoCommit(false);
-
+                //FIXME: java.sql.SQLSyntaxErrorException: Unknown column 'id_tipo_usuario' in 'field list'
                 String consulta = "INSERT INTO USUARIO (no_personal, nombre, apellido_paterno, apellido_materno," +
                         " correo_electronico, password, id_tipo_usuario, id_categoria, id_tipo_contratacion) " +
                         "VALUES (?, ?, ?, ?, ?, ?, 2, ?, ?) " +
@@ -107,5 +108,19 @@ public class DocenteDAO {
         }
 
         return respuesta;
+    }
+    private static void validarUsuario(Usuario usuario) {
+        if (usuario == null) {
+            throw new IllegalArgumentException("El usuario proporcionado no puede ser nulo.");
+        }
+
+        if (usuario.getNo_personal() == null || usuario.getNo_personal().isEmpty() ||
+                usuario.getNombre() == null || usuario.getNombre().isEmpty() ||
+                usuario.getApellidoPaterno() == null || usuario.getApellidoPaterno().isEmpty() ||
+                usuario.getApellidoMaterno() == null || usuario.getApellidoMaterno().isEmpty() ||
+                usuario.getCorreoElectronico() == null || usuario.getCorreoElectronico().isEmpty() ||
+                usuario.getContrasena() == null || usuario.getContrasena().isEmpty()) {
+            throw new IllegalArgumentException("El usuario contiene campos vacíos obligatorios.");
+        }
     }
 }

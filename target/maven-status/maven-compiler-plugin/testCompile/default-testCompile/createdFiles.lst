@@ -1,3 +1,4 @@
-org\lossuperconocidos\Clase2.class
-org\lossuperconocidos\tests.class
-org\lossuperconocidos\Participacion_test.class
+org\lossuperconocidos\ParticipacionDAO_test.class
+org\lossuperconocidos\DocenteDAO_test.class
+org\lossuperconocidos\UtilidadTest.class
+org\lossuperconocidos\UsuarioDAO_test.class

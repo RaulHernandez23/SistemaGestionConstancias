@@ -1,7 +1,7 @@
 package org.lossuperconocidos.sistemagestionconstancias.modelos;
 
 import java.util.Date;
-
+//FIXME: Actualizar acorde a la nueva BD o escoger la correcion ya hecha
 public class Participacion {
 
     private String constatacion;
