@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.lossuperconocidos.sistemagestionconstancias.Inicio;
 import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.PeriodoEscolarDAO;
@@ -16,9 +17,12 @@ import org.lossuperconocidos.sistemagestionconstancias.modelos.PeriodoEscolar;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.ContanciaItem;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.GeneradorConstancia;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.VentanasEmergentes;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.*;
 
 public class FXMLConstancias implements Initializable {
@@ -158,7 +162,15 @@ public class FXMLConstancias implements Initializable {
 
 
     public void clicBtnEjemplo(ActionEvent actionEvent) {
-
+        //String rutaDestino = VentanasEmergentes.openDirectoryChooser((Stage) listaContancias.getScene().getWindow(), "Ruta destino");
+        //String rutaDeLaPlantilla = VentanasEmergentes.openFileChooser((Stage) listaContancias.getScene().getWindow(), "Ruta de la plantilla");
+        GeneradorConstancia generadorConstancia = new GeneradorConstancia();
+        try {
+            //generadorConstancia.crearContancia(rutaDeLaPlantilla,rutaDestino);
+            generadorConstancia.crearContancia("E:\\JavaUV\\PDS\\SistemaGestionConstancias\\src\\main\\java\\org\\lossuperconocidos\\sistemagestionconstancias\\utilidades\\plantillas\\Proyecto.docx","C:\\Users\\USER\\Downloads\\ConstanciasPlantillas\\Ejemplo");
+        } catch (FileAlreadyExistsException e) {
+            Alertas.mostrarAlertaAdvertencia("Nombre duplicado", "Archivo con el mismo nombre");
+        }
     }
 
     private void agregarDeselecionAccion(RadioButton radioButton) {
