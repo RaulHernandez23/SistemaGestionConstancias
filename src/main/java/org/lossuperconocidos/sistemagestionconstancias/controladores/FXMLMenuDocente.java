@@ -2,16 +2,22 @@ package org.lossuperconocidos.sistemagestionconstancias.controladores;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.lossuperconocidos.sistemagestionconstancias.Inicio;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Utilidades;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -42,7 +48,23 @@ public class FXMLMenuDocente implements Initializable {
 
     @FXML
     void clicConsultarHistorial(ActionEvent event) {
-        System.out.println("botón consultar historial");
+        Stage escenario = (Stage) lblNombreUsuario.getScene().getWindow();
+        try {
+            escenario.hide();
+            FXMLLoader loader = new FXMLLoader(Inicio.class.getResource("FXMLConstancias.fxml"));
+            Parent root = loader.load();
+            FXMLConstancias controlador = loader.getController();
+            controlador.inicializar(usuario);
+            Stage nuevoEscenario = new Stage();
+            nuevoEscenario.setScene(new Scene(root));
+            nuevoEscenario.setTitle("Colaboraciones activas profesor");
+            nuevoEscenario.initModality(Modality.APPLICATION_MODAL);
+            nuevoEscenario.showAndWait();
+            escenario.show();
+        } catch (IOException e) {
+            escenario.show();
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

@@ -15,6 +15,8 @@ import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Utilidades;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class FXMLLogIn
@@ -28,7 +30,7 @@ public class FXMLLogIn
     private Button btnEntrar;
 
     Alertas alerta = new Alertas();
-
+    private static final String SEPARADOR_TIPO_USUARIO = ",";
     @javafx.fxml.FXML
     public void initialize() {
 
@@ -78,18 +80,35 @@ public class FXMLLogIn
         });
     }
 
+    //FIXME: Tipo usuario ahora es un string con los distintos tipos separador por ','
     private void cargarMenuPrincipal(Usuario usuario) {
-        if (usuario.getTipoUsuario().equals("Administrador")) {
-            // Cargar menú principal de administrador
-            System.out.println("Menu principal de administrador");
-        }
-        if (usuario.getTipoUsuario().equals("Docente")) {
+        ArrayList<String> privilegios = separaTiposUsuarios(usuario.getTipoUsuario());
+        if (privilegios.isEmpty()) throw new RuntimeException("No tiene tipo de usuario");
+
+//        if (usuario.getTipoUsuario().equals("Administrador")) {
+//            // Cargar menú principal de administrador
+//            System.out.println("Menu principal de administrador");
+//        }
+        if (privilegios.contains("Docente")) {
             inicializarmenuDocente(usuario);
         }
-        if (usuario.getTipoUsuario().equals("Personal administrativo")) {
-            // Cargar menú principal de personal administrativo
-            System.out.println("Menu principal de personal administrativo");
+//        if (usuario.getTipoUsuario().equals("Personal administrativo")) {
+//            // Cargar menú principal de personal administrativo
+//            System.out.println("Menu principal de personal administrativo");
+//        }
+    }
+    private ArrayList<String> separaTiposUsuarios(String tipoUsuario){
+        ArrayList<String> tipoUsuarioList = new ArrayList<>();
+        if (tipoUsuario == null || tipoUsuario.isEmpty()) {
+            return tipoUsuarioList;
         }
+        if (tipoUsuario.contains(SEPARADOR_TIPO_USUARIO)) {
+            tipoUsuarioList = new ArrayList<>(Arrays.asList(tipoUsuario.split(SEPARADOR_TIPO_USUARIO)));
+        } else {
+            tipoUsuarioList = new ArrayList<>();
+            tipoUsuarioList.add(tipoUsuario);
+        }
+        return tipoUsuarioList;
     }
 
     private void inicializarmenuDocente(Usuario usuario) {

@@ -14,20 +14,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UsuarioDAO {
+    public static final String ERROR_KEY = "error";
+    public static final String MESSAGE_KEY = "mensaje";
+    public static final String USER_KEY = "usuario";
+    public static final String CATEGORIES_KEY = "categorias";
+    public static final String CONTRACT_TYPES_KEY = "tiposContratacion";
 
-    public static HashMap<String, Object> iniciarSesion (String noPersonal, String contrasena) {
-
+    public static HashMap<String, Object> iniciarSesion(String noPersonal, String contrasena) {
         HashMap<String, Object> respuesta = new HashMap<>();
-
-        respuesta.put("error", true);
+        respuesta.put(ERROR_KEY, true);
 
         Connection conexion = ConectorBD.obtenerConexion();
 
         if (conexion != null) {
-
             try {
-
-                String consulta = "SELECT * FROM vista_usuarios WHERE no_personal = ? AND password = ?";
+                // TODO: La vista ya no tiene el password, verificar si la nueva implementación está bien
+                String consulta = "SELECT v.*, u.password " +
+                        "FROM vista_usuarios v JOIN usuario u ON v.no_personal = u.no_personal " +
+                        "WHERE u.no_personal = ? AND u.password = ?";
 
                 PreparedStatement sentencia = conexion.prepareStatement(consulta);
                 sentencia.setString(1, noPersonal);
@@ -35,10 +39,8 @@ public class UsuarioDAO {
 
                 ResultSet resultadoConsulta = sentencia.executeQuery();
 
-                if(resultadoConsulta.next()) {
-
+                if (resultadoConsulta.next()) {
                     Usuario usuario = new Usuario();
-
                     usuario.setNo_personal(resultadoConsulta.getString("no_personal"));
                     usuario.setNombre(resultadoConsulta.getString("nombre"));
                     usuario.setApellidoPaterno(resultadoConsulta.getString("apellido_paterno"));
@@ -48,19 +50,19 @@ public class UsuarioDAO {
                     usuario.setCategoria(resultadoConsulta.getString("categoria"));
                     usuario.setTipoContratacion(resultadoConsulta.getString("tipo_contratacion"));
 
-                    respuesta.put("error", false);
-                    respuesta.put("mensaje", "Inicio de sesión exitoso");
-                    respuesta.put("usuario", usuario);
+                    respuesta.put(ERROR_KEY, false);
+                    respuesta.put(MESSAGE_KEY, "Inicio de sesión exitoso");
+                    respuesta.put(USER_KEY, usuario);
                 } else {
-                    respuesta.put("mensaje", "Usuario y/o contraseña incorrectos. Por favor, verifique sus datos");
+                    respuesta.put(MESSAGE_KEY, "Usuario y/o contraseña incorrectos. Por favor, verifique sus datos");
                 }
-            } catch (SQLException sqlEx){
-                respuesta.put("mensaje", "Error: " + sqlEx.getMessage());
+            } catch (SQLException sqlEx) {
+                respuesta.put(MESSAGE_KEY, "Error: " + sqlEx.getMessage());
             } finally {
                 ConectorBD.cerrarConexion(conexion);
             }
         } else {
-            respuesta.put("mensaje", "No se pudo conectar a la red, por favor revise su conexión");
+            respuesta.put(MESSAGE_KEY, "No se pudo conectar a la red, por favor revise su conexión");
         }
 
         return respuesta;
@@ -68,7 +70,7 @@ public class UsuarioDAO {
 
     public static HashMap<String, Object> consultarCategorias() {
         HashMap<String, Object> respuesta = new HashMap<>();
-        respuesta.put("error", true);
+        respuesta.put(ERROR_KEY, true);
         Connection conexionBD = ConectorBD.obtenerConexion();
 
         if (conexionBD != null) {
@@ -86,24 +88,24 @@ public class UsuarioDAO {
                     categorias.add(categoria);
                 }
 
-                respuesta.put("error", false);
-                respuesta.put("categorias", categorias);
+                respuesta.put(ERROR_KEY, false);
+                respuesta.put(CATEGORIES_KEY, categorias);
 
             } catch (SQLException se) {
-                respuesta.put("mensaje", Constantes.MENSAJE_ERROR_REGISTRO);
+                respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_REGISTRO);
                 se.printStackTrace();
             } finally {
                 ConectorBD.cerrarConexion(conexionBD);
             }
         } else {
-            respuesta.put("mensaje", Constantes.MENSAJE_ERROR_REGISTRO);
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_REGISTRO);
         }
         return respuesta;
     }
 
     public static HashMap<String, Object> consultarTiposContratacion() {
         HashMap<String, Object> respuesta = new HashMap<>();
-        respuesta.put("error", true);
+        respuesta.put(ERROR_KEY, true);
         Connection conexionBD = ConectorBD.obtenerConexion();
 
         if (conexionBD != null) {
@@ -121,16 +123,16 @@ public class UsuarioDAO {
                     tiposContratacion.add(tipoContratacion);
                 }
 
-                respuesta.put("error", false);
-                respuesta.put("tiposContratacion", tiposContratacion);
+                respuesta.put(ERROR_KEY, false);
+                respuesta.put(CONTRACT_TYPES_KEY, tiposContratacion);
 
             } catch (SQLException se) {
-                respuesta.put("mensaje", Constantes.MENSAJE_ERROR_REGISTRO);
+                respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_REGISTRO);
             } finally {
                 ConectorBD.cerrarConexion(conexionBD);
             }
         } else {
-            respuesta.put("mensaje", Constantes.MENSAJE_ERROR_REGISTRO);
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_REGISTRO);
         }
 
         return respuesta;

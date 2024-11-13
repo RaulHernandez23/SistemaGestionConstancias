@@ -11,9 +11,12 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class DocenteDAO {
+    public static final String ERROR_KEY = "error";
+    public static final String MESSAGE_KEY = "mensaje";
     public static HashMap<String, Object> registrarDocente(Usuario docente) {
+        validarUsuario(docente);
         HashMap<String, Object> respuesta = new HashMap<>();
-        respuesta.put("error", true);
+        respuesta.put(ERROR_KEY, true);
 
         Connection conexionBD = ConectorBD.obtenerConexion();
 
@@ -21,7 +24,7 @@ public class DocenteDAO {
             try {
                 // Desactiva el auto-commit para gestionar la transacción
                 conexionBD.setAutoCommit(false);
-
+                //FIXME: java.sql.SQLSyntaxErrorException: Unknown column 'id_tipo_usuario' in 'field list'
                 String consulta = "INSERT INTO USUARIO (no_personal, nombre, apellido_paterno, apellido_materno," +
                         " correo_electronico, password, id_tipo_usuario, id_categoria, id_tipo_contratacion) " +
                         "VALUES (?, ?, ?, ?, ?, ?, 2, ?, ?) " +
@@ -49,12 +52,12 @@ public class DocenteDAO {
 
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
-                    respuesta.put("error", false);
-                    respuesta.put("mensaje", "La información del docente " + docente.getNombre()
+                    respuesta.put(ERROR_KEY, false);
+                    respuesta.put(MESSAGE_KEY, "La información del docente " + docente.getNombre()
                             + " se ha registrado correctamente.");
                 } else {
                     conexionBD.rollback();
-                    respuesta.put("mensaje", "No se pudo registrar el docente.");
+                    respuesta.put(MESSAGE_KEY, "No se pudo registrar el docente.");
                 }
 
             } catch (SQLException e) {
@@ -63,13 +66,13 @@ public class DocenteDAO {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                respuesta.put("mensaje", "Error en la operación de registro");
+                respuesta.put(MESSAGE_KEY, "Error en la operación de registro");
                 e.printStackTrace();
             } finally {
                 ConectorBD.cerrarConexion(conexionBD);
             }
         } else {
-            respuesta.put("mensaje", Constantes.MENSAJE_ERROR_DE_CONEXION);
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
         }
 
         return respuesta;
@@ -77,7 +80,7 @@ public class DocenteDAO {
 
     public static HashMap<String, Object> verificarDocente(String noPersonal) {
         HashMap<String, Object> respuesta = new HashMap<>();
-        respuesta.put("error", true);
+        respuesta.put(ERROR_KEY, true);
 
         Connection conexion = ConectorBD.obtenerConexion();
 
@@ -90,20 +93,34 @@ public class DocenteDAO {
                 ResultSet resultadoConsulta = sentencia.executeQuery();
 
                 if (resultadoConsulta.next()) {
-                    respuesta.put("mensaje", "El docente ya se encuentra registrado.");
+                    respuesta.put(MESSAGE_KEY, "El docente ya se encuentra registrado.");
                 } else {
-                    respuesta.put("error", false);
-                    respuesta.put("mensaje", "El usuario no está registrado.");
+                    respuesta.put(ERROR_KEY, false);
+                    respuesta.put(MESSAGE_KEY, "El usuario no está registrado.");
                 }
             } catch (SQLException sqlEx) {
-                respuesta.put("mensaje", "Error: " + sqlEx.getMessage());
+                respuesta.put(MESSAGE_KEY, "Error: " + sqlEx.getMessage());
             } finally {
                 ConectorBD.cerrarConexion(conexion);
             }
         } else {
-            respuesta.put("mensaje", Constantes.MENSAJE_ERROR_DE_CONEXION);
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
         }
 
         return respuesta;
+    }
+    private static void validarUsuario(Usuario usuario) {
+        if (usuario == null) {
+            throw new IllegalArgumentException("El usuario proporcionado no puede ser nulo.");
+        }
+
+        if (usuario.getNo_personal() == null || usuario.getNo_personal().isEmpty() ||
+                usuario.getNombre() == null || usuario.getNombre().isEmpty() ||
+                usuario.getApellidoPaterno() == null || usuario.getApellidoPaterno().isEmpty() ||
+                usuario.getApellidoMaterno() == null || usuario.getApellidoMaterno().isEmpty() ||
+                usuario.getCorreoElectronico() == null || usuario.getCorreoElectronico().isEmpty() ||
+                usuario.getContrasena() == null || usuario.getContrasena().isEmpty()) {
+            throw new IllegalArgumentException("El usuario contiene campos vacíos obligatorios.");
+        }
     }
 }
