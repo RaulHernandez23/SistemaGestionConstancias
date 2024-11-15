@@ -58,7 +58,6 @@ public class FXMLLogIn
         } else {
 
             Usuario usuario = (Usuario) respuesta.get("usuario");
-            alerta.mostrarAlertaInformacion("Éxito", respuesta.get("mensaje").toString());
             cargarMenuPrincipal(usuario);
 
         }
