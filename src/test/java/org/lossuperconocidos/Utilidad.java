@@ -3,7 +3,7 @@ package org.lossuperconocidos;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import com.github.javafaker.Faker;
 
-public class UtilidadTest {
+public class Utilidad {
     public static Usuario generarDocenteAleatorio() {
         Faker faker = new Faker(); // Crear instancia de Faker
         Usuario docente = new Usuario();

@@ -19,9 +19,13 @@ import org.lossuperconocidos.sistemagestionconstancias.utilidades.Utilidades;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class FXMLMenuDocente implements Initializable {
+    public BorderPane bpSolicitarConstancia;
+    public BorderPane bpHistorialConstancia;
     @FXML
     private BorderPane bpRegistrarDocente;
 
@@ -35,6 +39,7 @@ public class FXMLMenuDocente implements Initializable {
     private Label lblNombreUsuario;
 
     Usuario usuario;
+    private static final String SEPARADOR_TIPO_USUARIO = ",";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -97,6 +102,32 @@ public class FXMLMenuDocente implements Initializable {
                 + usuario.getNombre() + " "
                 + usuario.getApellidoPaterno() + " "
                 + usuario.getApellidoMaterno());
+        mostrarMenuCorrespondinete();
+    }
+
+    private void mostrarMenuCorrespondinete() {
+        ArrayList<String> privilegios = separaTiposUsuarios(usuario.getTipoUsuario());
+        bpHistorialConstancia.visibleProperty().set(false);
+        bpRegistrarDocente.visibleProperty().set(false);
+        bpSolicitarConstancia.visibleProperty().set(false);
+        bpRegistrarParticipacion.visibleProperty().set(false);
+        for (String privilegio : privilegios) {
+            if (privilegio.contains("ocente")) {
+                bpHistorialConstancia.visibleProperty().set(true);
+                bpSolicitarConstancia.visibleProperty().set(true);
+            }
+            if (privilegio.contains("ersona")){
+                bpHistorialConstancia.visibleProperty().set(true);
+                bpRegistrarDocente.visibleProperty().set(true);
+                bpRegistrarParticipacion.visibleProperty().set(true);
+            }
+            if (privilegio.contains("dministrador")){
+                bpHistorialConstancia.visibleProperty().set(true);
+                bpRegistrarDocente.visibleProperty().set(true);
+                bpSolicitarConstancia.visibleProperty().set(true);
+                bpRegistrarParticipacion.visibleProperty().set(true);
+            }
+        }
     }
 
     public void hoverInSalir(javafx.scene.input.MouseEvent mouseEvent) {
@@ -110,5 +141,17 @@ public class FXMLMenuDocente implements Initializable {
                 getClass().getResource("/imagenes/logoSalir.png").toExternalForm()
         ));
     }
-
+    private ArrayList<String> separaTiposUsuarios(String tipoUsuario){
+        ArrayList<String> tipoUsuarioList = new ArrayList<>();
+        if (tipoUsuario == null || tipoUsuario.isEmpty()) {
+            return tipoUsuarioList;
+        }
+        if (tipoUsuario.contains(SEPARADOR_TIPO_USUARIO)) {
+            tipoUsuarioList = new ArrayList<>(Arrays.asList(tipoUsuario.split(SEPARADOR_TIPO_USUARIO)));
+        } else {
+            tipoUsuarioList = new ArrayList<>();
+            tipoUsuarioList.add(tipoUsuario);
+        }
+        return tipoUsuarioList;
+    }
 }

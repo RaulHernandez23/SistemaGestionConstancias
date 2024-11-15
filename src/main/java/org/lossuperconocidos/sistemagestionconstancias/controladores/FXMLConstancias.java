@@ -39,6 +39,8 @@ public class FXMLConstancias implements Initializable {
     public RadioButton rbProyecto;
     private RadioButton lastSelectedRadioButton = null;
     private Usuario usuario;
+    private List<ContanciaItem> participacionesOriginales;
+    private PeriodoEscolar periodoSeleccionado;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -48,10 +50,12 @@ public class FXMLConstancias implements Initializable {
     public void inicializar(Usuario usuario)
     {
         this.usuario = usuario;
-        cargarParticipaciones(recuperarParticipaciones());
+        participacionesOriginales = recuperarParticipaciones();
+        cargarParticipaciones(participacionesOriginales);
         inicializarGrupoRadioBoton();
         inicializarComboBox();
     }
+
 
     private void cargarParticipaciones(List<ContanciaItem> participaciones) {
         if (participaciones == null || participaciones.isEmpty()){
@@ -118,7 +122,13 @@ public class FXMLConstancias implements Initializable {
             }
             List<PeriodoEscolar> periodos = (List<PeriodoEscolar>) resultadoConsulta.get(PeriodoEscolarDAO.PERIODOS_KEY);
             if (periodos != null && !periodos.isEmpty()) {
+
                 cbPeriodo.getItems().addAll(periodos);
+                // Listener para cambios en el ComboBox
+                cbPeriodo.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    periodoSeleccionado = newValue;
+                    aplicarFiltros();
+                });
             } else {
                 throw new Exception("La lista de periodos escolares está vacía");
             }
@@ -135,6 +145,44 @@ public class FXMLConstancias implements Initializable {
         agregarDeselecionAccion(rdImparticion);
         agregarDeselecionAccion(rdPladea);
         agregarDeselecionAccion(rbProyecto);
+        rdImparticion.setOnAction(event -> aplicarFiltros());
+        rdPladea.setOnAction(event -> aplicarFiltros());
+        rbJurado.setOnAction(event -> aplicarFiltros());
+        rbProyecto.setOnAction(event -> aplicarFiltros());
+
+        criteriosBusqueda.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                cargarParticipaciones(participacionesOriginales);
+            }
+        });
+    }
+
+    private void aplicarFiltros() {
+        if (participacionesOriginales == null || participacionesOriginales.isEmpty()) {
+            return;
+        }
+        String criterioTipo = null;
+        if (rdImparticion.isSelected()) {
+            criterioTipo = "mpartici";
+        } else if (rdPladea.isSelected()) {
+            criterioTipo = "ladea";
+        } else if (rbJurado.isSelected()) {
+            criterioTipo = "urado";
+        } else if (rbProyecto.isSelected()) {
+            criterioTipo = "royect";
+        }
+
+        List<ContanciaItem> filtradas = new ArrayList<>();
+        for (ContanciaItem item : participacionesOriginales) {
+            boolean coincideTipo = (criterioTipo == null) || item.getTipo().contains(criterioTipo);
+            boolean coincidePeriodo = (periodoSeleccionado == null) || item.getPeriodo().equalsIgnoreCase(periodoSeleccionado.getNombre());
+
+            if (coincideTipo && coincidePeriodo) {
+                filtradas.add(item);
+            }
+        }
+
+        cargarParticipaciones(filtradas);
     }
 
 
