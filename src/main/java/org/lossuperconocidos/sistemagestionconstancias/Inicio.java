@@ -13,7 +13,7 @@ public class Inicio extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
-        FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("FXMLLogin.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("FXMLRegistrarDocente.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
