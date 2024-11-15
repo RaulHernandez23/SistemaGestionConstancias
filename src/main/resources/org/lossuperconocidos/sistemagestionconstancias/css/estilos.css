@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "Roboto Black";
+    src: url("../fuentes/Roboto-Black.ttf");
+}
+
+.root {
+    -fx-font-family: "Roboto Black", sans-serif;
+    font-family: "Roboto Black", sans-serif;
+}
