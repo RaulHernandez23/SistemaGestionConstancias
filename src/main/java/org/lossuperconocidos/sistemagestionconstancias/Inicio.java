@@ -12,9 +12,7 @@ import java.io.IOException;
 public class Inicio extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        //TODO:Considerar este tipo de temas
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
-
         FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("FXMLLogin.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);

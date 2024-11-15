@@ -7,7 +7,7 @@ import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 
 import java.util.HashMap;
 
-//TODO: LOS METODOS QUE HAYA EN DAO Y MODELS
+//TODO:PROBAR LOS METODOS QUE HAYA EN DAO Y MODELS
 public class DocenteDAO_test {
 
     //#region registrarDocente
@@ -39,7 +39,7 @@ public class DocenteDAO_test {
     @Test
     void registrarDocente_DocenteAleatorio() {
         // Arrange
-        Usuario docente = UtilidadTest.generarDocenteAleatorio();
+        Usuario docente = Utilidad.generarDocenteAleatorio();
 
         // Actúa
         HashMap<String, Object> resultado = DocenteDAO.registrarDocente(docente);
@@ -52,7 +52,7 @@ public class DocenteDAO_test {
     @Test
     void registrarDocente_RegistroDuplicado() {
         // Arrange
-        Usuario docente = UtilidadTest.generarDocenteAleatorio();
+        Usuario docente = Utilidad.generarDocenteAleatorio();
         DocenteDAO.registrarDocente(docente); // Primer registro
 
         // Actúa

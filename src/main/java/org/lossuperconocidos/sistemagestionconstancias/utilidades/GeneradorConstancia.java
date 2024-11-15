@@ -6,28 +6,19 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.List;
 
 public class GeneradorConstancia {
-    public static final String NOMBRE_ARCHIVO_PROYECTO = "Proyecto.docx";
-    public static final String NOMBRE_ARCHIVO_JURADO = "Jurado.docx";
-    public static final String NOMBRE_ARCHIVO_PLADEA = "PLADEA.docx";
-    public static final String NOMBRE_ARCHIVO_IMPARTICIONEE = "ImparticionEE.docx";
-    public boolean crearContancia(String rutaDeLaPlantilla, String rutaDestinoSelecionada) throws FileAlreadyExistsException {
+    public boolean crearContancia(String rutaDeLaPlantilla, String rutaDestinoSelecionada, Plantilla plantilla) throws FileAlreadyExistsException {
         try {
             selectTemplate();
             //TODO: Si tuvieron las plantillas en una carpeta especifica
             //String pathTemplate = Paths.get(pathDirectory, "Pantillas", NOMBRE_ARCHIVO_PROYECTO).toString();
             String nuevoArchivoNombre = "Mi_plantilla.docx";
-
             String rutaArchivoDestination = Paths.get(rutaDestinoSelecionada, nuevoArchivoNombre).toString();
             Files.copy(Paths.get(rutaDeLaPlantilla), Paths.get(rutaArchivoDestination), StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("Ruta del Word: " + rutaDeLaPlantilla);
-            System.out.println("Ruta destino del PDF: " + rutaDestinoSelecionada);
-            changeValuesWord(rutaArchivoDestination , rutaDestinoSelecionada);
+            changeValuesWord(rutaArchivoDestination , rutaDestinoSelecionada, plantilla);
             return true;
         }catch (FileAlreadyExistsException  e){
             throw e;
@@ -40,27 +31,16 @@ public class GeneradorConstancia {
         return false;
     }
 
-    private static boolean changeValuesWord(String pathWord, String pathOutput) throws FileNotFoundException {
+    private static boolean changeValuesWord(String pathWord, String pathOutput, Plantilla plantilla) throws FileNotFoundException {
         if (pathWord == null) {
             return false;
         }
 
         try {
-            // Cargar el documento con Aspose.Words
             Document document = new Document(pathWord);
 
-            // Diccionario con las etiquetas y sus valores
-            Map<String, String> tagValues = new HashMap<>();
-            tagValues.put("NombreDirector", "Juan Pérez");
-            tagValues.put("NombreAcademico", "Nombre");
-            tagValues.put("Duracion", "01/01/2024 - 199aa9");
-            tagValues.put("ProyectoRealizado", "proyec realizadoooo");
-            tagValues.put("Lugar", "Aquiii");
-            //IMPLEMENTACION LA MAS FACIL Y RAPIDA
-//            // Reemplazar las etiquetas en el documento
-//            for (Map.Entry<String, String> entry : tagValues.entrySet()) {
-//                document.getRange().replace(entry.getKey(), entry.getValue(), new com.aspose.words.FindReplaceOptions());
-//            }
+            Map<String, String> tagValues = plantilla.getValores();
+
             // Crear una lista para almacenar todos los SDT encontrados
             List<StructuredDocumentTag> allSdts = new ArrayList<>();
             // Recorrer todas las secciones del documento
@@ -135,10 +115,8 @@ public class GeneradorConstancia {
         // TODO: Implementar lógica de selección de plantilla si es necesario
     }
 
-    // Método auxiliar para obtener todos los SDT en un CompositeNode
     private static List<StructuredDocumentTag> getAllSdtsInCompositeNode(CompositeNode node) {
         List<StructuredDocumentTag> sdtList = new ArrayList<>();
-        // Obtain all SDTs in the node
         NodeCollection sdts = node.getChildNodes(NodeType.STRUCTURED_DOCUMENT_TAG, true);
         for (int i = 0; i < sdts.getCount(); i++) {
             Node sdtNode = sdts.get(i);
