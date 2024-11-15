@@ -5,6 +5,7 @@ import org.lossuperconocidos.sistemagestionconstancias.utilidades.ConectorBD;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DocenteDAO {
@@ -142,5 +143,42 @@ public class DocenteDAO {
                 usuario.getContrasena() == null || usuario.getContrasena().isEmpty()) {
             throw new IllegalArgumentException("El usuario contiene campos vacíos obligatorios.");
         }
+    }
+
+    public static HashMap<String, Object> recuperarDocentes() {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put(ERROR_KEY, true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if (conexion != null) {
+            try {
+                String consulta = "SELECT * FROM vista_usuarios WHERE tipo_usuario = 'Docente'";
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+                ResultSet resultadoConsulta = sentencia.executeQuery();
+
+                ArrayList<Usuario> docentes = new ArrayList<>();
+
+                while (resultadoConsulta.next()) {
+                    Usuario docente = new Usuario();
+                    docente.setNombre(resultadoConsulta.getString("nombre"));
+                    docente.setApellidoPaterno(resultadoConsulta.getString("apellido_paterno"));
+                    docente.setApellidoMaterno(resultadoConsulta.getString("apellido_materno"));
+
+                    docentes.add(docente);
+                }
+
+                respuesta.put(ERROR_KEY, false);
+                respuesta.put("docentes", docentes);
+            } catch (SQLException sqlEx) {
+                respuesta.put(MESSAGE_KEY, "Error: " + sqlEx.getMessage());
+            } finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+        } else {
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
+        }
+
+        return respuesta;
     }
 }
