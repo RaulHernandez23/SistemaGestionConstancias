@@ -72,7 +72,6 @@ CREATE TABLE `PERIODO_ESCOLAR`(
 );
 CREATE TABLE `PARTICIPACION`(
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `constatacion` VARCHAR(255) NOT NULL,
     `tipo_participacion` VARCHAR(255) NOT NULL,
     `docente_id` INT NOT NULL,
     `periodo_escolar_id` INT NOT NULL

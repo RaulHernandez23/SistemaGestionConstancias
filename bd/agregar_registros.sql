@@ -43,12 +43,12 @@ INSERT INTO `PERIODO_ESCOLAR` (`fecha_inicio`, `fecha_fin`, `nombre`) VALUES
 ('2025-08-01', '2025-12-20', 'Otoño 2025');
 
 -- Más registros para la tabla PARTICIPACION
-INSERT INTO `PARTICIPACION` (`constatacion`, `tipo_participacion`, `docente_id`, `periodo_escolar_id`) VALUES 
-('Certificado', 'Impartición EE', 1, 2),
-('Evaluación', 'PLADEA', 1, 3),
-('Proyecto de Campo', 'Proyecto Campo', 1, 4),
-('Evaluador de Jurado', 'Jurado', 1, 1),
-('Evaluación', 'PLADEA', 1, 2);
+INSERT INTO `PARTICIPACION` (`tipo_participacion`, `docente_id`, `periodo_escolar_id`) VALUES 
+('Impartición EE', 1, 2),
+('PLADEA', 1, 3),
+('Proyecto Campo', 1, 4),
+('Jurado', 1, 1),
+('PLADEA', 1, 2);
 
 -- Más registros para la tabla IMPARTICION_EE
 INSERT INTO `IMPARTICION_EE` (`participacion_id`, `experiencia_educativa`, `bloque`, `creditos`, `horas`, `meses`, `programa_educativo`, `seccion`, `semanas`) VALUES 
