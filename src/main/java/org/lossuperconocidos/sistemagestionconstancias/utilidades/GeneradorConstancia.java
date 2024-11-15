@@ -10,28 +10,14 @@ import java.util.*;
 import java.util.List;
 
 public class GeneradorConstancia {
-    public static final String NOMBRE_ARCHIVO_PROYECTO = "Proyecto.docx";
-    public static final String NOMBRE_ARCHIVO_JURADO = "Jurado.docx";
-    public static final String NOMBRE_ARCHIVO_PLADEA = "PLADEA.docx";
-    public static final String NOMBRE_ARCHIVO_IMPARTICIONEE = "ImparticionEE.docx";
-    public boolean crearContancia(String rutaDeLaPlantilla, String rutaDestinoSelecionada) throws FileAlreadyExistsException {
+    public boolean crearContancia(String rutaDeLaPlantilla, String rutaDestinoSelecionada, Plantilla plantilla) throws FileAlreadyExistsException {
         try {
             selectTemplate();
             //TODO: Si tuvieron las plantillas en una carpeta especifica
             //String pathTemplate = Paths.get(pathDirectory, "Pantillas", NOMBRE_ARCHIVO_PROYECTO).toString();
             String nuevoArchivoNombre = "Mi_plantilla.docx";
-
             String rutaArchivoDestination = Paths.get(rutaDestinoSelecionada, nuevoArchivoNombre).toString();
             Files.copy(Paths.get(rutaDeLaPlantilla), Paths.get(rutaArchivoDestination), StandardCopyOption.REPLACE_EXISTING);
-
-            //FIXME: Tal vez seria mejor ocupar el paratemro
-            // Identificar la plantilla según su nombre
-            String nombrePlantilla = Paths.get(rutaDeLaPlantilla).getFileName().toString();
-            Plantilla plantilla = Arrays.stream(Plantilla.values())
-                    .filter(p -> p.getNombreArchivo().equals(nombrePlantilla))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("Plantilla no reconocida: " + nombrePlantilla));
-
             changeValuesWord(rutaArchivoDestination , rutaDestinoSelecionada, plantilla);
             return true;
         }catch (FileAlreadyExistsException  e){
@@ -53,8 +39,7 @@ public class GeneradorConstancia {
         try {
             Document document = new Document(pathWord);
 
-            // Obtener los valores dinámicamente desde el enum
-            Map<String, String> tagValues = plantilla.generarValores();
+            Map<String, String> tagValues = plantilla.getValores();
 
             // Crear una lista para almacenar todos los SDT encontrados
             List<StructuredDocumentTag> allSdts = new ArrayList<>();

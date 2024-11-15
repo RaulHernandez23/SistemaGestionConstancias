@@ -14,6 +14,7 @@ import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.PeriodoEscolarDAO;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.ParticipacionCorregido;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.PeriodoEscolar;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.PlantillaProyecto;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.ContanciaItem;
@@ -214,7 +215,12 @@ public class FXMLConstancias implements Initializable {
         String rutaDeLaPlantilla = VentanasEmergentes.openFileChooser((Stage) listaContancias.getScene().getWindow(), "Ruta de la plantilla");
         GeneradorConstancia generadorConstancia = new GeneradorConstancia();
         try {
-            generadorConstancia.crearContancia(rutaDeLaPlantilla,rutaDestino);
+            PlantillaProyecto plantillaProyecto = new PlantillaProyecto.Builder()
+                    .agregarValor("NombreDirector", "Juan Pérez")
+                    .agregarValor("ProyectoRealizado", "Sistema Innovador")
+                    .agregarValor("Lugar", "Ciudad de México")
+                    .build();
+            generadorConstancia.crearContancia(rutaDeLaPlantilla,rutaDestino, plantillaProyecto);
             //generadorConstancia.crearContancia("E:\\JavaUV\\PDS\\SistemaGestionConstancias\\src\\main\\java\\org\\lossuperconocidos\\sistemagestionconstancias\\utilidades\\plantillas\\Proyecto.docx","C:\\Users\\USER\\Downloads\\ConstanciasPlantillas\\Ejemplo");
         } catch (FileAlreadyExistsException e) {
             Alertas.mostrarAlertaAdvertencia("Nombre duplicado", "Archivo con el mismo nombre");
