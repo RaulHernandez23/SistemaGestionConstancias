@@ -108,7 +108,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <Button fx:id="btnRegistrar" defaultButton="true" layoutX="153.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionRegistrar" text="Registrar" />
+                  <Button fx:id="btnRegistrar" defaultButton="true" disable="true" layoutX="153.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionRegistrar" text="Registrar" />
                   <Button cancelButton="true" layoutX="413.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionCancelar" text="Cancelar" />
                </children>
             </AnchorPane>
