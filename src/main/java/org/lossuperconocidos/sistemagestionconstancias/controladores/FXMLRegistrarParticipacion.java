@@ -16,6 +16,18 @@ public class FXMLRegistrarParticipacion
 
     @javafx.fxml.FXML
     public void actionCancelar(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage escenario = new Stage();
+            escenario.setScene(scene);
+            escenario.setTitle("Menú principal");
+            escenario.show();
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
     }
 
     @javafx.fxml.FXML
