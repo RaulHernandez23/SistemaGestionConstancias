@@ -58,6 +58,20 @@ public class FXMLRegistrarParticipacion
 
     @javafx.fxml.FXML
     public void actionImparticion(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLParticipacionImparticion.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage escenario = new Stage();
+            escenario.setScene(scene);
+            escenario.setTitle("Registrar participacion: Imparticion de experiencia educativa");
+            escenario.show();
+
+            Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            ventanaActual.close();
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
     }
 
     @javafx.fxml.FXML
