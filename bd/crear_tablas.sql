@@ -5,6 +5,10 @@ CREATE TABLE `CATEGORIA`(
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `nombre` VARCHAR(255) NOT NULL
 );
+CREATE TABLE `PROGRAMA_EDUCATIVO`(
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `nombre` VARCHAR(255) NOT NULL
+);
 CREATE TABLE `IMPARTICION_EE`(
     `participacion_id` INT NOT NULL,
     `experiencia_educativa` VARCHAR(255) NOT NULL,
@@ -12,9 +16,9 @@ CREATE TABLE `IMPARTICION_EE`(
     `creditos` INT NOT NULL,
     `horas` INT NOT NULL,
     `meses` INT NOT NULL,
-    `programa_educativo` INT NOT NULL,
     `seccion` INT NOT NULL,
-    `semanas` INT NOT NULL
+    `semanas` INT NOT NULL,
+    `programa_educativo_id` INT NOT NULL
 );
 CREATE TABLE `PLADEA`(
     `participacion_id` INT NOT NULL,
@@ -96,3 +100,5 @@ ALTER TABLE
     `USUARIO_TIPO_USUARIO` ADD CONSTRAINT `FK_usuario_tipo_usuario_usuario` FOREIGN KEY(`usuario_id`) REFERENCES `USUARIO`(`id`);
 ALTER TABLE
     `USUARIO` ADD CONSTRAINT `FK_usuario_categoria` FOREIGN KEY(`categoria_id`) REFERENCES `CATEGORIA`(`id`);
+ALTER TABLE
+    `IMPARTICION_EE` ADD CONSTRAINT `FK_imparticion_ee_programa_educativo` FOREIGN KEY(`programa_educativo_id`) REFERENCES `PROGRAMA_EDUCATIVO`(`id`);

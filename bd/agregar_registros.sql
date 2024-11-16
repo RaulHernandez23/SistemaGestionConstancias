@@ -7,6 +7,12 @@ INSERT INTO `CATEGORIA` (`nombre`) VALUES
 ('Coordinador de Programas'), 
 ('Asesor Académico');
 
+INSERT INTO `PROGRAMA_EDUCATIVO` (`nombre`) VALUES
+('Ingeniería de Software'),
+('Ingeniería en Ciencia de Datos'),
+('Ingeniería en Sistemas y Tecnologías de la Información'),
+('Ingeniería de Ciberseguridad e Infraestructura de Cómputo');
+
 -- Más registros para la tabla TIPO_CONTRATACION
 INSERT INTO `TIPO_CONTRATACION` (`nombre`) VALUES 
 ('Parcial'), 
