@@ -2,6 +2,7 @@ package org.lossuperconocidos.sistemagestionconstancias.controladores;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,8 +24,11 @@ public class FXMLRegistrarParticipacion
             Scene scene = new Scene(root);
             Stage escenario = new Stage();
             escenario.setScene(scene);
-            escenario.setTitle("Menú principal");
+            escenario.setTitle("Menú del docente");
             escenario.show();
+
+            Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            ventanaActual.close();
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
         }
@@ -40,6 +44,9 @@ public class FXMLRegistrarParticipacion
             escenario.setScene(scene);
             escenario.setTitle("Registrar participacion:  Proyecto de campo");
             escenario.show();
+
+            Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            ventanaActual.close();
         } catch (IOException ioEx){
             ioEx.printStackTrace();
         }

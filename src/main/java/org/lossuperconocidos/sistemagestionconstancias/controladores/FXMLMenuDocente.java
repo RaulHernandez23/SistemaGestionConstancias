@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -81,8 +82,22 @@ public class FXMLMenuDocente implements Initializable {
     }
 
     @FXML
-    void clicRegistrarParticipacion(ActionEvent event) {
-        System.out.println("botón registrar participación");
+    void clicRegistrarParticipacion(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLRegistrarParticipacion.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage escenario = new Stage();
+            escenario.setScene(scene);
+            escenario.setTitle("Registrar participación");
+            escenario.show();
+
+            Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            ventanaActual.close();
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
     }
 
     @FXML

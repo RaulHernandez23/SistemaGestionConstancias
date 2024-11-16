@@ -13,8 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLParticipacionProyecto">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLParticipacionProyecto">
    <children>
       <GridPane prefHeight="600.0" prefWidth="800.0">
         <columnConstraints>
@@ -38,10 +37,10 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="391.0" layoutX="411.0" layoutY="22.0" smooth="false" stroke="BLACK" strokeType="INSIDE" width="358.0" />
-                  <Label layoutX="45.0" layoutY="22.0" text="Seleccionar docente:" />
-                  <ComboBox fx:id="cbDocentes" layoutX="45.0" layoutY="53.0" prefHeight="26.0" prefWidth="300.0" />
+                  <Label layoutX="45.0" layoutY="13.0" text="Seleccionar docente:" />
+                  <ComboBox fx:id="cbDocentes" layoutX="45.0" layoutY="34.0" prefHeight="26.0" prefWidth="300.0" />
                   <Label layoutX="45.0" layoutY="92.0" text="Seleccionar periodo escolar:" />
-                  <ComboBox fx:id="cbPeriodos" layoutX="45.0" layoutY="123.0" prefHeight="26.0" prefWidth="208.0" />
+                  <ComboBox fx:id="cbPeriodos" layoutX="45.0" layoutY="109.0" prefHeight="26.0" prefWidth="208.0" />
                   <Label layoutX="45.0" layoutY="169.0" text="Nombre del proyecto:" />
                   <TextField fx:id="txtProyecto" layoutX="45.0" layoutY="191.0" prefHeight="26.0" prefWidth="300.0" />
                   <Label fx:id="lblErrorProyecto" layoutX="45.0" layoutY="225.0" text="Mensaje de error" textFill="RED" visible="false">
@@ -63,15 +62,11 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <AnchorPane layoutX="440.0" layoutY="143.0" prefHeight="254.0" prefWidth="300.0">
-                     <children>
-                        <TableView fx:id="tvAlumnos" prefHeight="254.0" prefWidth="300.0" style="-fx-border-color: #000000;">
-                          <columns>
-                            <TableColumn fx:id="tcAlumnos" prefWidth="297.5999755859375" text="Alumnos" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
+                  <TableView fx:id="tvAlumnos" layoutX="440.0" layoutY="192.0" prefHeight="201.0" prefWidth="300.0">
+                    <columns>
+                      <TableColumn fx:id="tcAlumnos" prefWidth="297.5999755859375" text="Alumnos" />
+                    </columns>
+                  </TableView>
                   <Label layoutX="440.0" layoutY="30.0" text="Ingresar alumno:" />
                   <TextField fx:id="txtAlumno" layoutX="440.0" layoutY="52.0" prefHeight="26.0" prefWidth="300.0" />
                   <Label fx:id="lblErrorAlumno" layoutX="440.0" layoutY="86.0" text="Mensaje de error" textFill="RED" visible="false">
@@ -79,8 +74,18 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnAñadir" layoutX="456.0" layoutY="110.0" mnemonicParsing="false" onAction="#actionAñadir" text="Añadir" />
-                  <Button fx:id="btnEliminar" layoutX="674.0" layoutY="110.0" mnemonicParsing="false" onAction="#actionEliminar" text="Eliminar" />
+                  <Button fx:id="btnAnadir" layoutX="455.0" layoutY="122.0" mnemonicParsing="false" onAction="#actionAnadir" text="Añadir" />
+                  <Button fx:id="btnEliminar" layoutX="672.0" layoutY="122.0" mnemonicParsing="false" onAction="#actionEliminar" text="Eliminar" />
+                  <Label fx:id="lblErrorDocente" layoutX="46.0" layoutY="65.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblErrorPeriodo" layoutX="46.0" layoutY="139.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
