@@ -115,4 +115,32 @@ public class ParticipacionDAO {
         return respuesta;
     }
 
+    public static HashMap<String, Object> recuperarProgramas () {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put(ERROR_KEY, true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if(conexion != null) {
+            try {
+                String consulta = "SELECT nombre FROM PROGRAMA_EDUCATIVO";
+                ResultSet resultadoConsulta = conexion.createStatement().executeQuery(consulta);
+
+                ArrayList<String> programasEducativos = new ArrayList<>();
+                while (resultadoConsulta.next()) {
+                    programasEducativos.add(resultadoConsulta.getString("nombre"));
+                }
+                respuesta.put(ERROR_KEY, false);
+                respuesta.put("programas", programasEducativos);
+            } catch (SQLException sqlEx) {
+                respuesta.put(MESSAGE_KEY, "Error al obtener los programas: " + sqlEx.getMessage());
+            } finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+        } else {
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
+        }
+        return respuesta;
+    }
+
 }

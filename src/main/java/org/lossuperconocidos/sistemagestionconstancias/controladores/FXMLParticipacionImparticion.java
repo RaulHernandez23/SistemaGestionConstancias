@@ -9,11 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.lossuperconocidos.sistemagestionconstancias.daos.DocenteDAO;
+import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.PeriodoEscolarDAO;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.PeriodoEscolar;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class FXMLParticipacionImparticion {
     public void initialize() {
         cargarDocentes();
         cargarPeriodos();
+        cargarProgramas();
         crearListeners();
         limitarSpinners();
     }
@@ -125,6 +128,20 @@ public class FXMLParticipacionImparticion {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error al cargar los periodos escolares");
+            alert.setContentText(resultadoConsulta.get("mensaje").toString());
+            alert.showAndWait();
+        }
+    }
+
+    private void cargarProgramas() {
+        HashMap<String, Object> resultadoConsulta = ParticipacionDAO.recuperarProgramas();
+        if (!(boolean) resultadoConsulta.get("error")) {
+            ArrayList<String> programas = (ArrayList<String>) resultadoConsulta.get("programas");
+            cbPrograma.setItems(FXCollections.observableArrayList(programas));
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al cargar los programas educativos");
             alert.setContentText(resultadoConsulta.get("mensaje").toString());
             alert.showAndWait();
         }
