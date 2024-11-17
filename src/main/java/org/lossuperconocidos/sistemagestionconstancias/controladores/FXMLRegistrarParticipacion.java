@@ -54,6 +54,20 @@ public class FXMLRegistrarParticipacion
 
     @javafx.fxml.FXML
     public void actionPladea(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLParticipacionPladea.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage escenario = new Stage();
+            escenario.setScene(scene);
+            escenario.setTitle("Registrar participacion: Jurado");
+            escenario.show();
+
+            Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            ventanaActual.close();
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
     }
 
     @javafx.fxml.FXML
