@@ -1,6 +1,5 @@
 package org.lossuperconocidos.sistemagestionconstancias.daos;
 
-import org.lossuperconocidos.sistemagestionconstancias.modelos.Participacion;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.ParticipacionCorregido;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.ConectorBD;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes;
@@ -19,7 +18,7 @@ public class ParticipacionDAO {
     private static final String MENSAJE_PARTICIPACION_REGISTRADA = "Participación registrada correctamente";
     private static final String MENSAJE_PARTICIPACION_NO_REGISTRADA = "No se pudo registrar la participación";
     private static final String MENSAJE_ERROR_CONEXION = Constantes.MENSAJE_ERROR_DE_CONEXION;
-    public static HashMap<String, Object> registrarParticipacion(Participacion nuevaParticipacion) {
+    public static HashMap<String, Object> registrarParticipacion(ParticipacionCorregido nuevaParticipacion) {
         HashMap<String, Object> respuesta = new HashMap<>();
         respuesta.put(ERROR_KEY, true);
 
@@ -28,15 +27,14 @@ public class ParticipacionDAO {
         if (conexion != null) {
             try {
                 //FIXME: Actualizar acorde a la nueva BD
-                String consulta = "INSERT INTO participacion (constatacion, fecha_inicio, fecha_fin, tipo_participacion, id_docente) " +
-                        "VALUES (?, ?, ?, ?, ?)";
+                String consulta = "INSERT INTO participacion ( fecha_inicio, fecha_fin, tipo_participacion, id_docente) " +
+                        "VALUES ( ?, ?, ?, ?)";
 
                 PreparedStatement sentencia = conexion.prepareStatement(consulta);
-                sentencia.setString(1, nuevaParticipacion.getConstatacion());
-                sentencia.setDate(2, new java.sql.Date(nuevaParticipacion.getFechaInicio().getTime()));
-                sentencia.setDate(3, new java.sql.Date(nuevaParticipacion.getFechaFin().getTime()));
-                sentencia.setString(4, nuevaParticipacion.getTipoParticipacion());
-                sentencia.setInt(5, nuevaParticipacion.getIdDocente());
+                sentencia.setDate(1, new java.sql.Date(nuevaParticipacion.getFechaInicio().getTime()));
+                sentencia.setDate(2, new java.sql.Date(nuevaParticipacion.getFechaFin().getTime()));
+                sentencia.setString(3, nuevaParticipacion.getTipoParticipacion());
+                sentencia.setInt(4, nuevaParticipacion.getDocenteId());
 
                 int resultadoConsulta = sentencia.executeUpdate();
 
@@ -72,7 +70,6 @@ public class ParticipacionDAO {
 //                        "WHERE p.docente_id = ?";
                 String consulta = "SELECT " +
                                     "p.id AS participacion_id, " +
-                                    "p.constatacion, " +
                                     "p.tipo_participacion, " +
                                     "pe.nombre AS periodo_escolar, " +
                                     "pe.fecha_inicio, " +
@@ -90,11 +87,10 @@ public class ParticipacionDAO {
                 while (resultadoConsulta.next()) {
                     ParticipacionCorregido participacion = new ParticipacionCorregido();
                     participacion.setId(resultadoConsulta.getInt(1));
-                    participacion.setConstatacion(resultadoConsulta.getString(2));
-                    participacion.setTipoParticipacion(resultadoConsulta.getString(3));
-                    participacion.setPeriodoEscolarNombre(resultadoConsulta.getString(4));
-                    participacion.setFechaInicio(resultadoConsulta.getDate(5));
-                    participacion.setFechaFin(resultadoConsulta.getDate(6));
+                    participacion.setTipoParticipacion(resultadoConsulta.getString(2));
+                    participacion.setPeriodoEscolarNombre(resultadoConsulta.getString(3));
+                    participacion.setFechaInicio(resultadoConsulta.getDate(4));
+                    participacion.setFechaFin(resultadoConsulta.getDate(5));
 
                     listaParticipaciones.add(participacion);
                 }

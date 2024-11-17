@@ -4,7 +4,6 @@ import java.util.Date;
 //TODO: Verificar
 public class ParticipacionCorregido {
     private int id;
-    private String constatacion;
     private String tipoParticipacion;
     private int docenteId;
     private int periodoEscolarId;
@@ -15,9 +14,8 @@ public class ParticipacionCorregido {
     public ParticipacionCorregido() {
     }
 
-    public ParticipacionCorregido(int id, String constatacion, String tipoParticipacion, int docenteId, int periodoEscolarId, String periodoEscolarNombre, Date fechaInicio, Date fechaFin) {
+    public ParticipacionCorregido(int id, String tipoParticipacion, int docenteId, int periodoEscolarId, String periodoEscolarNombre, Date fechaInicio, Date fechaFin) {
         this.id = id;
-        this.constatacion = constatacion;
         this.tipoParticipacion = tipoParticipacion;
         this.docenteId = docenteId;
         this.periodoEscolarId = periodoEscolarId;
@@ -32,14 +30,6 @@ public class ParticipacionCorregido {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getConstatacion() {
-        return constatacion;
-    }
-
-    public void setConstatacion(String constatacion) {
-        this.constatacion = constatacion;
     }
 
     public String getTipoParticipacion() {
