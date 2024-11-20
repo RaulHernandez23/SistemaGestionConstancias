@@ -1,0 +1,88 @@
+.root {
+    -fx-font-family: "Roboto", sans-serif;
+    font-family: "Roboto", sans-serif;
+}
+
+/* Botón Registrar */
+.botonRegistrar {
+    -fx-background-color: #009eff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 8px 16px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
+}
+
+.botonRegistrar:hover {
+    -fx-background-color: #007acc;
+}
+
+.botonRegistrar:pressed {
+    -fx-background-color: #005ea1;
+}
+
+/* Botón Eliminar */
+.botonCancelar {
+    -fx-background-color: #d9534f;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 8px 16px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
+}
+
+.botonEliminar:hover {
+    -fx-background-color: #c9302c;
+}
+
+.botonEliminar:pressed {
+    -fx-background-color: #ac2925;
+}
+
+/* Lista Desplegable */
+.listaDesplegable {
+    -fx-background-color: white;
+    -fx-border-color: #009eff;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.listaDesplegable:hover {
+    -fx-border-color: #007acc;
+}
+
+.listaDesplegable:focused {
+    -fx-border-color: #007acc;
+}
+
+/* Campos Rellenables */
+.campoRellenable {
+    -fx-background-color: white;
+    -fx-border-color: #009eff;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 6px;
+    -fx-font-size: 14px;
+}
+
+.camposRellenables:focused {
+    -fx-border-color: #007acc;
+}
+
+/* Título */
+.titulo {
+    -fx-text-fill: #333333;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Subtítulo */
+.subtitulo {
+    -fx-text-fill: #666666;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
