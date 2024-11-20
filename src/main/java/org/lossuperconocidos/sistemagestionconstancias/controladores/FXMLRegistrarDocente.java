@@ -249,11 +249,11 @@ public class FXMLRegistrarDocente implements Initializable {
                 Alertas.mostrarAlertaInformacion("Registro exitoso",
                         (String) respuesta.get("mensaje"));
             } else {
-
                 Alertas.mostrarAlertaError("Error en el registro",
                         (String) respuesta.get("mensaje"));
 
             }
+            cerrarVentana();
         }catch (Exception e){
             e.printStackTrace();
         }

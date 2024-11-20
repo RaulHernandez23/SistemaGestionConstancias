@@ -58,7 +58,6 @@ public class FXMLLogIn
         } else {
 
             Usuario usuario = (Usuario) respuesta.get("usuario");
-            alerta.mostrarAlertaInformacion("Éxito", respuesta.get("mensaje").toString());
             cargarMenuPrincipal(usuario);
 
         }
@@ -84,18 +83,8 @@ public class FXMLLogIn
     private void cargarMenuPrincipal(Usuario usuario) {
         ArrayList<String> privilegios = separaTiposUsuarios(usuario.getTipoUsuario());
         if (privilegios.isEmpty()) throw new RuntimeException("No tiene tipo de usuario");
+        inicializarmenuDocente(usuario);
 
-//        if (usuario.getTipoUsuario().equals("Administrador")) {
-//            // Cargar menú principal de administrador
-//            System.out.println("Menu principal de administrador");
-//        }
-        if (privilegios.contains("Docente")) {
-            inicializarmenuDocente(usuario);
-        }
-//        if (usuario.getTipoUsuario().equals("Personal administrativo")) {
-//            // Cargar menú principal de personal administrativo
-//            System.out.println("Menu principal de personal administrativo");
-//        }
     }
     private ArrayList<String> separaTiposUsuarios(String tipoUsuario){
         ArrayList<String> tipoUsuarioList = new ArrayList<>();

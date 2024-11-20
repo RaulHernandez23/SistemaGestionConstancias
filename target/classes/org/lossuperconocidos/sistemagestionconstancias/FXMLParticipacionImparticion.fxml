@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLParticipacionImparticion">
+   <children>
+      <GridPane prefHeight="600.0" prefWidth="613.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="200.0" minHeight="40.0" prefHeight="105.99999618530273" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="451.20000000000005" minHeight="10.0" prefHeight="403.20000381469725" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="114.79996337890623" minHeight="10.0" prefHeight="73.5999877929687" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #009eff;">
+               <children>
+                  <Label layoutX="45.0" layoutY="42.0" text="Registrar participación: Impartición de E.E." textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Label layoutX="45.0" layoutY="13.0" text="Seleccionar docente:" />
+                  <ComboBox fx:id="cbDocentes" layoutX="45.0" layoutY="34.0" prefHeight="26.0" prefWidth="300.0" />
+                  <Label layoutX="45.0" layoutY="92.0" text="Seleccionar periodo escolar:" />
+                  <ComboBox fx:id="cbPeriodos" layoutX="45.0" layoutY="109.0" prefHeight="26.0" prefWidth="208.0" />
+                  <Label layoutX="45.0" layoutY="169.0" text="Experiencia educativa:" />
+                  <TextField fx:id="txtExperienciaEducativa" layoutX="45.0" layoutY="191.0" prefHeight="26.0" prefWidth="300.0" />
+                  <Label fx:id="lblErrorExperiencia" layoutX="45.0" layoutY="225.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="46.0" layoutY="254.0" text="Programa educativo:" />
+                  <Label fx:id="lblErrorPrograma" layoutX="46.0" layoutY="310.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="46.0" layoutY="338.0" text="Bloque:" />
+                  <TextField fx:id="txtBloque" layoutX="46.0" layoutY="360.0" prefHeight="26.0" prefWidth="117.0" />
+                  <Label fx:id="lblErrorBloque" layoutX="46.0" layoutY="394.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblErrorDocente" layoutX="46.0" layoutY="65.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblErrorPeriodo" layoutX="46.0" layoutY="139.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="196.0" layoutY="338.0" text="Sección:" />
+                  <Label layoutX="385.0" layoutY="168.0" text="Créditos:" />
+                  <Label fx:id="lblErrorCreditos" layoutX="385.0" layoutY="224.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Spinner fx:id="spinCreditos" layoutX="385.0" layoutY="191.0" prefHeight="25.0" prefWidth="83.0" />
+                  <Label layoutX="384.0" layoutY="252.0" text="Horas:" />
+                  <Label fx:id="lblErrorHoras" layoutX="384.0" layoutY="310.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Spinner fx:id="spinHoras" layoutX="384.0" layoutY="275.0" prefHeight="25.0" prefWidth="83.0" />
+                  <Label layoutX="502.0" layoutY="252.0" text="Semanas:" />
+                  <Label fx:id="lblErrorSemanas" layoutX="502.0" layoutY="310.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Spinner fx:id="spinSemanas" layoutX="502.0" layoutY="275.0" prefHeight="25.0" prefWidth="83.0" />
+                  <Label layoutX="385.0" layoutY="337.0" text="Meses:" />
+                  <Label fx:id="lblErrorMeses" layoutX="385.0" layoutY="394.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Spinner fx:id="spinMeses" layoutX="385.0" layoutY="360.0" prefHeight="25.0" prefWidth="83.0" />
+                  <Label fx:id="lblErrorSeccion" layoutX="193.0" layoutY="394.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Spinner fx:id="spinSeccion" layoutX="193.0" layoutY="361.0" prefHeight="25.0" prefWidth="83.0" />
+                  <ComboBox fx:id="cbPrograma" layoutX="43.0" layoutY="275.0" prefHeight="26.0" prefWidth="300.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="btnRegistrar" defaultButton="true" disable="true" layoutX="153.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionRegistrar" text="Registrar" />
+                  <Button cancelButton="true" layoutX="413.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionCancelar" text="Cancelar" />
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

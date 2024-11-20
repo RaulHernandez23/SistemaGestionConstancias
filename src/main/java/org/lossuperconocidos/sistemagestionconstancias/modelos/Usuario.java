@@ -131,4 +131,8 @@ public class Usuario {
 
     public void setIdTipoContratacion(Integer idTipoContratacion) { this.idTipoContratacion = idTipoContratacion; }
 
+    @Override
+    public String toString() {
+        return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+    }
 }

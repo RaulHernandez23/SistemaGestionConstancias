@@ -4,15 +4,15 @@ import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.ConectorBD;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DocenteDAO {
     public static final String ERROR_KEY = "error";
     public static final String MESSAGE_KEY = "mensaje";
+
+
     public static HashMap<String, Object> registrarDocente(Usuario docente) {
         validarUsuario(docente);
         HashMap<String, Object> respuesta = new HashMap<>();
@@ -24,21 +24,22 @@ public class DocenteDAO {
             try {
                 // Desactiva el auto-commit para gestionar la transacción
                 conexionBD.setAutoCommit(false);
-                //FIXME: java.sql.SQLSyntaxErrorException: Unknown column 'id_tipo_usuario' in 'field list'
-                String consulta = "INSERT INTO USUARIO (no_personal, nombre, apellido_paterno, apellido_materno," +
-                        " correo_electronico, password, id_tipo_usuario, id_categoria, id_tipo_contratacion) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, 2, ?, ?) " +
+
+                // Consulta para insertar o actualizar el docente
+                String consultaDocente = "INSERT INTO USUARIO (no_personal, nombre, apellido_paterno, apellido_materno, " +
+                        "correo_electronico, password, categoria_id, tipo_contratacion_id) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
-                        "no_personal = VALUES(no_personal),"+
+                        "no_personal = VALUES(no_personal), " +
                         "nombre = VALUES(nombre), " +
                         "apellido_paterno = VALUES(apellido_paterno), " +
                         "apellido_materno = VALUES(apellido_materno), " +
                         "correo_electronico = VALUES(correo_electronico), " +
                         "password = VALUES(password), " +
-                        "id_categoria = VALUES(id_categoria), " +
-                        "id_tipo_contratacion = VALUES(id_tipo_contratacion)";
+                        "categoria_id = VALUES(categoria_id), " +
+                        "tipo_contratacion_id = VALUES(tipo_contratacion_id)";
 
-                PreparedStatement sentenciaUsuario = conexionBD.prepareStatement(consulta);
+                PreparedStatement sentenciaUsuario = conexionBD.prepareStatement(consultaDocente, Statement.RETURN_GENERATED_KEYS);
                 sentenciaUsuario.setString(1, docente.getNo_personal());
                 sentenciaUsuario.setString(2, docente.getNombre());
                 sentenciaUsuario.setString(3, docente.getApellidoPaterno());
@@ -51,10 +52,29 @@ public class DocenteDAO {
                 int filasAfectadas = sentenciaUsuario.executeUpdate();
 
                 if (filasAfectadas > 0) {
-                    conexionBD.commit();
-                    respuesta.put(ERROR_KEY, false);
-                    respuesta.put(MESSAGE_KEY, "La información del docente " + docente.getNombre()
-                            + " se ha registrado correctamente.");
+                    // ID del docente recién insertado o actualizado
+                    ResultSet generatedKeys = sentenciaUsuario.getGeneratedKeys();
+                    int idUsuario = 0;
+                    if (generatedKeys.next()) {
+                        idUsuario = generatedKeys.getInt(1);
+                    }
+
+                    //Inserta en USUARIO_TIPO_USUARIO
+                    String consultaUsuarioTipo = "INSERT INTO USUARIO_TIPO_USUARIO (tipo_usuario_id, usuario_id) VALUES (?, ?)";
+                    PreparedStatement sentenciaUsuarioTipo = conexionBD.prepareStatement(consultaUsuarioTipo);
+                    sentenciaUsuarioTipo.setInt(1, 1); // Tipo de usuario "1"
+                    sentenciaUsuarioTipo.setInt(2, idUsuario);
+                    int filasAfectadasTipo = sentenciaUsuarioTipo.executeUpdate();
+
+                    if (filasAfectadasTipo > 0) {
+                        conexionBD.commit();
+                        respuesta.put(ERROR_KEY, false);
+                        respuesta.put(MESSAGE_KEY, "La información del docente " + docente.getNombre() +
+                                " se ha registrado correctamente");
+                    } else {
+                        conexionBD.rollback();
+                        respuesta.put(MESSAGE_KEY, "No se pudo registrar el tipo de usuario para el docente.");
+                    }
                 } else {
                     conexionBD.rollback();
                     respuesta.put(MESSAGE_KEY, "No se pudo registrar el docente.");
@@ -77,6 +97,7 @@ public class DocenteDAO {
 
         return respuesta;
     }
+
 
     public static HashMap<String, Object> verificarDocente(String noPersonal) {
         HashMap<String, Object> respuesta = new HashMap<>();
@@ -122,5 +143,42 @@ public class DocenteDAO {
                 usuario.getContrasena() == null || usuario.getContrasena().isEmpty()) {
             throw new IllegalArgumentException("El usuario contiene campos vacíos obligatorios.");
         }
+    }
+
+    public static HashMap<String, Object> recuperarDocentes() {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put(ERROR_KEY, true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if (conexion != null) {
+            try {
+                String consulta = "SELECT * FROM vista_usuarios WHERE tipo_usuario = 'Docente'";
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+                ResultSet resultadoConsulta = sentencia.executeQuery();
+
+                ArrayList<Usuario> docentes = new ArrayList<>();
+
+                while (resultadoConsulta.next()) {
+                    Usuario docente = new Usuario();
+                    docente.setNombre(resultadoConsulta.getString("nombre"));
+                    docente.setApellidoPaterno(resultadoConsulta.getString("apellido_paterno"));
+                    docente.setApellidoMaterno(resultadoConsulta.getString("apellido_materno"));
+
+                    docentes.add(docente);
+                }
+
+                respuesta.put(ERROR_KEY, false);
+                respuesta.put("docentes", docentes);
+            } catch (SQLException sqlEx) {
+                respuesta.put(MESSAGE_KEY, "Error: " + sqlEx.getMessage());
+            } finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+        } else {
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
+        }
+
+        return respuesta;
     }
 }

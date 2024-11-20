@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="650.0" prefWidth="871.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLParticipacionPladea">
+   <children>
+      <GridPane prefHeight="650.0" prefWidth="879.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="200.0" minHeight="40.0" prefHeight="82.33332951863606" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="613.3333129882812" minHeight="10.0" prefHeight="481.66667048136395" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="114.79996337890623" minHeight="10.0" prefHeight="89.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="99.0" prefWidth="879.0" style="-fx-background-color: #009eff;">
+               <children>
+                  <Label layoutX="45.0" layoutY="26.0" text="Registrar participación: PlaDEA" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="471.0" prefWidth="885.0" GridPane.rowIndex="1">
+               <children>
+                  <Label layoutX="45.0" layoutY="13.0" text="Seleccionar docente:" />
+                  <ComboBox fx:id="cbDocentes" layoutX="45.0" layoutY="34.0" prefHeight="26.0" prefWidth="300.0" />
+                  <Label fx:id="lblErrorDocente" layoutX="46.0" layoutY="65.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="45.0" layoutY="92.0" text="Seleccionar periodo escolar:" />
+                  <ComboBox fx:id="cbPeriodos" layoutX="45.0" layoutY="109.0" prefHeight="26.0" prefWidth="208.0" />
+                  <Label fx:id="lblErrorPeriodo" layoutX="46.0" layoutY="139.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="45.0" layoutY="169.0" text="Programa estratégico:" />
+                  <TextField fx:id="txtPrograma" layoutX="45.0" layoutY="191.0" prefHeight="26.0" prefWidth="365.0" />
+                  <Label fx:id="lblErrorPrograma" layoutX="45.0" layoutY="225.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="44.0" layoutY="251.0" text="Eje estratégico:" />
+                  <TextField fx:id="txtEje" layoutX="44.0" layoutY="273.0" prefHeight="26.0" prefWidth="365.0" />
+                  <Label fx:id="lblErrorEje" layoutX="44.0" layoutY="307.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="45.0" layoutY="340.0" text="Metas:" />
+                  <TextArea fx:id="txtMetas" layoutX="45.0" layoutY="368.0" prefHeight="106.0" prefWidth="365.0" />
+                  <Label fx:id="lblErrorMetas" layoutX="45.0" layoutY="489.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="451.0" layoutY="169.0" text="Acciones:" />
+                  <TextArea fx:id="txtAcciones" layoutX="451.0" layoutY="190.0" prefHeight="115.0" prefWidth="365.0" />
+                  <Label fx:id="lblErrorAcciones" layoutX="451.0" layoutY="315.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="451.0" layoutY="338.0" text="Objetivos:" />
+                  <TextArea fx:id="txtObjetivos" layoutX="451.0" layoutY="366.0" prefHeight="106.0" prefWidth="365.0" />
+                  <Label fx:id="lblErrorObjetivos" layoutX="451.0" layoutY="487.0" text="Mensaje de error" textFill="RED" visible="false">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="49.0" prefWidth="879.0" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="btnRegistrar" defaultButton="true" disable="true" layoutX="250.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionRegistrar" text="Registrar" />
+                  <Button cancelButton="true" layoutX="570.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionCancelar" text="Cancelar" />
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
