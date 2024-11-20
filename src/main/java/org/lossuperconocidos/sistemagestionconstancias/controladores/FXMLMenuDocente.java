@@ -132,6 +132,7 @@ public class FXMLMenuDocente implements Initializable {
                 bpSolicitarConstancia.visibleProperty().set(true);
             }
             if (privilegio.contains("ersona")){
+                bpSolicitarConstancia.visibleProperty().set(true);
                 bpHistorialConstancia.visibleProperty().set(true);
                 bpRegistrarDocente.visibleProperty().set(true);
                 bpRegistrarParticipacion.visibleProperty().set(true);
