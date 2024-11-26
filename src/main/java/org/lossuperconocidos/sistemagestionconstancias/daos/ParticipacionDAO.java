@@ -19,42 +19,6 @@ public class ParticipacionDAO {
     private static final String MENSAJE_PARTICIPACION_REGISTRADA = "Participación registrada correctamente";
     private static final String MENSAJE_PARTICIPACION_NO_REGISTRADA = "No se pudo registrar la participación";
     private static final String MENSAJE_ERROR_CONEXION = Constantes.MENSAJE_ERROR_DE_CONEXION;
-    public static HashMap<String, Object> registrarParticipacion(ParticipacionCorregido nuevaParticipacion) {
-        HashMap<String, Object> respuesta = new HashMap<>();
-        respuesta.put(ERROR_KEY, true);
-
-        Connection conexion = ConectorBD.obtenerConexion();
-
-        if (conexion != null) {
-            try {
-                //FIXME: Actualizar acorde a la nueva BD
-                String consulta = "INSERT INTO participacion ( fecha_inicio, fecha_fin, tipo_participacion, id_docente) " +
-                        "VALUES ( ?, ?, ?, ?)";
-
-                PreparedStatement sentencia = conexion.prepareStatement(consulta);
-                sentencia.setDate(1, new java.sql.Date(nuevaParticipacion.getFechaInicio().getTime()));
-                sentencia.setDate(2, new java.sql.Date(nuevaParticipacion.getFechaFin().getTime()));
-                sentencia.setString(3, nuevaParticipacion.getTipoParticipacion());
-                sentencia.setInt(4, nuevaParticipacion.getDocenteId());
-
-                int resultadoConsulta = sentencia.executeUpdate();
-
-                if (resultadoConsulta > 0) {
-                    respuesta.put(ERROR_KEY, false);
-                    respuesta.put(MESSAGE_KEY, MENSAJE_PARTICIPACION_REGISTRADA);
-                } else {
-                    respuesta.put(MESSAGE_KEY, MENSAJE_PARTICIPACION_NO_REGISTRADA);
-                }
-            } catch (SQLException sqlEx) {
-                respuesta.put(MESSAGE_KEY, "Error: " + sqlEx.getMessage());
-            } finally {
-                ConectorBD.cerrarConexion(conexion);
-            }
-        } else {
-            respuesta.put(MESSAGE_KEY, MENSAJE_ERROR_CONEXION);
-        }
-        return respuesta;
-    }
 
     public  static HashMap<String, Object> recuperarParticipacionPorNoPerosnal(String numPersonal) {
         HashMap<String, Object> respuesta = new HashMap<>();
