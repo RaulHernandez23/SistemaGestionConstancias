@@ -112,7 +112,7 @@ public class ParticipacionDAO {
 
         if(conexion != null) {
             try {
-                String consulta = "{CALL RegistrarParticipacionImparticion(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+                String consulta = "{CALL SP_registrar_participacion_imparticion(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
                 PreparedStatement sentencia = conexion.prepareStatement(consulta);
                 sentencia.setString(1, imparticion.getTipoParticipacion());
                 sentencia.setString(2, imparticion.getNoPersonal());
@@ -126,15 +126,10 @@ public class ParticipacionDAO {
                 sentencia.setInt(10, imparticion.getSemanas());
                 sentencia.setString(11, imparticion.getProgramaEducativo());
 
-                int filasAfectadas = sentencia.executeUpdate();
+                sentencia.executeUpdate();
 
-                if(filasAfectadas > 0) {
-                    respuesta.put(ERROR_KEY, false);
-                    respuesta.put(MESSAGE_KEY, "La participación se ha registrado exitosamente");
-                } else {
-                    respuesta.put(MESSAGE_KEY, "No se pudo registrar la impartición de la EE");
-                }
-
+                respuesta.put(ERROR_KEY, false);
+                respuesta.put(MESSAGE_KEY, "La participación se ha registrado exitosamente");
             } catch (SQLException sqlEx) {
                 respuesta.put(MESSAGE_KEY, "Error al registrar la impartición de la EE: " + sqlEx.getMessage());
             } finally {

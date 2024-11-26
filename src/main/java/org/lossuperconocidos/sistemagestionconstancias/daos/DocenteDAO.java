@@ -153,7 +153,7 @@ public class DocenteDAO {
 
         if (conexion != null) {
             try {
-                String consulta = "SELECT * FROM vista_usuarios WHERE tipo_usuario = 'Docente'";
+                String consulta = "SELECT * FROM v_usuarios WHERE tipo_usuario = 'Docente'";
                 PreparedStatement sentencia = conexion.prepareStatement(consulta);
                 ResultSet resultadoConsulta = sentencia.executeQuery();
 

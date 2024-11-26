@@ -1,4 +1,4 @@
-CREATE VIEW vista_usuarios AS
+CREATE VIEW v_usuarios AS
 SELECT
   u.no_personal,
   u.nombre,
@@ -20,7 +20,7 @@ GROUP BY
 
 DELIMITER $$
 
-CREATE PROCEDURE RegistrarParticipacionImparticion(
+CREATE PROCEDURE SP_registrar_participacion_imparticion(
     IN tipo_participacion VARCHAR(255),
     IN no_personal VARCHAR(255),
     IN periodo_escolar VARCHAR(255),
@@ -33,17 +33,13 @@ CREATE PROCEDURE RegistrarParticipacionImparticion(
     IN semanas INT,
     IN programa_educativo VARCHAR(255)
 )
-
 BEGIN
     DECLARE nuevo_id INT;
     DECLARE docente_id INT;
     DECLARE periodo_escolar_id INT;
     DECLARE programa_educativo_id INT;
+    DECLARE comprobar_id INT;
     
-    -- Manejador de excepciones para errores SQL
-    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
-        ROLLBACK;  -- Si ocurre cualquier error, se realiza un ROLLBACK
-
     START TRANSACTION;
 
     -- Obtener el id del docente
@@ -51,6 +47,7 @@ BEGIN
     
     IF docente_id IS NULL THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontró el docente';
+        ROLLBACK;
     END IF;
 
     -- Obtener el id del periodo escolar
@@ -71,12 +68,20 @@ BEGIN
     
     IF programa_educativo_id IS NULL THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontró el programa educativo';
+        ROLLBACK;
     END IF;
 
     -- Insertar en la tabla imparticion_ee
-    INSERT INTO imparticion_ee (id, experiencia_educativa, bloque, creditos, horas, meses, seccion, semanas, programa_educativo_id)
+    INSERT INTO imparticion_ee (participacion_id, experiencia_educativa, bloque, creditos, horas, meses, seccion, semanas, programa_educativo_id)
     VALUES (nuevo_id, experiencia_educativa, bloque, creditos, horas, meses, seccion, semanas, programa_educativo_id);
 
+    SET comprobar_id = LAST_INSERT_ID();
+    
+    IF comprobar_id != nuevo_id THEN
+      SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar la participación';
+      ROLLBACK;
+    END IF;
+    
     -- Si todo va bien, se realiza el COMMIT
     COMMIT;
 
