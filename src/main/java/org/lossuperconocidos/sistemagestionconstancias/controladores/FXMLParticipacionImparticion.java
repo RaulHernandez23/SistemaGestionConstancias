@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas.mostrarAlertaConfirmacion;
+import static org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes.MENSAJE_CANCELAR_PARTICIPACION;
+
 public class FXMLParticipacionImparticion {
     @javafx.fxml.FXML
     private Label lblErrorMeses;
@@ -75,20 +78,23 @@ public class FXMLParticipacionImparticion {
 
     @javafx.fxml.FXML
     public void actionCancelar(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
-            Parent root = loader.load();
 
-            Scene scene = new Scene(root);
-            Stage escenario = new Stage();
-            escenario.setScene(scene);
-            escenario.setTitle("Menú del docente");
-            escenario.show();
+        if (mostrarAlertaConfirmacion("Cancelar registro", MENSAJE_CANCELAR_PARTICIPACION)) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
+                Parent root = loader.load();
 
-            Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            ventanaActual.close();
-        } catch (IOException ioEx) {
-            ioEx.printStackTrace();
+                Scene scene = new Scene(root);
+                Stage escenario = new Stage();
+                escenario.setScene(scene);
+                escenario.setTitle("Menú del docente");
+                escenario.show();
+
+                Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                ventanaActual.close();
+            } catch (IOException ioEx) {
+                ioEx.printStackTrace();
+            }
         }
     }
 

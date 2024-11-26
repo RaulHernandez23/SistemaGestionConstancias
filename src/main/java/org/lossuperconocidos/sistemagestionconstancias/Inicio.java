@@ -14,7 +14,7 @@ public class Inicio extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
-        FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("FXMLLogIn.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("FXMLRegistrarParticipacion.fxml")); // CAMBIARLO POR EL LOGIN
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
