@@ -1,5 +1,6 @@
 package org.lossuperconocidos.sistemagestionconstancias.daos;
 
+import org.lossuperconocidos.sistemagestionconstancias.modelos.ImparticionEE;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.ParticipacionCorregido;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.ConectorBD;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes;
@@ -136,6 +137,47 @@ public class ParticipacionDAO {
         } else {
             respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
         }
+        return respuesta;
+    }
+
+    public static HashMap<String, Object> registrarImparticionEE(ImparticionEE imparticion) {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put(ERROR_KEY, true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if(conexion != null) {
+            try {
+                String consulta = "{CALL RegistrarParticipacionImparticion(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+                sentencia.setString(1, imparticion.getTipoParticipacion());
+                sentencia.setString(2, imparticion.getNoPersonal());
+                sentencia.setString(3, imparticion.getPeriodoEscolar());
+                sentencia.setString(4, imparticion.getExperienciaEducativa());
+                sentencia.setString(5, imparticion.getBloque());
+                sentencia.setInt(6, imparticion.getCreditos());
+                sentencia.setInt(7, imparticion.getHoras());
+                sentencia.setInt(8, imparticion.getMeses());
+                sentencia.setInt(9, imparticion.getSeccion());
+                sentencia.setInt(10, imparticion.getSemanas());
+                sentencia.setString(11, imparticion.getProgramaEducativo());
+
+                int filasAfectadas = sentencia.executeUpdate();
+
+                if(filasAfectadas > 0) {
+                    respuesta.put(ERROR_KEY, false);
+                    respuesta.put(MESSAGE_KEY, "La participación se ha registrado exitosamente");
+                } else {
+                    respuesta.put(MESSAGE_KEY, "No se pudo registrar la impartición de la EE");
+                }
+
+            } catch (SQLException sqlEx) {
+                respuesta.put(MESSAGE_KEY, "Error al registrar la impartición de la EE: " + sqlEx.getMessage());
+            } finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+        }
+
         return respuesta;
     }
 

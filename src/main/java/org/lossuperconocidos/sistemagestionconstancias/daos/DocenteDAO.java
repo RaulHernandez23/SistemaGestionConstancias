@@ -161,6 +161,7 @@ public class DocenteDAO {
 
                 while (resultadoConsulta.next()) {
                     Usuario docente = new Usuario();
+                    docente.setNo_personal(resultadoConsulta.getString("no_personal"));
                     docente.setNombre(resultadoConsulta.getString("nombre"));
                     docente.setApellidoPaterno(resultadoConsulta.getString("apellido_paterno"));
                     docente.setApellidoMaterno(resultadoConsulta.getString("apellido_materno"));
