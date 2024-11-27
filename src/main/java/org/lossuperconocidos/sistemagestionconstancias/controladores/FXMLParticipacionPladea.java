@@ -76,7 +76,6 @@ public class FXMLParticipacionPladea {
 
         HashMap<String, Object> resultadoRegistro = ParticipacionDAO.registrarPladea(pladea);
         if (!(boolean) resultadoRegistro.get("error")) {
-
             Alertas.mostrarAlertaInformacion("Registro exitoso", resultadoRegistro.get("mensaje").toString());
             cargarMenu();
             cerrarVentana();
