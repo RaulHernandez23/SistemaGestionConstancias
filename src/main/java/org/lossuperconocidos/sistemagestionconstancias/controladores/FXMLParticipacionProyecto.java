@@ -4,22 +4,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.lossuperconocidos.sistemagestionconstancias.daos.DocenteDAO;
+import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.PeriodoEscolarDAO;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.PeriodoEscolar;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.Proyecto;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
+import static org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas.mostrarAlertaConfirmacion;
+import static org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes.MENSAJE_CANCELAR_PARTICIPACION;
 
 public class FXMLParticipacionProyecto {
     @javafx.fxml.FXML
@@ -57,14 +58,14 @@ public class FXMLParticipacionProyecto {
     @javafx.fxml.FXML
     private Label lblErrorPeriodo;
 
-    private ObservableList<String> listaNombres = FXCollections.observableArrayList();
+    private ObservableList<String> listaAlumnos = FXCollections.observableArrayList();
 
     @javafx.fxml.FXML
     public void initialize() {
         cargarDocentes();
         cargarPeriodos();
         tcAlumnos.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue()));
-        tvAlumnos.setItems(listaNombres);
+        tvAlumnos.setItems(listaAlumnos);
         tvAlumnos.setPlaceholder(new Label("No hay alumnos registrados"));
         btnAnadir.setDisable(true);
         btnEliminar.setDisable(true);
@@ -74,20 +75,9 @@ public class FXMLParticipacionProyecto {
 
     @javafx.fxml.FXML
     public void actionCancelar(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-            Stage escenario = new Stage();
-            escenario.setScene(scene);
-            escenario.setTitle("Menú del docente");
-            escenario.show();
-
-            Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            ventanaActual.close();
-        } catch (IOException ioEx) {
-            ioEx.printStackTrace();
+        if (mostrarAlertaConfirmacion("Cancelar registro", MENSAJE_CANCELAR_PARTICIPACION)) {
+            cargarMenu();
+            cerrarVentana();
         }
     }
 
@@ -95,32 +85,28 @@ public class FXMLParticipacionProyecto {
     public void actionAnadir(ActionEvent actionEvent) {
         String alumno = txtAlumno.getText().trim();
 
-        listaNombres.add(alumno);
+        listaAlumnos.add(alumno);
         txtAlumno.clear();
     }
 
     @javafx.fxml.FXML
     public void actionEliminar(ActionEvent actionEvent) {
         String alumno = tvAlumnos.getSelectionModel().getSelectedItem();
-        listaNombres.remove(alumno);
+        listaAlumnos.remove(alumno);
     }
 
     @javafx.fxml.FXML
     public void actionRegistrar(ActionEvent actionEvent) {
-        String proyecto = txtProyecto.getText().trim();
-        String impacto = txtImpacto.getText().trim();
-        String lugar = txtLugar.getText().trim();
-        String docente = cbDocentes.getSelectionModel().getSelectedItem().toString();
-        String periodoEscolar = cbPeriodos.getSelectionModel().getSelectedItem().toString();
-        String alumnos = String.join(", ", listaNombres);
+        Proyecto proyecto = leerDatos();
 
-        System.out.println("Proyecto: " + proyecto);
-        System.out.println("Impacto: " + impacto);
-        System.out.println("Lugar: " + lugar);
-        System.out.println("Docente: " + docente);
-        System.out.println("Periodo escolar: " + periodoEscolar);
-        System.out.println("Alumnos: " + alumnos);
-
+        HashMap<String, Object> resultadoRegistro = ParticipacionDAO.registrarProyecto(proyecto);
+        if (!(boolean) resultadoRegistro.get("error")) {
+            Alertas.mostrarAlertaInformacion("Registro exitoso", resultadoRegistro.get("mensaje").toString());
+            cargarMenu();
+            cerrarVentana();
+        } else {
+            Alertas.mostrarAlertaError("Error al registrar", resultadoRegistro.get("mensaje").toString());
+        }
     }
 
     private void cargarDocentes() {
@@ -129,11 +115,7 @@ public class FXMLParticipacionProyecto {
             List<Usuario> docentes = (List<Usuario>) resultadoConsulta.get("docentes");
             cbDocentes.setItems(FXCollections.observableArrayList(docentes));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al cargar los docentes");
-            alert.setContentText(resultadoConsulta.get("mensaje").toString());
-            alert.showAndWait();
+            Alertas.mostrarAlertaError("Error al cargar docentes", resultadoConsulta.get("mensaje").toString());
         }
     }
 
@@ -143,11 +125,7 @@ public class FXMLParticipacionProyecto {
             List<PeriodoEscolar> periodos = (List<PeriodoEscolar>) resultadoConsulta.get("periodos");
             cbPeriodos.setItems(FXCollections.observableArrayList(periodos));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al cargar los periodos escolares");
-            alert.setContentText(resultadoConsulta.get("mensaje").toString());
-            alert.showAndWait();
+            Alertas.mostrarAlertaError("Error al cargar periodos", resultadoConsulta.get("mensaje").toString());
         }
     }
 
@@ -186,7 +164,7 @@ public class FXMLParticipacionProyecto {
         txtAlumno.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) { // Cuando el campo pierde el enfoque
                 String mensajeError = obtenerMensajeError(txtAlumno.getText());
-                if (listaNombres.isEmpty()) {
+                if (listaAlumnos.isEmpty()) {
                     if (!mensajeError.isEmpty()) { // Si está vacío
                         lblErrorAlumno.setText(mensajeError);
                         lblErrorAlumno.setVisible(true); // Mostrar el Label de error
@@ -199,7 +177,7 @@ public class FXMLParticipacionProyecto {
         });
         txtAlumno.textProperty().addListener((observable, oldValue, newValue) -> {
             String mensajeError = obtenerMensajeError(txtAlumno.getText());
-            if(listaNombres.isEmpty()) {
+            if(listaAlumnos.isEmpty()) {
                 if (!mensajeError.isEmpty()) {
                     lblErrorAlumno.setText(mensajeError);
                     lblErrorAlumno.setVisible(true);
@@ -296,7 +274,7 @@ public class FXMLParticipacionProyecto {
         boolean proyectoValido = obtenerMensajeError(txtProyecto.getText()).isEmpty();
         boolean impactoValido = obtenerMensajeError(txtImpacto.getText()).isEmpty();
         boolean lugarValido = obtenerMensajeError(txtLugar.getText()).isEmpty();
-        boolean tablaLlena = !listaNombres.isEmpty();
+        boolean tablaLlena = !listaAlumnos.isEmpty();
 
         btnRegistrar.setDisable(!proyectoValido
                 || !impactoValido
@@ -304,5 +282,36 @@ public class FXMLParticipacionProyecto {
                 || !tablaLlena
                 || !docenteValido
                 || !periodoValido);
+    }
+
+    private void cargarMenu() {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage escenario = new Stage();
+            escenario.setScene(scene);
+            escenario.setTitle("Menú del docente");
+            escenario.show();
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+    }
+
+    private void cerrarVentana() {
+        Stage escenario = (Stage) cbDocentes.getScene().getWindow();
+        escenario.close();
+    }
+
+    private Proyecto leerDatos() {
+        Usuario docente = (Usuario) cbDocentes.getSelectionModel().getSelectedItem();
+        String periodo = cbPeriodos.getSelectionModel().getSelectedItem().toString();
+        String proyecto = txtProyecto.getText();
+        String impacto = txtImpacto.getText();
+        String lugar = txtLugar.getText();
+        String alumnos = String.join(", ", listaAlumnos);
+
+        return new Proyecto(docente.getNo_personal(), periodo, proyecto, impacto, lugar, alumnos);
     }
 }

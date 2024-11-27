@@ -11,13 +11,18 @@ import javafx.stage.Stage;
 import org.lossuperconocidos.sistemagestionconstancias.daos.DocenteDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.PeriodoEscolarDAO;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.ImparticionEE;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.PeriodoEscolar;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas.mostrarAlertaConfirmacion;
+import static org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes.MENSAJE_CANCELAR_PARTICIPACION;
 
 public class FXMLParticipacionImparticion {
     @javafx.fxml.FXML
@@ -75,34 +80,27 @@ public class FXMLParticipacionImparticion {
 
     @javafx.fxml.FXML
     public void actionCancelar(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
-            Parent root = loader.load();
 
-            Scene scene = new Scene(root);
-            Stage escenario = new Stage();
-            escenario.setScene(scene);
-            escenario.setTitle("Menú del docente");
-            escenario.show();
-
-            Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            ventanaActual.close();
-        } catch (IOException ioEx) {
-            ioEx.printStackTrace();
+        if (mostrarAlertaConfirmacion("Cancelar registro", MENSAJE_CANCELAR_PARTICIPACION)) {
+            cargarMenu();
+            cerrarVentana();
         }
     }
 
     @javafx.fxml.FXML
     public void actionRegistrar(ActionEvent actionEvent) {
-        String docente = cbDocentes.getSelectionModel().getSelectedItem().toString();
-        String periodoEscolar = cbPeriodos.getSelectionModel().getSelectedItem().toString();
-        String experienciaEducativa = txtExperienciaEducativa.getText().trim();
-        String bloque = txtBloque.getText().trim();
-        int seccion = (int) spinSeccion.getValue();
-        int semanas = (int) spinSemanas.getValue();
-        int horas = (int) spinHoras.getValue();
-        int creditos = (int) spinCreditos.getValue();
-        int meses = (int) spinMeses.getValue();
+
+        ImparticionEE imparticion = leerDatos();
+
+        HashMap<String, Object> resultadoRegistro = ParticipacionDAO.registrarImparticionEE(imparticion);
+        if (!(boolean) resultadoRegistro.get("error")) {
+
+            Alertas.mostrarAlertaInformacion("Registro exitoso", resultadoRegistro.get("mensaje").toString());
+            cargarMenu();
+            cerrarVentana();
+        } else {
+            Alertas.mostrarAlertaError("Error al registrar", resultadoRegistro.get("mensaje").toString());
+        }
     }
 
     private void cargarDocentes() {
@@ -111,11 +109,8 @@ public class FXMLParticipacionImparticion {
             List<Usuario> docentes = (List<Usuario>) resultadoConsulta.get("docentes");
             cbDocentes.setItems(FXCollections.observableArrayList(docentes));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al cargar los docentes");
-            alert.setContentText(resultadoConsulta.get("mensaje").toString());
-            alert.showAndWait();
+            Alertas.mostrarAlertaError("Error al cargar los docentes", resultadoConsulta.get("mensaje").toString());
+
         }
     }
 
@@ -125,11 +120,8 @@ public class FXMLParticipacionImparticion {
             List<PeriodoEscolar> periodos = (List<PeriodoEscolar>) resultadoConsulta.get("periodos");
             cbPeriodos.setItems(FXCollections.observableArrayList(periodos));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al cargar los periodos escolares");
-            alert.setContentText(resultadoConsulta.get("mensaje").toString());
-            alert.showAndWait();
+            Alertas.mostrarAlertaError("Error al cargar los periodos", resultadoConsulta.get("mensaje").toString());
+
         }
     }
 
@@ -139,11 +131,7 @@ public class FXMLParticipacionImparticion {
             ArrayList<String> programas = (ArrayList<String>) resultadoConsulta.get("programas");
             cbPrograma.setItems(FXCollections.observableArrayList(programas));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al cargar los programas educativos");
-            alert.setContentText(resultadoConsulta.get("mensaje").toString());
-            alert.showAndWait();
+            Alertas.mostrarAlertaError("Error al cargar los programas educativos", resultadoConsulta.get("mensaje").toString());
         }
     }
 
@@ -205,5 +193,49 @@ public class FXMLParticipacionImparticion {
         spinMeses.setValueFactory(valueFactoryMeses);
         spinSemanas.setValueFactory(valueFactorySemanas);
         spinSeccion.setValueFactory(valueFactorySeccion);
+    }
+
+    private void cerrarVentana() {
+        Stage escenario = (Stage) cbDocentes.getScene().getWindow();
+        escenario.close();
+    }
+
+    private void cargarMenu() {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage escenario = new Stage();
+            escenario.setScene(scene);
+            escenario.setTitle("Menú del docente");
+            escenario.show();
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+    }
+
+    private ImparticionEE leerDatos() {
+        Usuario docente = (Usuario) cbDocentes.getSelectionModel().getSelectedItem();
+        String periodoEscolar = cbPeriodos.getSelectionModel().getSelectedItem().toString();
+        String experienciaEducativa = txtExperienciaEducativa.getText().trim();
+        String programaEducativo = cbPrograma.getSelectionModel().getSelectedItem().toString();
+        String bloque = txtBloque.getText().trim();
+        int seccion = (int) spinSeccion.getValue();
+        int semanas = (int) spinSemanas.getValue();
+        int horas = (int) spinHoras.getValue();
+        int creditos = (int) spinCreditos.getValue();
+        int meses = (int) spinMeses.getValue();
+
+        return new ImparticionEE(docente.getNo_personal(),
+                periodoEscolar,
+                experienciaEducativa,
+                programaEducativo,
+                bloque,
+                creditos,
+                horas,
+                meses,
+                seccion,
+                semanas);
     }
 }

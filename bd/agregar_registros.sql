@@ -27,11 +27,11 @@ INSERT INTO `TIPO_USUARIO` (`nombre`) VALUES
 
 -- Más registros para la tabla USUARIO
 INSERT INTO `USUARIO` (`no_personal`, `nombre`, `apellido_paterno`, `apellido_materno`, `correo_electronico`, `password`, `firma_digital`, `categoria_id`, `tipo_contratacion_id`) VALUES
-('11111', 'Daniel', 'Sánchez', 'Muñoz', 'daniel.sanchez@universidad.es', 'pwd123', 'firma_digital_daniel', 1, 2),
-('22222', 'Laura', 'Castillo', NULL, 'laura.castillo@universidad.es', 'pwd456', NULL, 2, 3),
-('33333', 'Miguel', 'Torres', 'Ramírez', 'miguel.torres@universidad.es', 'pwd789', 'firma_digital_miguel', 4, 1),
-('44444', 'Patricia', 'Navarro', 'López', 'patricia.navarro@universidad.es', 'pwd012', NULL, 3, 2),
-('55555', 'Andrés', 'Reyes', 'Castro', 'andres.reyes@universidad.es', 'pwd345', 'firma_digital_andres', 2, 1);
+('D-010101', 'Daniel', 'Sánchez', 'Muñoz', 'daniel.sanchez@universidad.es', 'pwd123', 'firma_digital_daniel', 1, 2),
+('A-020201', 'Laura', 'Castillo', NULL, 'laura.castillo@universidad.es', 'pwd456', NULL, 2, 3),
+('A-030301', 'Miguel', 'Torres', 'Ramírez', 'miguel.torres@universidad.es', 'pwd789', 'firma_digital_miguel', 4, 1),
+('A-020202', 'Patricia', 'Navarro', 'López', 'patricia.navarro@universidad.es', 'pwd012', NULL, 3, 2),
+('A-030302', 'Andrés', 'Reyes', 'Castro', 'andres.reyes@universidad.es', 'pwd345', 'firma_digital_andres', 2, 1);
 
 -- Más registros para la tabla USUARIO_TIPO_USUARIO
 INSERT INTO `USUARIO_TIPO_USUARIO` (`tipo_usuario_id`, `usuario_id`) VALUES
@@ -43,10 +43,10 @@ INSERT INTO `USUARIO_TIPO_USUARIO` (`tipo_usuario_id`, `usuario_id`) VALUES
 
 -- Más registros para la tabla PERIODO_ESCOLAR
 INSERT INTO `PERIODO_ESCOLAR` (`fecha_inicio`, `fecha_fin`, `nombre`) VALUES
-('2024-01-15', '2024-06-15', 'Primavera 2024'),
-('2024-08-01', '2024-12-20', 'Otoño 2024'),
-('2025-01-15', '2025-06-15', 'Primavera 2025'),
-('2025-08-01', '2025-12-20', 'Otoño 2025');
+('2024-08-19', '2025-01-17', 'Agosto - Enero 24/25'),
+('2024-02-06', '2024-07-04', 'Febrero - Julio 24'),
+('2023-08-21', '2024-01-10', 'Agosto - Enero 23/24'),
+('2023-02-07', '2023-06-23', 'Febrero - Julio 23');
 
 -- Más registros para la tabla PARTICIPACION
 INSERT INTO `PARTICIPACION` (`tipo_participacion`, `docente_id`, `periodo_escolar_id`) VALUES
@@ -58,7 +58,7 @@ INSERT INTO `PARTICIPACION` (`tipo_participacion`, `docente_id`, `periodo_escola
 
 -- Más registros para la tabla IMPARTICION_EE
 INSERT INTO `IMPARTICION_EE` (`participacion_id`, `experiencia_educativa`, `bloque`, `creditos`, `horas`, `meses`, `programa_educativo_id`, `seccion`, `semanas`) VALUES
-(1, 'Física Avanzada', 'Bloque B', 5, 90, 6, 1, 2, 18);
+(1, 'Bases de datos no relacionales', 'Bloque B', 5, 90, 6, 1, 2, 18);
 
 -- Más registros para la tabla PLADEA
 INSERT INTO `PLADEA` (`participacion_id`, `acciones`, `eje_estrategico`, `metas`, `objetivos_generales`, `programa_estrategico`) VALUES

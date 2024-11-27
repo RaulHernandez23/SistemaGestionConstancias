@@ -4,19 +4,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.lossuperconocidos.sistemagestionconstancias.daos.DocenteDAO;
+import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.PeriodoEscolarDAO;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.Jurado;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.PeriodoEscolar;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import static org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas.mostrarAlertaConfirmacion;
+import static org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes.MENSAJE_CANCELAR_PARTICIPACION;
 
 public class FXMLParticipacionJurado {
     @javafx.fxml.FXML
@@ -75,20 +81,9 @@ public class FXMLParticipacionJurado {
 
     @javafx.fxml.FXML
     public void actionCancelar(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-            Stage escenario = new Stage();
-            escenario.setScene(scene);
-            escenario.setTitle("Menú del docente");
-            escenario.show();
-
-            Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            ventanaActual.close();
-        } catch (IOException ioEx) {
-            ioEx.printStackTrace();
+        if (mostrarAlertaConfirmacion("Cancelar registro", MENSAJE_CANCELAR_PARTICIPACION)) {
+            cargarMenu();
+            cerrarVentana();
         }
     }
 
@@ -101,6 +96,16 @@ public class FXMLParticipacionJurado {
 
     @javafx.fxml.FXML
     public void actionRegistrar(ActionEvent actionEvent) {
+        Jurado jurado = leerDatos();
+
+        HashMap<String, Object> resultadoRegistro = ParticipacionDAO.registrarJurado(jurado);
+        if (!(boolean) resultadoRegistro.get("error")) {
+            Alertas.mostrarAlertaInformacion("Registro exitoso", resultadoRegistro.get("mensaje").toString());
+            cargarMenu();
+            cerrarVentana();
+        } else {
+            Alertas.mostrarAlertaError("Error al registrar", resultadoRegistro.get("mensaje").toString());
+        }
     }
 
     @javafx.fxml.FXML
@@ -117,11 +122,7 @@ public class FXMLParticipacionJurado {
             List<Usuario> docentes = (List<Usuario>) resultadoConsulta.get("docentes");
             cbDocentes.setItems(FXCollections.observableArrayList(docentes));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al cargar los docentes");
-            alert.setContentText(resultadoConsulta.get("mensaje").toString());
-            alert.showAndWait();
+            Alertas.mostrarAlertaError("Error al cargar docentes", resultadoConsulta.get("mensaje").toString());
         }
     }
 
@@ -131,11 +132,7 @@ public class FXMLParticipacionJurado {
             List<PeriodoEscolar> periodos = (List<PeriodoEscolar>) resultadoConsulta.get("periodos");
             cbPeriodos.setItems(FXCollections.observableArrayList(periodos));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al cargar los periodos escolares");
-            alert.setContentText(resultadoConsulta.get("mensaje").toString());
-            alert.showAndWait();
+            Alertas.mostrarAlertaError("Error al cargar periodos", resultadoConsulta.get("mensaje").toString());
         }
     }
 
@@ -220,5 +217,37 @@ public class FXMLParticipacionJurado {
                 || !modalidadValida
                 || !resultadoValido
                 || !tablaLlena);
+    }
+
+    private void cargarMenu() {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage escenario = new Stage();
+            escenario.setScene(scene);
+            escenario.setTitle("Menú del docente");
+            escenario.show();
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+    }
+
+    private void cerrarVentana() {
+        Stage escenario = (Stage) cbDocentes.getScene().getWindow();
+        escenario.close();
+    }
+
+    private Jurado leerDatos() {
+        String modalidad = txtModalidad.getText();
+        String titulo = txtTitulo.getText();
+        String resultado = txtResultado.getText();
+        Date fecha = Date.valueOf(dpFecha.getValue());
+        Usuario docente = (Usuario)cbDocentes.getSelectionModel().getSelectedItem();
+        String periodo = cbPeriodos.getSelectionModel().getSelectedItem().toString();
+        String alumnos = String.join(", ", listaAlumnos);
+
+        return new Jurado(docente.getNo_personal(), periodo, titulo, fecha, modalidad, alumnos, resultado);
     }
 }

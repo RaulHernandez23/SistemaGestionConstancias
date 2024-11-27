@@ -25,4 +25,8 @@ public class Constantes {
             + " informacion de la base de datos,"
             + " inténtelo de nuevo más tarde";
 
+    public static final String MENSAJE_CANCELAR_PARTICIPACION = "¿Está seguro"
+            + " de abandonar el registro de la participación?"
+            + " \nLos datos ingresados se perderán";
+
 }
