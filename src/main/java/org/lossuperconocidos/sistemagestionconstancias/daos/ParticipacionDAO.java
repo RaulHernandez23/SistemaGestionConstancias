@@ -1,7 +1,6 @@
 package org.lossuperconocidos.sistemagestionconstancias.daos;
 
-import org.lossuperconocidos.sistemagestionconstancias.modelos.ImparticionEE;
-import org.lossuperconocidos.sistemagestionconstancias.modelos.ParticipacionCorregido;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.*;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.ConectorBD;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Constantes;
 
@@ -130,13 +129,117 @@ public class ParticipacionDAO {
                 respuesta.put(ERROR_KEY, false);
                 respuesta.put(MESSAGE_KEY, "La participación se ha registrado exitosamente");
             } catch (SQLException sqlEx) {
-                respuesta.put(MESSAGE_KEY, "Error al registrar la impartición de la EE: " + sqlEx.getMessage());
+                respuesta.put(MESSAGE_KEY, "Error al registrar la participación: " + sqlEx.getMessage());
             } finally {
                 ConectorBD.cerrarConexion(conexion);
             }
+        } else {
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
+        }
+        return respuesta;
+    }
+
+    public static HashMap<String, Object> registrarJurado(Jurado jurado) {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put(ERROR_KEY, true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if (conexion != null) {
+            try {
+                String consulta = "{CALL SP_registrar_participacion_jurado(?, ?, ?, ?, ?, ?, ?)}";
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+
+                sentencia.setString(1, jurado.getNoPersonal());
+                sentencia.setString(2, jurado.getPeriodoEscolar());
+                sentencia.setString(3, jurado.getTituloTrabajo());
+                sentencia.setDate(4, jurado.getFechaPresentacion());
+                sentencia.setString(5, jurado.getModalidad());
+                sentencia.setString(6, jurado.getNombreAlumnos());
+                sentencia.setString(7, jurado.getResultadoObtenido());
+
+                sentencia.executeUpdate();
+
+                respuesta.put(ERROR_KEY, false);
+                respuesta.put(MESSAGE_KEY, "La participación se ha registrado exitosamente");
+            } catch (SQLException sqlEx) {
+                respuesta.put(MESSAGE_KEY, "Error al registrar la participación: " + sqlEx.getMessage());
+            } finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+        } else {
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
         }
 
         return respuesta;
     }
 
+    public static HashMap<String, Object> registrarProyecto(Proyecto proyecto) {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put(ERROR_KEY, true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if (conexion != null) {
+            try {
+                String consulta = "{CALL SP_registrar_participacion_proyecto(?, ?, ?, ?, ?, ?)}";
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+
+                sentencia.setString(1, proyecto.getNoPersonal());
+                sentencia.setString(2, proyecto.getPeriodoEscolar());
+                sentencia.setString(3, proyecto.getProyectoRealizado());
+                sentencia.setString(4, proyecto.getImpactoObtenido());
+                sentencia.setString(5, proyecto.getLugar());
+                sentencia.setString(6, proyecto.getNombreAlumnos());
+
+                sentencia.executeUpdate();
+
+                respuesta.put(ERROR_KEY, false);
+                respuesta.put(MESSAGE_KEY, "La participación se ha registrado exitosamente");
+            } catch (SQLException sqlEx) {
+                respuesta.put(MESSAGE_KEY, "Error al registrar la participación: " + sqlEx.getMessage());
+            } finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+        } else {
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
+        }
+
+        return respuesta;
+    }
+
+    public static HashMap<String, Object> registrarPladea(Pladea pladea) {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put(ERROR_KEY, true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if (conexion != null) {
+            try {
+                String consulta = "{CALL SP_registrar_participacion_pladea(?, ?, ?, ?, ?, ?, ?)}";
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+
+                sentencia.setString(1, pladea.getNoPersonal());
+                sentencia.setString(2, pladea.getPeriodoEscolar());
+                sentencia.setString(3, pladea.getAcciones());
+                sentencia.setString(4, pladea.getEjeEstrategico());
+                sentencia.setString(5, pladea.getMetas());
+                sentencia.setString(6, pladea.getObjetivosGenerales());
+                sentencia.setString(7, pladea.getProgramaEstrategico());
+
+                sentencia.executeUpdate();
+
+                respuesta.put(ERROR_KEY, false);
+                respuesta.put(MESSAGE_KEY, "La participación se ha registrado exitosamente");
+            } catch (SQLException sqlEx) {
+                respuesta.put(MESSAGE_KEY, "Error al registrar la participación: " + sqlEx.getMessage());
+            } finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+        } else {
+            respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
+        }
+
+        return respuesta;
+    }
 }

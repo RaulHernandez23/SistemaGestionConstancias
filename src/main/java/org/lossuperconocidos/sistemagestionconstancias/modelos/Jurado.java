@@ -1,8 +1,10 @@
 package org.lossuperconocidos.sistemagestionconstancias.modelos;
 
+import java.sql.Date;
+
 public class Jurado extends Participacion{
     private String tituloTrabajo;
-    private String fechaPresentacion;
+    private Date fechaPresentacion;
     private String modalidad;
     private String nombreAlumnos;
     private String resultadoObtenido;
@@ -10,7 +12,7 @@ public class Jurado extends Participacion{
     public Jurado(String noPersonal,
                   String periodoEscolar,
                   String tituloTrabajo,
-                  String fechaPresentacion,
+                  Date fechaPresentacion,
                   String modalidad,
                   String nombreAlumnos,
                   String resultadoObtenido) {
@@ -30,11 +32,11 @@ public class Jurado extends Participacion{
         this.tituloTrabajo = tituloTrabajo;
     }
 
-    public String getFechaPresentacion() {
+    public Date getFechaPresentacion() {
         return fechaPresentacion;
     }
 
-    public void setFechaPresentacion(String fechaPresentacion) {
+    public void setFechaPresentacion(Date fechaPresentacion) {
         this.fechaPresentacion = fechaPresentacion;
     }
 
