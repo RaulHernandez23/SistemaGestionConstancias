@@ -1,0 +1,4 @@
+--patch-module
+org.lossuperconocidos.sistemagestionconstancias=_
+--add-reads
+org.lossuperconocidos.sistemagestionconstancias=ALL-UNNAMED
