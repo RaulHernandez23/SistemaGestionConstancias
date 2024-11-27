@@ -128,7 +128,7 @@ BEGIN
     
     SET nuevo_id = LAST_INSERT_ID();
 
-    -- Insertar en la tabla imparticion_ee
+    -- Insertar en la tabla jurado
     INSERT INTO jurado (participacion_id, titulo_trabajo, fecha_presentacion, modalidad, nombre_alumnos, resultado_obtenido)
     VALUES (nuevo_id,titulo_trabajo, fecha_presentacion, modalidad, nombre_alumnos, resultado_obtenido);
 
@@ -185,7 +185,7 @@ BEGIN
     
     SET nuevo_id = LAST_INSERT_ID();
 
-    -- Insertar en la tabla imparticion_ee
+    -- Insertar en la tabla proyecto_campo
     INSERT INTO proyecto_campo (participacion_id, proyecto_realizado, impacto_obtenido, lugar, nombre_alumnos)
     VALUES (nuevo_id, proyecto_realizado, impacto_obtenido, lugar, nombre_alumnos);
 
@@ -243,7 +243,7 @@ BEGIN
     
     SET nuevo_id = LAST_INSERT_ID();
 
-    -- Insertar en la tabla imparticion_ee
+    -- Insertar en la tabla pladea
     INSERT INTO pladea (participacion_id, acciones, eje_estrategico, metas, objetivos_generales, programa_estrategico)
     VALUES (nuevo_id, acciones, eje_estrategico, metas, objetivos_generales, programa_estrategico);
 
