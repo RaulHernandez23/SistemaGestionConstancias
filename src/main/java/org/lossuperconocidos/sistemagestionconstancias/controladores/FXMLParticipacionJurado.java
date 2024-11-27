@@ -246,11 +246,7 @@ public class FXMLParticipacionJurado {
         Date fecha = Date.valueOf(dpFecha.getValue());
         Usuario docente = (Usuario)cbDocentes.getSelectionModel().getSelectedItem();
         String periodo = cbPeriodos.getSelectionModel().getSelectedItem().toString();
-        String alumnos = "";
-        for (String alumno : listaAlumnos) {
-            alumnos += alumno + ", ";
-        }
-        alumnos = alumnos.substring(0, alumnos.length() - 2);
+        String alumnos = String.join(", ", listaAlumnos);
 
         return new Jurado(docente.getNo_personal(), periodo, titulo, fecha, modalidad, alumnos, resultado);
     }
