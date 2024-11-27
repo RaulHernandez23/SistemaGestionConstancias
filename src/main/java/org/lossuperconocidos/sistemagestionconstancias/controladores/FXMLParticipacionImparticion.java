@@ -82,50 +82,21 @@ public class FXMLParticipacionImparticion {
     public void actionCancelar(ActionEvent actionEvent) {
 
         if (mostrarAlertaConfirmacion("Cancelar registro", MENSAJE_CANCELAR_PARTICIPACION)) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
-                Parent root = loader.load();
-
-                Scene scene = new Scene(root);
-                Stage escenario = new Stage();
-                escenario.setScene(scene);
-                escenario.setTitle("Menú del docente");
-                escenario.show();
-
-                cerrarVentana();
-            } catch (IOException ioEx) {
-                ioEx.printStackTrace();
-            }
+            cargarMenu();
+            cerrarVentana();
         }
     }
 
     @javafx.fxml.FXML
     public void actionRegistrar(ActionEvent actionEvent) {
-        Usuario docente = (Usuario) cbDocentes.getSelectionModel().getSelectedItem();
-        String periodoEscolar = cbPeriodos.getSelectionModel().getSelectedItem().toString();
-        String experienciaEducativa = txtExperienciaEducativa.getText().trim();
-        String programaEducativo = cbPrograma.getSelectionModel().getSelectedItem().toString();
-        String bloque = txtBloque.getText().trim();
-        int seccion = (int) spinSeccion.getValue();
-        int semanas = (int) spinSemanas.getValue();
-        int horas = (int) spinHoras.getValue();
-        int creditos = (int) spinCreditos.getValue();
-        int meses = (int) spinMeses.getValue();
 
-        ImparticionEE imparticion = new ImparticionEE(docente.getNo_personal(),
-                periodoEscolar,
-                experienciaEducativa,
-                programaEducativo,
-                bloque,
-                creditos,
-                horas,
-                meses,
-                seccion,
-                semanas);
+        ImparticionEE imparticion = leerDatos();
 
         HashMap<String, Object> resultadoRegistro = ParticipacionDAO.registrarImparticionEE(imparticion);
         if (!(boolean) resultadoRegistro.get("error")) {
+
             Alertas.mostrarAlertaInformacion("Registro exitoso", resultadoRegistro.get("mensaje").toString());
+            cargarMenu();
             cerrarVentana();
         } else {
             Alertas.mostrarAlertaError("Error al registrar", resultadoRegistro.get("mensaje").toString());
@@ -227,5 +198,44 @@ public class FXMLParticipacionImparticion {
     private void cerrarVentana() {
         Stage escenario = (Stage) cbDocentes.getScene().getWindow();
         escenario.close();
+    }
+
+    private void cargarMenu() {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage escenario = new Stage();
+            escenario.setScene(scene);
+            escenario.setTitle("Menú del docente");
+            escenario.show();
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+    }
+
+    private ImparticionEE leerDatos() {
+        Usuario docente = (Usuario) cbDocentes.getSelectionModel().getSelectedItem();
+        String periodoEscolar = cbPeriodos.getSelectionModel().getSelectedItem().toString();
+        String experienciaEducativa = txtExperienciaEducativa.getText().trim();
+        String programaEducativo = cbPrograma.getSelectionModel().getSelectedItem().toString();
+        String bloque = txtBloque.getText().trim();
+        int seccion = (int) spinSeccion.getValue();
+        int semanas = (int) spinSemanas.getValue();
+        int horas = (int) spinHoras.getValue();
+        int creditos = (int) spinCreditos.getValue();
+        int meses = (int) spinMeses.getValue();
+
+        return new ImparticionEE(docente.getNo_personal(),
+                periodoEscolar,
+                experienciaEducativa,
+                programaEducativo,
+                bloque,
+                creditos,
+                horas,
+                meses,
+                seccion,
+                semanas);
     }
 }

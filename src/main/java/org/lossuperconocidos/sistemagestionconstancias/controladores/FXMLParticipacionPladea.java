@@ -9,9 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.lossuperconocidos.sistemagestionconstancias.daos.DocenteDAO;
+import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.PeriodoEscolarDAO;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.PeriodoEscolar;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.Pladea;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -62,26 +65,24 @@ public class FXMLParticipacionPladea {
     @javafx.fxml.FXML
     public void actionCancelar(ActionEvent actionEvent) {
         if (mostrarAlertaConfirmacion("Cancelar registro", MENSAJE_CANCELAR_PARTICIPACION)) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
-                Parent root = loader.load();
-
-                Scene scene = new Scene(root);
-                Stage escenario = new Stage();
-                escenario.setScene(scene);
-                escenario.setTitle("Menú del docente");
-                escenario.show();
-
-                Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                ventanaActual.close();
-            } catch (IOException ioEx) {
-                ioEx.printStackTrace();
-            }
+            cargarMenu();
+            cerrarVentana();
         }
     }
 
     @javafx.fxml.FXML
     public void actionRegistrar(ActionEvent actionEvent) {
+        Pladea pladea = leerDatos();
+
+        HashMap<String, Object> resultadoRegistro = ParticipacionDAO.registrarPladea(pladea);
+        if (!(boolean) resultadoRegistro.get("error")) {
+
+            Alertas.mostrarAlertaInformacion("Registro exitoso", resultadoRegistro.get("mensaje").toString());
+            cargarMenu();
+            cerrarVentana();
+        } else {
+            Alertas.mostrarAlertaError("Error al registrar", resultadoRegistro.get("mensaje").toString());
+        }
     }
 
     private void cargarDocentes() {
@@ -90,11 +91,7 @@ public class FXMLParticipacionPladea {
             List<Usuario> docentes = (List<Usuario>) resultadoConsulta.get("docentes");
             cbDocentes.setItems(FXCollections.observableArrayList(docentes));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al cargar los docentes");
-            alert.setContentText(resultadoConsulta.get("mensaje").toString());
-            alert.showAndWait();
+            Alertas.mostrarAlertaError("Error al cargar docentes", resultadoConsulta.get("mensaje").toString());
         }
     }
 
@@ -104,11 +101,7 @@ public class FXMLParticipacionPladea {
             List<PeriodoEscolar> periodos = (List<PeriodoEscolar>) resultadoConsulta.get("periodos");
             cbPeriodos.setItems(FXCollections.observableArrayList(periodos));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al cargar los periodos escolares");
-            alert.setContentText(resultadoConsulta.get("mensaje").toString());
-            alert.showAndWait();
+            Alertas.mostrarAlertaError("Error al cargar periodos", resultadoConsulta.get("mensaje").toString());
         }
     }
 
@@ -195,5 +188,43 @@ public class FXMLParticipacionPladea {
                 || !accionesValidas
                 || !metasValidas
                 || !objetivosValidos);
+    }
+
+    private void cargarMenu() {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/lossuperconocidos/sistemagestionconstancias/FXMLMenuDocente.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage escenario = new Stage();
+            escenario.setScene(scene);
+            escenario.setTitle("Menú del docente");
+            escenario.show();
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+    }
+
+    private void cerrarVentana() {
+        Stage escenario = (Stage) cbDocentes.getScene().getWindow();
+        escenario.close();
+    }
+
+    private Pladea leerDatos() {
+        Usuario docente = (Usuario) cbDocentes.getSelectionModel().getSelectedItem();
+        String periodoEscolar = cbPeriodos.getSelectionModel().getSelectedItem().toString();
+        String programa = txtPrograma.getText();
+        String eje = txtEje.getText();
+        String acciones = txtAcciones.getText();
+        String metas = txtMetas.getText();
+        String objetivos = txtObjetivos.getText();
+
+        return new Pladea(docente.getNo_personal(),
+                periodoEscolar,
+                programa,
+                eje,
+                acciones,
+                metas,
+                objetivos);
     }
 }
