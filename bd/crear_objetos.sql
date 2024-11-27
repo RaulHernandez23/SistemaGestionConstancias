@@ -21,7 +21,6 @@ GROUP BY
 DELIMITER $$
 
 CREATE PROCEDURE SP_registrar_participacion_imparticion(
-    IN tipo_participacion VARCHAR(255),
     IN no_personal VARCHAR(255),
     IN periodo_escolar VARCHAR(255),
     IN experiencia_educativa VARCHAR(255),
@@ -59,7 +58,7 @@ BEGIN
 
     -- Insertar en la tabla participacion
     INSERT INTO participacion (tipo_participacion, docente_id, periodo_escolar_id)
-    VALUES (tipo_participacion, docente_id, periodo_escolar_id);
+    VALUES ('Impartición de experiencia educativa', docente_id, periodo_escolar_id);
     
     SET nuevo_id = LAST_INSERT_ID();
     
@@ -89,3 +88,60 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+
+CREATE PROCEDURE SP_registrar_participacion_jurado(
+    IN no_personal VARCHAR(255),
+    IN periodo_escolar VARCHAR(255),
+    IN titulo_trabajo VARCHAR(255),
+    IN fecha_presentacion DATE,
+    IN modalidad VARCHAR(255),
+    IN nombre_alumnos VARCHAR(255),
+    IN resultado_obtenido VARCHAR(255)
+)
+BEGIN
+    DECLARE nuevo_id INT;
+    DECLARE docente_id INT;
+    DECLARE periodo_escolar_id INT;
+    DECLARE comprobar_id INT;
+    
+    START TRANSACTION;
+
+    -- Obtener el id del docente
+    SELECT id INTO docente_id FROM usuario u WHERE u.no_personal = no_personal;
+    
+    IF docente_id IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontró el docente';
+        ROLLBACK;
+    END IF;
+
+    -- Obtener el id del periodo escolar
+    SELECT id INTO periodo_escolar_id FROM periodo_escolar pe WHERE pe.nombre = periodo_escolar;
+    
+    IF periodo_escolar_id IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontró el periodo escolar';
+    END IF;
+
+    -- Insertar en la tabla participacion
+    INSERT INTO participacion (tipo_participacion, docente_id, periodo_escolar_id)
+    VALUES ('Jurado', docente_id, periodo_escolar_id);
+    
+    SET nuevo_id = LAST_INSERT_ID();
+
+    -- Insertar en la tabla imparticion_ee
+    INSERT INTO jurado (participacion_id, titulo_trabajo, fecha_presentacion, modalidad, nombre_alumnos, resultado_obtenido)
+    VALUES (nuevo_id,titulo_trabajo, fecha_presentacion, modalidad, nombre_alumnos, resultado_obtenido);
+
+    SET comprobar_id = LAST_INSERT_ID();
+    
+    IF comprobar_id != nuevo_id THEN
+      SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar la participación';
+      ROLLBACK;
+    END IF;
+    
+    -- Si todo va bien, se realiza el COMMIT
+    COMMIT;
+
+END$$
+
+DELIMITER ;

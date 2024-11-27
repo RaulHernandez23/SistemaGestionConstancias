@@ -5,6 +5,11 @@ public class Participacion {
     private String no_personal;
     private String periodoEscolar;
 
+    public Participacion(String no_personal, String periodoEscolar) {
+        this.no_personal = no_personal;
+        this.periodoEscolar = periodoEscolar;
+    }
+
     public Participacion(String tipoParticipacion, String no_personal, String periodoEscolar) {
         this.tipoParticipacion = tipoParticipacion;
         this.no_personal = no_personal;

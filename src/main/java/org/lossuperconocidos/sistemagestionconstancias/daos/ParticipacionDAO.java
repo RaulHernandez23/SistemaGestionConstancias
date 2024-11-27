@@ -112,19 +112,18 @@ public class ParticipacionDAO {
 
         if(conexion != null) {
             try {
-                String consulta = "{CALL SP_registrar_participacion_imparticion(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+                String consulta = "{CALL SP_registrar_participacion_imparticion(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
                 PreparedStatement sentencia = conexion.prepareStatement(consulta);
-                sentencia.setString(1, imparticion.getTipoParticipacion());
-                sentencia.setString(2, imparticion.getNoPersonal());
-                sentencia.setString(3, imparticion.getPeriodoEscolar());
-                sentencia.setString(4, imparticion.getExperienciaEducativa());
-                sentencia.setString(5, imparticion.getBloque());
-                sentencia.setInt(6, imparticion.getCreditos());
-                sentencia.setInt(7, imparticion.getHoras());
-                sentencia.setInt(8, imparticion.getMeses());
-                sentencia.setInt(9, imparticion.getSeccion());
-                sentencia.setInt(10, imparticion.getSemanas());
-                sentencia.setString(11, imparticion.getProgramaEducativo());
+                sentencia.setString(1, imparticion.getNoPersonal());
+                sentencia.setString(2, imparticion.getPeriodoEscolar());
+                sentencia.setString(3, imparticion.getExperienciaEducativa());
+                sentencia.setString(4, imparticion.getBloque());
+                sentencia.setInt(5, imparticion.getCreditos());
+                sentencia.setInt(6, imparticion.getHoras());
+                sentencia.setInt(7, imparticion.getMeses());
+                sentencia.setInt(8, imparticion.getSeccion());
+                sentencia.setInt(9, imparticion.getSemanas());
+                sentencia.setString(10, imparticion.getProgramaEducativo());
 
                 sentencia.executeUpdate();
 

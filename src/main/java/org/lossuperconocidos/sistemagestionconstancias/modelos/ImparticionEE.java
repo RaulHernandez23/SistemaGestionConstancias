@@ -20,7 +20,7 @@ public class ImparticionEE extends Participacion {
                          int meses,
                          int seccion,
                          int semanas) {
-        super("Imparticion de Experiencia Educativa", noPersonal, periodoEscolar);
+        super(noPersonal, periodoEscolar);
         this.experienciaEducativa = experienciaEducativa;
         this.programaEducativo = programaEducativo;
         this.bloque = bloque;
