@@ -13,14 +13,23 @@ public class FXMLConstanciaItem implements Initializable {
 
     public Label lbTipo;
     public Label lbPeriodo;
+    public Label lbNombre;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-    public void inicializarContanciaItem(ContanciaItem contanciaItem)
+    public void inicializarContanciaItem(ContanciaItem constanciaItem)
     {
-        this.lbPeriodo.setText("Perido" +contanciaItem.periodo);
-        this.lbTipo.setText("Tipo" + contanciaItem.tipo);
+        this.lbPeriodo.setText("Perido" +constanciaItem.periodo);
+        this.lbTipo.setText("Tipo" + constanciaItem.tipo);
+        try {
+            if (constanciaItem.getNombreCompleto() != null && !constanciaItem.getNombreCompleto().isEmpty()) {
+                lbNombre.setText(constanciaItem.getNombreCompleto());
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

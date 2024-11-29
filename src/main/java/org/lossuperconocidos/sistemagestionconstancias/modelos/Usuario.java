@@ -1,7 +1,13 @@
 package org.lossuperconocidos.sistemagestionconstancias.modelos;
 
-public class Usuario {
+import java.util.ArrayList;
+import java.util.Arrays;
 
+public class Usuario {
+    public static final String SEPARADOR_TIPO_USUARIO = ",";
+    public static final String FILTRO_PERSONAL_ADMINISTRATIVO = "ersona";
+    public static final String FILTRO_DOCENTE = "ocente";
+    public static final String FILTRO_ADMINISTRADOR = "dministrador";
     private String no_personal;
     private String nombre;
     private String apellidoPaterno;
@@ -134,5 +140,22 @@ public class Usuario {
     @Override
     public String toString() {
         return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+    }
+
+    /*
+    * Retorna una lista de privilegios del usuario
+    * */
+    public ArrayList<String> separaTiposUsuarios(){
+        ArrayList<String> tipoUsuarioList = new ArrayList<>();
+        if (tipoUsuario == null || tipoUsuario.isEmpty()) {
+            return tipoUsuarioList;
+        }
+        if (tipoUsuario.contains(SEPARADOR_TIPO_USUARIO)) {
+            tipoUsuarioList = new ArrayList<>(Arrays.asList(tipoUsuario.split(SEPARADOR_TIPO_USUARIO)));
+        } else {
+            tipoUsuarioList = new ArrayList<>();
+            tipoUsuarioList.add(tipoUsuario);
+        }
+        return tipoUsuarioList;
     }
 }
