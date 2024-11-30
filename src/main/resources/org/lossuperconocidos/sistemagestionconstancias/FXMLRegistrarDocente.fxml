@@ -8,13 +8,6 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLRegistrarDocente">
-   <top>
-          <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnSalir" style="-fx-background-color: transparent;" textAlignment="RIGHT" BorderPane.alignment="TOP_RIGHT">
-              <graphic>
-                  <FontAwesomeIconView fill="#009eff" glyphName="CLOSE" size="18" />
-              </graphic>
-          </Button>
-   </top>
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -22,23 +15,16 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="0.0" minHeight="15.0" percentHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label styleClass="titulo" text="Registrar información de docente:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
-               <GridPane.margin>
-                  <Insets left="20.0" />
-               </GridPane.margin>
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Label>
-            <GridPane GridPane.rowIndex="1">
+            <GridPane GridPane.rowIndex="2">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -56,13 +42,13 @@
                      <GridPane.margin>
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin></TextField>
-                  <Label fx:id="lbErrorNombre" styleClass="label.error" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                  <Label fx:id="lbErrorNombre" style="-fx-text-fill: red;" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets left="30.0" />
+                        <Insets left="30.0" top="4.0" />
                      </GridPane.margin></Label>
                </children>
             </GridPane>
-            <GridPane layoutX="10.0" layoutY="105.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <GridPane layoutX="10.0" layoutY="105.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
@@ -84,7 +70,7 @@
                   </ComboBox>
                </children>
             </GridPane>
-            <GridPane layoutX="10.0" layoutY="105.0" GridPane.rowIndex="4">
+            <GridPane layoutX="10.0" layoutY="105.0" GridPane.rowIndex="5">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
@@ -104,14 +90,14 @@
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Label fx:id="lbErrorNumero" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                  <Label fx:id="lbErrorNumero" style="-fx-text-fill: red;" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets left="30.0" />
+                        <Insets left="30.0" top="4.0" />
                      </GridPane.margin>
                   </Label>
                </children>
             </GridPane>
-            <GridPane layoutX="10.0" layoutY="105.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <GridPane layoutX="10.0" layoutY="105.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
@@ -131,14 +117,14 @@
                         <Insets left="10.0" right="20.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Label fx:id="lbErrorCorreo" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                  <Label fx:id="lbErrorCorreo" style="-fx-text-fill: red;" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0" top="4.0" />
                      </GridPane.margin>
                   </Label>
                </children>
             </GridPane>
-            <GridPane layoutX="10.0" layoutY="105.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <GridPane layoutX="10.0" layoutY="105.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
@@ -160,7 +146,7 @@
                   </ComboBox>
                </children>
             </GridPane>
-            <GridPane layoutX="10.0" layoutY="296.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <GridPane layoutX="10.0" layoutY="296.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
@@ -180,14 +166,14 @@
                         <Insets left="10.0" right="20.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Label fx:id="lbErrorPassword" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                  <Label fx:id="lbErrorPassword" style="-fx-text-fill: red;" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0" top="4.0" />
                      </GridPane.margin>
                   </Label>
                </children>
             </GridPane>
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -200,15 +186,15 @@
                   <Button fx:id="btnCancelar" layoutX="66.0" layoutY="45.0" mnemonicParsing="false" onAction="#clicCancelar" prefHeight="26.0" prefWidth="130.0" styleClass="botonCancelar" text="Cancelar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
-            <BorderPane fx:id="bpErrorDocenteExistente" prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+            <BorderPane fx:id="bpErrorDocenteExistente" prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </GridPane.margin>
                <center>
-                  <Label fx:id="lbErrorDocenteExistente" text="Error, el profesor ya existe en el sistema" BorderPane.alignment="CENTER" />
+                  <Label fx:id="lbErrorDocenteExistente" style="-fx-text-fill: red;" text="Error, el profesor ya existe en el sistema" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
-            <GridPane layoutX="10.0" layoutY="76.0" GridPane.rowIndex="2">
+            <GridPane layoutX="10.0" layoutY="76.0" GridPane.rowIndex="3">
                <children>
                   <Label styleClass="subtitulo" text="Apellido paterno:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                      <GridPane.margin>
@@ -220,9 +206,9 @@
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Label fx:id="lbErrorAPaterno" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                  <Label fx:id="lbErrorAPaterno" style="-fx-text-fill: red;" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets left="30.0" />
+                        <Insets left="30.0" top="4.0" />
                      </GridPane.margin>
                   </Label>
                </children>
@@ -235,7 +221,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane layoutX="10.0" layoutY="157.0" GridPane.rowIndex="3">
+            <GridPane layoutX="10.0" layoutY="157.0" GridPane.rowIndex="4">
                <children>
                   <Label styleClass="subtitulo" text="Apellido materno:" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                      <GridPane.margin>
@@ -247,9 +233,9 @@
                         <Insets left="30.0" right="5.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Label fx:id="lbErrorAMaterno" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                  <Label fx:id="lbErrorAMaterno" style="-fx-text-fill: red;" text="Mensaje Error" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets left="30.0" />
+                        <Insets left="30.0" top="4.0" />
                      </GridPane.margin>
                   </Label>
                </children>
@@ -262,6 +248,16 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #009eff;" GridPane.columnIndex="1" />
+            <Pane prefHeight="65.0" prefWidth="350.0" style="-fx-background-color: #009eff;">
+               <children>
+                  <Label layoutX="31.0" layoutY="30.0" styleClass="titulo" text="Registrar información de docente:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
       </GridPane>
    </center>
