@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -251,7 +250,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #009eff;" GridPane.columnIndex="1" />
             <Pane prefHeight="65.0" prefWidth="350.0" style="-fx-background-color: #009eff;">
                <children>
-                  <Label layoutX="31.0" layoutY="30.0" styleClass="titulo" text="Registrar información de docente:" textFill="WHITE">
+                  <Label layoutX="31.0" layoutY="30.0" styleClass="titulo" text="Registrar información de docente" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

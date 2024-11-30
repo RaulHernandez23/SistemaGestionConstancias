@@ -110,12 +110,12 @@ public class FXMLMenuDocente implements Initializable {
 
     public void inicializarVentana(Usuario usuario) {
         this.usuario = usuario;
-
-        lblNombreUsuario.setText(
-                "Bienvenido "
+        String mensaje = "Bienvenido "
                 + usuario.getNombre() + " "
-                + usuario.getApellidoPaterno() + " "
-                + usuario.getApellidoMaterno());
+                + usuario.getApellidoPaterno()
+                + (usuario.getApellidoMaterno() != null ? " " + usuario.getApellidoMaterno() : "");
+
+        lblNombreUsuario.setText(mensaje);
         mostrarMenuCorrespondinete();
     }
 
