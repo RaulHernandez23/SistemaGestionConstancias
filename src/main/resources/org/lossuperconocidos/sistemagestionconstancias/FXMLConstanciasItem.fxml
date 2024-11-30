@@ -2,14 +2,44 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="60.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLConstanciaItem">
-      <Text text="Tipo:" />
-      <Label fx:id="lbTipo" text="{Tipo}" />
-      <Label text="Periodo: " />
-      <Label fx:id="lbPeriodo" text="{Periodo}" />
+<VBox prefHeight="60.0" style="-fx-background-color: #0082c3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLConstanciaItem">
+   <HBox>
+      <children>
+            <Text text="Tipo:">
+            <HBox.margin>
+               <Insets right="20.0" />
+            </HBox.margin>
+         </Text>
+            <Label fx:id="lbTipo" text="{Tipo}">
+            <HBox.margin>
+               <Insets right="20.0" />
+            </HBox.margin>
+         </Label>
+            <Label text="Periodo: ">
+            <HBox.margin>
+               <Insets right="20.0" />
+            </HBox.margin>
+         </Label>
+            <Label fx:id="lbPeriodo" text="{Periodo}">
+            <HBox.margin>
+               <Insets right="20.0" />
+            </HBox.margin>
+         </Label>
+      </children>
+   </HBox>
+   <HBox>
+      <children>
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre: " />
+            <Label fx:id="lbNombre" text="{NombreCompleto}" />
+      </children>
+      <padding>
+         <Insets top="10.0" />
+      </padding>
+   </HBox>
    <padding>
       <Insets bottom="5.0" top="5.0" />
    </padding>

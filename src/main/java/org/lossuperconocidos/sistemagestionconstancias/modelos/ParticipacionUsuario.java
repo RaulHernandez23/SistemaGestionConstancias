@@ -1,8 +1,7 @@
 package org.lossuperconocidos.sistemagestionconstancias.modelos;
 import java.util.Date;
 
-//TODO: Verificar
-public class ParticipacionCorregido {
+public class ParticipacionUsuario {
     private int id;
     private String tipoParticipacion;
     private int docenteId;
@@ -10,11 +9,14 @@ public class ParticipacionCorregido {
     private String periodoEscolarNombre;
     private Date fechaInicio;
     private Date fechaFin;
+    private String nombreUsuario;
+    private String apellido_paterno;
+    private String apellido_materno;
 
-    public ParticipacionCorregido() {
+    public ParticipacionUsuario() {
     }
 
-    public ParticipacionCorregido(int id, String tipoParticipacion, int docenteId, int periodoEscolarId, String periodoEscolarNombre, Date fechaInicio, Date fechaFin) {
+    public ParticipacionUsuario(int id, String tipoParticipacion, int docenteId, int periodoEscolarId, String periodoEscolarNombre, Date fechaInicio, Date fechaFin) {
         this.id = id;
         this.tipoParticipacion = tipoParticipacion;
         this.docenteId = docenteId;
@@ -22,6 +24,43 @@ public class ParticipacionCorregido {
         this.periodoEscolarNombre = periodoEscolarNombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+    }
+
+    public ParticipacionUsuario(int id, String tipoParticipacion, int docenteId, int periodoEscolarId, String periodoEscolarNombre, Date fechaInicio, Date fechaFin, String nombreUsuario, String apellido_paterno, String apellido_materno) {
+        this.id = id;
+        this.tipoParticipacion = tipoParticipacion;
+        this.docenteId = docenteId;
+        this.periodoEscolarId = periodoEscolarId;
+        this.periodoEscolarNombre = periodoEscolarNombre;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.nombreUsuario = nombreUsuario;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
+    }
+
+    public String getApellido_materno() {
+        return apellido_materno;
+    }
+
+    public void setApellidoMaterno(String apellido_materno) {
+        this.apellido_materno = apellido_materno;
+    }
+
+    public String getApellido_paterno() {
+        return apellido_paterno;
+    }
+
+    public void setApellidoPaterno(String apellido_paterno) {
+        this.apellido_paterno = apellido_paterno;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public int getId() {
@@ -78,6 +117,10 @@ public class ParticipacionCorregido {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public String getNombreCompleto() {
+        return nombreUsuario + " " + apellido_paterno + " " + apellido_materno;
     }
 
 }

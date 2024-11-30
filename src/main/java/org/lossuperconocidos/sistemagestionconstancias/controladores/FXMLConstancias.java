@@ -12,14 +12,11 @@ import javafx.stage.Stage;
 import org.lossuperconocidos.sistemagestionconstancias.Inicio;
 import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.PeriodoEscolarDAO;
-import org.lossuperconocidos.sistemagestionconstancias.modelos.ParticipacionCorregido;
+import org.lossuperconocidos.sistemagestionconstancias.modelos.ParticipacionUsuario;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.PeriodoEscolar;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.PlantillaProyecto;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
-import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
-import org.lossuperconocidos.sistemagestionconstancias.utilidades.ContanciaItem;
-import org.lossuperconocidos.sistemagestionconstancias.utilidades.GeneradorConstancia;
-import org.lossuperconocidos.sistemagestionconstancias.utilidades.VentanasEmergentes;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,6 +28,10 @@ public class FXMLConstancias implements Initializable {
     private static final int  ALTO_PARA_ITEM = 80;
     private static final int  PADDING_ARRIBA_PARA_ITEM = 5;
     private static final int  PADDING_ABAJO_PARA_ITEM = 5;
+    private String nombreBusquedardImparticion ="mpartici";
+    private String nombreBusquedardPladea = "ladea";
+    private String nombreBusquedarbJurado = "urado";
+    private String nombreBusquedarbProyecto = "royect";
     public ToggleGroup criteriosBusqueda;
     public ListView<VBox> listaContancias;
     public RadioButton rdImparticion;
@@ -51,10 +52,51 @@ public class FXMLConstancias implements Initializable {
     public void inicializar(Usuario usuario)
     {
         this.usuario = usuario;
-        participacionesOriginales = recuperarParticipaciones();
+        ArrayList<String> privilegios = usuario.separaTiposUsuarios();
+        boolean contieneFiltroDocente = false;
+        for (String privilegio : privilegios) {
+            if (privilegio.contains(usuario.FILTRO_DOCENTE)) {
+                contieneFiltroDocente = true;
+                break;
+            }
+        }
+        if (contieneFiltroDocente){
+            participacionesOriginales = recuperarParticipacionesDocente();
+        }else {
+            participacionesOriginales = recuperarTodasParticipaciones();
+        }
         cargarParticipaciones(participacionesOriginales);
         inicializarGrupoRadioBoton();
         inicializarComboBox();
+    }
+
+    private List<ContanciaItem> recuperarTodasParticipaciones() {
+        List<ContanciaItem> resultado;
+        try {
+            HashMap<String, Object> resultadoConsulta = ParticipacionDAO.recuperarTodaParticipacion();
+            if (resultadoConsulta == null || (boolean)resultadoConsulta.get(ParticipacionDAO.ERROR_KEY)) {
+                throw new Exception("No se puede recuperar la participacion");
+            }
+            ArrayList<ParticipacionUsuario> participaciones= (ArrayList<ParticipacionUsuario>) resultadoConsulta.get(ParticipacionDAO.PARTICIPACIONES_KEY);
+
+
+            if (participaciones != null && !participaciones.isEmpty()) {
+                resultado = new ArrayList<>();
+                participaciones.forEach(participacion -> {
+                    ContanciaItem itemDeLista = new ContanciaItem(
+                            participacion.getPeriodoEscolarNombre(),
+                            participacion.getTipoParticipacion(),
+                            participacion.getNombreCompleto()
+                    );
+                    resultado.add(itemDeLista);
+                });
+                return  resultado;
+            }
+        } catch (Exception e) {
+            System.err.println("Error al recuperar las participaciones: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
@@ -74,14 +116,14 @@ public class FXMLConstancias implements Initializable {
         iniciarListView(dataList);
     }
 
-    private List<ContanciaItem> recuperarParticipaciones() {
+    private List<ContanciaItem> recuperarParticipacionesDocente() {
         List<ContanciaItem> resultado;
         try {
             HashMap<String, Object> resultadoConsulta = ParticipacionDAO.recuperarParticipacionPorNoPerosnal(usuario.getNo_personal());
             if (resultadoConsulta == null || (boolean)resultadoConsulta.get(ParticipacionDAO.ERROR_KEY)) {
                 throw new Exception("No se puede recuperar la participacion");
             }
-            ArrayList<ParticipacionCorregido> participaciones= (ArrayList<ParticipacionCorregido>) resultadoConsulta.get(ParticipacionDAO.PARTICIPACIONES_KEY);
+            ArrayList<ParticipacionUsuario> participaciones= (ArrayList<ParticipacionUsuario>) resultadoConsulta.get(ParticipacionDAO.PARTICIPACIONES_KEY);
 
             if (participaciones != null && !participaciones.isEmpty()) {
                 resultado = new ArrayList<>();
@@ -164,13 +206,13 @@ public class FXMLConstancias implements Initializable {
         }
         String criterioTipo = null;
         if (rdImparticion.isSelected()) {
-            criterioTipo = "mpartici";
+            criterioTipo = nombreBusquedardImparticion;
         } else if (rdPladea.isSelected()) {
-            criterioTipo = "ladea";
+            criterioTipo = nombreBusquedardPladea;
         } else if (rbJurado.isSelected()) {
-            criterioTipo = "urado";
+            criterioTipo = nombreBusquedarbJurado;
         } else if (rbProyecto.isSelected()) {
-            criterioTipo = "royect";
+            criterioTipo = nombreBusquedarbProyecto;
         }
 
         List<ContanciaItem> filtradas = new ArrayList<>();
@@ -211,6 +253,8 @@ public class FXMLConstancias implements Initializable {
 
 
     public void clicBtnEjemplo(ActionEvent actionEvent) {
+        String rutaActual = System.getProperty("user.dir");
+        System.out.println(rutaActual);
         String rutaDestino = VentanasEmergentes.openDirectoryChooser((Stage) listaContancias.getScene().getWindow(), "Ruta destino");
         String rutaDeLaPlantilla = VentanasEmergentes.openFileChooser((Stage) listaContancias.getScene().getWindow(), "Ruta de la plantilla");
         GeneradorConstancia generadorConstancia = new GeneradorConstancia();
@@ -221,7 +265,6 @@ public class FXMLConstancias implements Initializable {
                     .agregarValor("Lugar", "Ciudad de México")
                     .build();
             generadorConstancia.crearContancia(rutaDeLaPlantilla,rutaDestino, plantillaProyecto);
-            //generadorConstancia.crearContancia("E:\\JavaUV\\PDS\\SistemaGestionConstancias\\src\\main\\java\\org\\lossuperconocidos\\sistemagestionconstancias\\utilidades\\plantillas\\Proyecto.docx","C:\\Users\\USER\\Downloads\\ConstanciasPlantillas\\Ejemplo");
         } catch (FileAlreadyExistsException e) {
             Alertas.mostrarAlertaAdvertencia("Nombre duplicado", "Archivo con el mismo nombre");
         }
@@ -230,10 +273,11 @@ public class FXMLConstancias implements Initializable {
     private void agregarDeselecionAccion(RadioButton radioButton) {
         radioButton.setOnMouseClicked(event -> {
             if (radioButton.equals(lastSelectedRadioButton)) {
-                criteriosBusqueda.selectToggle(null); // Deselecciona el RadioButton en el grupo
-                lastSelectedRadioButton = null;       // Limpia la última selección
+                criteriosBusqueda.selectToggle(null);
+                lastSelectedRadioButton = null;
+                cbPeriodo.getSelectionModel().clearSelection();
             } else {
-                lastSelectedRadioButton = radioButton; // Actualiza el último seleccionado
+                lastSelectedRadioButton = radioButton;
             }
         });
     }

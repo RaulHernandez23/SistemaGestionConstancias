@@ -88,9 +88,6 @@ public class FXMLLogIn
     }
     private ArrayList<String> separaTiposUsuarios(String tipoUsuario){
         ArrayList<String> tipoUsuarioList = new ArrayList<>();
-        if (tipoUsuario == null || tipoUsuario.isEmpty()) {
-            return tipoUsuarioList;
-        }
         if (tipoUsuario.contains(SEPARADOR_TIPO_USUARIO)) {
             tipoUsuarioList = new ArrayList<>(Arrays.asList(tipoUsuario.split(SEPARADOR_TIPO_USUARIO)));
         } else {
@@ -100,7 +97,7 @@ public class FXMLLogIn
         return tipoUsuarioList;
     }
 
-    private void inicializarmenuDocente(Usuario usuario) {
+    private void inicializarmenuDocente(Usuario usuario ) {
         Stage escenario = (Stage) btnEntrar.getScene().getWindow();
 
         try {

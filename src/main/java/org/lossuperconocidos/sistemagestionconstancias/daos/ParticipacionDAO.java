@@ -22,16 +22,9 @@ public class ParticipacionDAO {
     public  static HashMap<String, Object> recuperarParticipacionPorNoPerosnal(String numPersonal) {
         HashMap<String, Object> respuesta = new HashMap<>();
         respuesta.put(ERROR_KEY, true);
-
         Connection conexion = ConectorBD.obtenerConexion();
-
         if (conexion != null) {
             try {
-//                String consulta = "SELECT p.id, p.constatacion, p.tipo_participacion, pe.nombre AS periodo_escolar, " +
-//                        "pe.fecha_inicio, pe.fecha_fin " +
-//                        "FROM PARTICIPACION p " +
-//                        "LEFT JOIN PERIODO_ESCOLAR pe ON p.periodo_escolar_id = pe.id " +
-//                        "WHERE p.docente_id = ?";
                 String consulta = "SELECT " +
                                     "p.id AS participacion_id, " +
                                     "p.tipo_participacion, " +
@@ -46,10 +39,10 @@ public class ParticipacionDAO {
                 sentencia.setString(1, numPersonal);
 
                 ResultSet resultadoConsulta = sentencia.executeQuery();
-                ArrayList<ParticipacionCorregido> listaParticipaciones = new ArrayList<>();
+                ArrayList<ParticipacionUsuario> listaParticipaciones = new ArrayList<>();
 
                 while (resultadoConsulta.next()) {
-                    ParticipacionCorregido participacion = new ParticipacionCorregido();
+                    ParticipacionUsuario participacion = new ParticipacionUsuario();
                     participacion.setId(resultadoConsulta.getInt(1));
                     participacion.setTipoParticipacion(resultadoConsulta.getString(2));
                     participacion.setPeriodoEscolarNombre(resultadoConsulta.getString(3));
@@ -238,6 +231,58 @@ public class ParticipacionDAO {
             }
         } else {
             respuesta.put(MESSAGE_KEY, Constantes.MENSAJE_ERROR_DE_CONEXION);
+        }
+
+        return respuesta;
+    }
+
+    public static HashMap<String, Object> recuperarTodaParticipacion() {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put(ERROR_KEY, true);
+        Connection conexion = ConectorBD.obtenerConexion();
+        if (conexion != null) {
+            try {
+                String consulta = "SELECT " +
+                        "p.id AS participacion_id, " +
+                        "p.tipo_participacion, " +
+                        "pe.nombre AS periodo_escolar, " +
+                        "pe.fecha_inicio, " +
+                        "pe.fecha_fin, " +
+                        "u.nombre AS docente_nombre, " +
+                        "u.apellido_paterno AS docente_apellido_paterno, " +
+                        "u.apellido_materno AS docente_apellido_materno " +
+                        "FROM PARTICIPACION p " +
+                        "LEFT JOIN PERIODO_ESCOLAR pe ON p.periodo_escolar_id = pe.id " +
+                        "LEFT JOIN USUARIO u ON p.docente_id = u.id";
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+
+                ResultSet resultadoConsulta = sentencia.executeQuery();
+                ArrayList<ParticipacionUsuario> listaParticipaciones = new ArrayList<>();
+
+                while (resultadoConsulta.next()) {
+                    ParticipacionUsuario participacion = new ParticipacionUsuario();
+                    participacion.setId(resultadoConsulta.getInt(1));
+                    participacion.setTipoParticipacion(resultadoConsulta.getString(2));
+                    participacion.setPeriodoEscolarNombre(resultadoConsulta.getString(3));
+                    participacion.setFechaInicio(resultadoConsulta.getDate(4));
+                    participacion.setFechaFin(resultadoConsulta.getDate(5));
+                    participacion.setNombreUsuario(resultadoConsulta.getString(6));
+                    participacion.setApellidoMaterno(resultadoConsulta.getString(7));
+                    participacion.setApellidoPaterno(resultadoConsulta.getString(8));
+                    listaParticipaciones.add(participacion);
+                }
+
+                respuesta.put(ERROR_KEY, false);
+                respuesta.put(MESSAGE_KEY, "Participaciones recuperadas exitosamente.");
+                respuesta.put(PARTICIPACIONES_KEY, listaParticipaciones);
+
+            } catch (SQLException sqlEx) {
+                respuesta.put(MESSAGE_KEY, "Error al obtener las participaciones: " + sqlEx.getMessage());
+            } finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+        } else {
+            respuesta.put(MESSAGE_KEY, MENSAJE_ERROR_CONEXION);
         }
 
         return respuesta;
