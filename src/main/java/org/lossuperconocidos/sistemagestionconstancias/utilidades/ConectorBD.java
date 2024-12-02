@@ -8,9 +8,9 @@ public class ConectorBD {
     private static String driver = "com.mysql.jdbc.Driver";
     private static String nombreBD = "sistema_constancias";
     private static String hostname = "localhost";
-    private static String puerto = "3306";
+    private static String puerto = "3307";
     private static String usuario = "root";
-    private static String clave = "naviking2023!";
+    private static String clave = "Morales300802";
 
     public static final String URL_CONEXION = "jdbc:mysql://" + hostname + ":" + puerto + "/" + nombreBD +
             "?allowPublicKeyRetrieval=true&useSSL=false";

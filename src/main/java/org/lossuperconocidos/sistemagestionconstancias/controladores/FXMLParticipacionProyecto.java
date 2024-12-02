@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.lossuperconocidos.sistemagestionconstancias.daos.DocenteDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
 import org.lossuperconocidos.sistemagestionconstancias.daos.PeriodoEscolarDAO;
@@ -57,6 +58,8 @@ public class FXMLParticipacionProyecto {
     private Label lblErrorDocente;
     @javafx.fxml.FXML
     private Label lblErrorPeriodo;
+
+    public Usuario usuario;
 
     private ObservableList<String> listaAlumnos = FXCollections.observableArrayList();
 
@@ -293,6 +296,10 @@ public class FXMLParticipacionProyecto {
             Stage escenario = new Stage();
             escenario.setScene(scene);
             escenario.setTitle("Menú del docente");
+            escenario.initStyle(StageStyle.UNDECORATED);
+            escenario.setResizable(false);
+            FXMLMenuDocente controlador = loader.getController();
+            controlador.inicializarVentana(usuario);
             escenario.show();
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
