@@ -287,4 +287,239 @@ public class ParticipacionDAO {
 
         return respuesta;
     }
+
+    public static HashMap<String, Object> obtenerImparticionesEE (String no_personal) {
+
+        HashMap<String, Object> respuesta = new HashMap<>();
+
+        respuesta.put("error", true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if (conexion != null) {
+
+            try {
+
+                String consulta =
+                        "SELECT " + "*" + " FROM v_imparticion_ee " +
+                        "WHERE no_personal = ? ";
+
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+
+                sentencia.setString(1, no_personal);
+
+                ResultSet resultadoConsulta = sentencia.executeQuery();
+
+                ArrayList<ImparticionEE> imparticiones = new ArrayList<>();
+
+                while (resultadoConsulta.next()) {
+
+                    ImparticionEE imparticion = new ImparticionEE(
+                            resultadoConsulta.getString("no_personal"),
+                            resultadoConsulta.getString("periodo_escolar"),
+                            resultadoConsulta.getString("experiencia_educativa"),
+                            resultadoConsulta.getString("programa_educativo"),
+                            resultadoConsulta.getString("bloque"),
+                            resultadoConsulta.getInt("creditos"),
+                            resultadoConsulta.getInt("horas"),
+                            resultadoConsulta.getInt("meses"),
+                            resultadoConsulta.getInt("seccion"),
+                            resultadoConsulta.getInt("semanas")
+                    );
+
+                    imparticiones.add(imparticion);
+
+                }
+
+                respuesta.put("error", false);
+                respuesta.put("mensaje", "Imparticiones de EE recuperadas exitosamente.");
+                respuesta.put("imparticiones", imparticiones);
+
+            }
+            catch (SQLException sqlEx) {
+                respuesta.put("mensaje", "Error al obtener las imparticiones: " + sqlEx.getMessage());
+            }
+            finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+
+        }
+
+        return respuesta;
+
+    }
+
+    public static HashMap<String, Object> obtenerJurados (String no_personal) {
+
+        HashMap<String, Object> respuesta = new HashMap<>();
+
+        respuesta.put("error", true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if (conexion != null) {
+
+            try {
+
+                String consulta =
+                        "SELECT " + "*" + " FROM v_jurado " +
+                        "WHERE no_personal = ? ";
+
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+
+                sentencia.setString(1, no_personal);
+
+                ResultSet resultadoConsulta = sentencia.executeQuery();
+
+                ArrayList<Jurado> jurados = new ArrayList<>();
+
+                while (resultadoConsulta.next()) {
+
+                    Jurado jurado = new Jurado(
+                            resultadoConsulta.getString("no_personal"),
+                            resultadoConsulta.getString("periodo_escolar"),
+                            resultadoConsulta.getString("titulo_trabajo"),
+                            resultadoConsulta.getDate("fecha_presentacion"),
+                            resultadoConsulta.getString("modalidad"),
+                            resultadoConsulta.getString("nombre_alumnos"),
+                            resultadoConsulta.getString("resultado_obtenido")
+                    );
+
+                    jurados.add(jurado);
+
+                }
+
+                respuesta.put("error", false);
+                respuesta.put("mensaje", "Jurados recuperados exitosamente.");
+                respuesta.put("jurados", jurados);
+
+            }
+            catch (SQLException sqlEx) {
+                respuesta.put("mensaje", "Error al obtener los jurados: " + sqlEx.getMessage());
+            }
+            finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+
+        }
+
+        return respuesta;
+
+    }
+
+    public static HashMap<String, Object> obtenerProyectosDeCampo (String no_personal) {
+
+        HashMap<String, Object> respuesta = new HashMap<>();
+
+        respuesta.put("error", true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if (conexion != null) {
+
+            try {
+
+                String consulta =
+                        "SELECT " + "*" + " FROM v_proyecto_campo " +
+                        "WHERE no_personal = ? ";
+
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+
+                sentencia.setString(1, no_personal);
+
+                ResultSet resultadoConsulta = sentencia.executeQuery();
+
+                ArrayList<Proyecto> proyectos = new ArrayList<>();
+
+                while (resultadoConsulta.next()) {
+
+                    Proyecto proyecto = new Proyecto(
+                            resultadoConsulta.getString("no_personal"),
+                            resultadoConsulta.getString("periodo_escolar"),
+                            resultadoConsulta.getString("proyecto_realizado"),
+                            resultadoConsulta.getString("impacto_obtenido"),
+                            resultadoConsulta.getString("lugar"),
+                            resultadoConsulta.getString("nombre_alumnos")
+                    );
+
+                    proyectos.add(proyecto);
+
+                }
+
+                respuesta.put("error", false);
+                respuesta.put("mensaje", "Proyectos de campo recuperados exitosamente.");
+                respuesta.put("proyectos", proyectos);
+
+            }
+            catch (SQLException sqlEx) {
+                respuesta.put("mensaje", "Error al obtener los proyectos: " + sqlEx.getMessage());
+            }
+            finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+
+        }
+
+        return respuesta;
+
+    }
+
+    public static HashMap<String, Object> obtenerPladeas (String no_personal) {
+
+        HashMap<String, Object> respuesta = new HashMap<>();
+
+        respuesta.put("error", true);
+
+        Connection conexion = ConectorBD.obtenerConexion();
+
+        if (conexion != null) {
+
+            try {
+
+                String consulta =
+                        "SELECT " + "*" + " FROM v_pladea " +
+                        "WHERE no_personal = ? ";
+
+                PreparedStatement sentencia = conexion.prepareStatement(consulta);
+
+                sentencia.setString(1, no_personal);
+
+                ResultSet resultadoConsulta = sentencia.executeQuery();
+
+                ArrayList<Pladea> pladeas = new ArrayList<>();
+
+                while (resultadoConsulta.next()) {
+
+                    Pladea pladea = new Pladea(
+                            resultadoConsulta.getString("no_personal"),
+                            resultadoConsulta.getString("periodo_escolar"),
+                            resultadoConsulta.getString("acciones"),
+                            resultadoConsulta.getString("eje_estrategico"),
+                            resultadoConsulta.getString("metas"),
+                            resultadoConsulta.getString("objetivos_generales"),
+                            resultadoConsulta.getString("programa_estrategico")
+                    );
+
+                    pladeas.add(pladea);
+
+                }
+
+                respuesta.put("error", false);
+                respuesta.put("mensaje", "Pladeas recuperados exitosamente.");
+                respuesta.put("pladeas", pladeas);
+
+            }
+            catch (SQLException sqlEx) {
+                respuesta.put("mensaje", "Error al obtener los pladeas: " + sqlEx.getMessage());
+            }
+            finally {
+                ConectorBD.cerrarConexion(conexion);
+            }
+
+        }
+
+        return respuesta;
+
+    }
+
 }

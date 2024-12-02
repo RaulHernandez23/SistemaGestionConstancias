@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.lossuperconocidos.sistemagestionconstancias.Inicio;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
+import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Utilidades;
 
 import java.io.IOException;
@@ -25,8 +26,13 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class FXMLMenuDocente implements Initializable {
+
+    @FXML
     public BorderPane bpSolicitarConstancia;
-    public BorderPane bpHistorialConstancia;;
+
+    @FXML
+    public BorderPane bpHistorialConstancia;
+
     @FXML
     private BorderPane bpRegistrarDocente;
 
@@ -48,7 +54,26 @@ public class FXMLMenuDocente implements Initializable {
 
     @FXML
     void clicSolicitarConstancia(ActionEvent event) {
-        System.out.println("botón solicitar constancia");
+
+        Stage escenario = (Stage) lblNombreUsuario.getScene().getWindow();
+
+        try {
+            escenario.hide();
+            FXMLLoader loader = new FXMLLoader(Inicio.class.getResource("FXMLSolicitarConstancias.fxml"));
+            Parent root = loader.load();
+            FXMLSolicitarConstancias controlador = loader.getController();
+            controlador.inicializar(usuario);
+            Stage nuevoEscenario = new Stage();
+            nuevoEscenario.setScene(new Scene(root));
+            nuevoEscenario.setTitle("Solicitar constancia");
+            nuevoEscenario.initModality(Modality.APPLICATION_MODAL);
+            nuevoEscenario.showAndWait();
+            escenario.show();
+        } catch (IOException e) {
+            Alertas.mostrarAlertaError("Error", e.getMessage());
+        } catch (RuntimeException e) {
+            Alertas.mostrarAlertaError("Error", e.getMessage());
+        }
     }
 
     @FXML

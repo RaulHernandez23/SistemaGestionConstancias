@@ -116,7 +116,7 @@ public class FXMLLogIn
             escenario.show();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Alertas.mostrarAlertaError("Error", e.getMessage());
         }
     }
 

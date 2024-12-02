@@ -11,6 +11,7 @@ module org.lossuperconocidos.sistemagestionconstancias {
     requires com.aspose.words;
 
     opens org.lossuperconocidos.sistemagestionconstancias to javafx.fxml;
+    opens org.lossuperconocidos.sistemagestionconstancias.modelos to javafx.base;
     exports org.lossuperconocidos.sistemagestionconstancias;
     exports org.lossuperconocidos.sistemagestionconstancias.controladores;
     opens org.lossuperconocidos.sistemagestionconstancias.controladores to javafx.fxml;

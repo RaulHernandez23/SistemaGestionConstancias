@@ -18,6 +18,69 @@ FROM
 GROUP BY
   u.id;
 
+CREATE VIEW v_imparticion_ee AS
+SELECT
+    u.no_personal,
+    pe.nombre AS periodo_escolar,
+    iee.experiencia_educativa,
+    iee.bloque,
+    iee.creditos,
+    iee.horas,
+    iee.meses,
+    iee.seccion,
+    iee.semanas,
+    pr.nombre AS programa_educativo
+FROM
+    imparticion_ee iee
+    JOIN participacion p ON iee.participacion_id = p.id
+    JOIN usuario u ON p.docente_id = u.id
+    JOIN periodo_escolar pe ON p.periodo_escolar_id = pe.id
+    JOIN programa_educativo pr ON iee.programa_educativo_id = pr.id;
+
+CREATE VIEW v_jurado AS
+SELECT
+    u.no_personal,
+    pe.nombre AS periodo_escolar,
+    j.titulo_trabajo,
+    j.fecha_presentacion,
+    j.modalidad,
+    j.nombre_alumnos,
+    j.resultado_obtenido
+FROM
+    jurado j
+    JOIN participacion p ON j.participacion_id = p.id
+    JOIN usuario u ON p.docente_id = u.id
+    JOIN periodo_escolar pe ON p.periodo_escolar_id = pe.id;
+
+CREATE VIEW v_proyecto_campo AS
+SELECT
+    u.no_personal,
+    pe.nombre AS periodo_escolar,
+    pc.proyecto_realizado,
+    pc.impacto_obtenido,
+    pc.lugar,
+    pc.nombre_alumnos
+FROM
+    proyecto_campo pc
+    JOIN participacion p ON pc.participacion_id = p.id
+    JOIN usuario u ON p.docente_id = u.id
+    JOIN periodo_escolar pe ON p.periodo_escolar_id = pe.id;
+
+CREATE VIEW v_pladea AS
+SELECT
+    u.no_personal,
+    pe.nombre AS periodo_escolar,
+    pl.acciones,
+    pl.eje_estrategico,
+    pl.metas,
+    pl.objetivos_generales,
+    pl.programa_estrategico
+FROM
+    pladea pl
+    JOIN participacion p ON pl.participacion_id = p.id
+    JOIN usuario u ON p.docente_id = u.id
+    JOIN periodo_escolar pe ON p.periodo_escolar_id = pe.id;
+
 DELIMITER $$
 
 CREATE PROCEDURE SP_registrar_participacion_imparticion(
