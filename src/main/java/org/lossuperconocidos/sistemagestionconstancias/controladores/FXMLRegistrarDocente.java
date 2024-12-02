@@ -147,7 +147,7 @@ public class FXMLRegistrarDocente implements Initializable {
 
         // Validación del campo de número personal
         String numeroPersonal = tfNumeroPersonal.getText().trim();
-        if (numeroPersonal.isEmpty() || !numeroPersonal.matches("^[a-zA-Z\\d]{5,10}$")) {
+        if (numeroPersonal.isEmpty() || !numeroPersonal.matches("^[a-zA-ZáéíóúÁÉÍÓÚüÜ0-9\\s\\-]{3,40}$")) {
             tfNumeroPersonal.setStyle("-fx-border-color: red;");
             lbErrorNumero.setText("Número personal no válido.");
             esValido = false;
