@@ -8,6 +8,8 @@ public class Jurado extends Participacion{
     private String modalidad;
     private String nombreAlumnos;
     private String resultadoObtenido;
+    private String nombreDocente;
+    private String programaEducativo;
 
     public Jurado(String noPersonal,
                   String periodoEscolar,
@@ -22,6 +24,23 @@ public class Jurado extends Participacion{
         this.modalidad = modalidad;
         this.nombreAlumnos = nombreAlumnos;
         this.resultadoObtenido = resultadoObtenido;
+    }
+
+    public Jurado(String noPersonal,
+                  String nombreDocente,
+                  String periodoEscolar,
+                  String tituloTrabajo,
+                  Date fechaPresentacion,
+                  String modalidad,
+                  String nombreAlumnos,
+                  String resultadoObtenido) {
+        super(noPersonal, periodoEscolar);
+        this.tituloTrabajo = tituloTrabajo;
+        this.fechaPresentacion = fechaPresentacion;
+        this.modalidad = modalidad;
+        this.nombreAlumnos = nombreAlumnos;
+        this.resultadoObtenido = resultadoObtenido;
+        this.nombreDocente = nombreDocente;
     }
 
     public String getTituloTrabajo() {
@@ -63,4 +82,21 @@ public class Jurado extends Participacion{
     public void setResultadoObtenido(String resultadoObtenido) {
         this.resultadoObtenido = resultadoObtenido;
     }
+
+    public String getNombreDocente() {
+        return nombreDocente;
+    }
+
+    public void setNombreDocente(String nombreDocente) {
+        this.nombreDocente = nombreDocente;
+    }
+
+    public String getProgramaEducativo() {
+        return programaEducativo;
+    }
+
+    public void setProgramaEducativo(String programaEducativo) {
+        this.programaEducativo = programaEducativo;
+    }
+
 }

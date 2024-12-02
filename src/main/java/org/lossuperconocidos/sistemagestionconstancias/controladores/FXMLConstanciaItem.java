@@ -20,16 +20,22 @@ public class FXMLConstanciaItem implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-    public void inicializarContanciaItem(ContanciaItem constanciaItem)
+    public void inicializarContanciaItem(ContanciaItem constanciaItem, boolean esProfesor)
     {
         this.lbPeriodo.setText("Perido" +constanciaItem.periodo);
         this.lbTipo.setText("Tipo" + constanciaItem.tipo);
         try {
             if (constanciaItem.getNombreCompleto() != null && !constanciaItem.getNombreCompleto().isEmpty()) {
-                lbNombre.setText(constanciaItem.getNombreCompleto());
+                if (esProfesor){
+                    this.lbNombre.setText("");
+                    this.txtNombre.visibleProperty().set(false);
+                    return;
+                }else {
+                    lbNombre.setText(constanciaItem.getNombreCompleto());
+                }
             }else {
-                txtNombre.visibleProperty().set(false);
-                lbNombre.visibleProperty().set(false);
+                lbNombre.setText("");
+                this.txtNombre.visibleProperty().set(false);
             }
         }catch (Exception e) {
             e.printStackTrace();

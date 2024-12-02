@@ -316,6 +316,7 @@ public class ParticipacionDAO {
 
                     ImparticionEE imparticion = new ImparticionEE(
                             resultadoConsulta.getString("no_personal"),
+                            resultadoConsulta.getString("nombre_docente"),
                             resultadoConsulta.getString("periodo_escolar"),
                             resultadoConsulta.getString("experiencia_educativa"),
                             resultadoConsulta.getString("programa_educativo"),
@@ -377,6 +378,7 @@ public class ParticipacionDAO {
 
                     Jurado jurado = new Jurado(
                             resultadoConsulta.getString("no_personal"),
+                            resultadoConsulta.getString("nombre_docente"),
                             resultadoConsulta.getString("periodo_escolar"),
                             resultadoConsulta.getString("titulo_trabajo"),
                             resultadoConsulta.getDate("fecha_presentacion"),
@@ -435,6 +437,7 @@ public class ParticipacionDAO {
 
                     Proyecto proyecto = new Proyecto(
                             resultadoConsulta.getString("no_personal"),
+                            resultadoConsulta.getString("nombre_docente"),
                             resultadoConsulta.getString("periodo_escolar"),
                             resultadoConsulta.getString("proyecto_realizado"),
                             resultadoConsulta.getString("impacto_obtenido"),
@@ -492,6 +495,7 @@ public class ParticipacionDAO {
 
                     Pladea pladea = new Pladea(
                             resultadoConsulta.getString("no_personal"),
+                            resultadoConsulta.getString("nombre_docente"),
                             resultadoConsulta.getString("periodo_escolar"),
                             resultadoConsulta.getString("acciones"),
                             resultadoConsulta.getString("eje_estrategico"),

@@ -21,6 +21,7 @@ GROUP BY
 CREATE VIEW v_imparticion_ee AS
 SELECT
     u.no_personal,
+    CONCAT(u.nombre, ' ', u.apellido_paterno, ' ', u.apellido_materno) AS nombre_docente,
     pe.nombre AS periodo_escolar,
     iee.experiencia_educativa,
     iee.bloque,
@@ -40,6 +41,7 @@ FROM
 CREATE VIEW v_jurado AS
 SELECT
     u.no_personal,
+    CONCAT(u.nombre, ' ', u.apellido_paterno, ' ', u.apellido_materno) AS nombre_docente,
     pe.nombre AS periodo_escolar,
     j.titulo_trabajo,
     j.fecha_presentacion,
@@ -55,6 +57,7 @@ FROM
 CREATE VIEW v_proyecto_campo AS
 SELECT
     u.no_personal,
+    CONCAT(u.nombre, ' ', u.apellido_paterno, ' ', u.apellido_materno) AS nombre_docente,
     pe.nombre AS periodo_escolar,
     pc.proyecto_realizado,
     pc.impacto_obtenido,
@@ -69,6 +72,7 @@ FROM
 CREATE VIEW v_pladea AS
 SELECT
     u.no_personal,
+    CONCAT(u.nombre, ' ', u.apellido_paterno, ' ', u.apellido_materno) AS nombre_docente,
     pe.nombre AS periodo_escolar,
     pl.acciones,
     pl.eje_estrategico,

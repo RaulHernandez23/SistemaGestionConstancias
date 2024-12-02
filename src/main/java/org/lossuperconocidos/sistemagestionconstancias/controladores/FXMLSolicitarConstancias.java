@@ -16,17 +16,26 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JRDesignStyle;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.lossuperconocidos.sistemagestionconstancias.daos.ParticipacionDAO;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.*;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
 
 import java.awt.*;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.design.JRDesignStyle;
 
 public class FXMLSolicitarConstancias implements Initializable {
 
@@ -78,6 +87,14 @@ public class FXMLSolicitarConstancias implements Initializable {
 
     private TableColumn colEjeEstrategicoPladea;
 
+    private ImparticionEE imparticionEESeleccionada;
+
+    private Jurado juradoSeleccionado;
+
+    private Proyecto proyectoSeleccionado;
+
+    private Pladea pladeaSeleccionado;
+
 
     @FXML
     private Button btnVolver;
@@ -127,7 +144,185 @@ public class FXMLSolicitarConstancias implements Initializable {
 
     @FXML
     private void onBtnSolicitarClick() {
-        // TODO: implementar
+
+        if (cbParticipaciones.getSelectionModel().getSelectedItem().equals("Impartición EE")) {
+
+            try {
+
+                Map<String, Object> parametros = new HashMap<>();
+
+                parametros.put("NOMBRE_DOCENTE", imparticionEESeleccionada.getNombreDocente());
+                parametros.put("PERIODO_ESCOLAR", imparticionEESeleccionada.getPeriodoEscolar());
+                parametros.put("PROGRAMA_EDUCATIVO", imparticionEESeleccionada.getProgramaEducativo());
+                parametros.put("EXPERIENCIA_EDUCATIVA", imparticionEESeleccionada.getExperienciaEducativa());
+                parametros.put("BLOQUE", imparticionEESeleccionada.getBloque());
+                parametros.put("SECCION", imparticionEESeleccionada.getSeccion() + "");
+                parametros.put("CREDITOS", imparticionEESeleccionada.getCreditos() + "");
+                parametros.put("HORAS", imparticionEESeleccionada.getHoras() + "");
+                parametros.put("SEMANAS", imparticionEESeleccionada.getSemanas() + "");
+                parametros.put("MESES", imparticionEESeleccionada.getMeses() + "");
+                parametros.put("NOMBRE_DIRECTOR", "");
+
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Guardar Constancia");
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+
+                File file = fileChooser.showSaveDialog(btnSolicitar.getScene().getWindow());
+
+                if (file != null) {
+
+                    String rutaSalida = file.getAbsolutePath();
+
+                    generarReporte(
+                            "src/main/resources/plantillas/constancia_imparticion_ee.jasper",
+                            rutaSalida,
+                            parametros
+                    );
+
+                    Alertas.mostrarAlertaInformacion("Éxito", "Constancia generada correctamente");
+
+                    tvImparticiones.getSelectionModel().clearSelection();
+                    btnSolicitar.setDisable(true);
+
+                }
+
+            } catch (JRException e) {
+
+                Alertas.mostrarAlertaError("Error", e.getMessage());
+
+            }
+
+        }
+        else if (cbParticipaciones.getSelectionModel().getSelectedItem().equals("Jurado")) {
+
+                try {
+
+                    Map<String, Object> parametros = new HashMap<>();
+
+                    parametros.put("NOMBRE_DOCENTE", juradoSeleccionado.getNombreDocente());
+                    parametros.put("FECHA_PRESENTACION", juradoSeleccionado.getFechaPresentacion() + "");
+                    parametros.put("TITULO_TRABAJO", juradoSeleccionado.getTituloTrabajo());
+                    parametros.put("MODALIDAD", juradoSeleccionado.getModalidad());
+                    parametros.put("NOMBRE_ALUMNOS", juradoSeleccionado.getNombreAlumnos());
+                    parametros.put("RESULTADO_OBTENIDO", juradoSeleccionado.getResultadoObtenido());
+                    parametros.put("PROGRAMA_EDUCATIVO", "Ingeniería de Software");
+
+                    FileChooser fileChooser = new FileChooser();
+
+                    fileChooser.setTitle("Guardar Constancia");
+
+                    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+
+                    File file = fileChooser.showSaveDialog(btnSolicitar.getScene().getWindow());
+
+                    if (file != null) {
+
+                        String rutaSalida = file.getAbsolutePath();
+
+                        generarReporte(
+                                "src/main/resources/plantillas/constancia_jurado.jasper",
+                                rutaSalida,
+                                parametros
+                        );
+
+                        Alertas.mostrarAlertaInformacion("Éxito", "Constancia generada correctamente");
+
+                        tvJurados.getSelectionModel().clearSelection();
+                        btnSolicitar.setDisable(true);
+
+                    }
+
+                } catch (JRException e) {
+                    Alertas.mostrarAlertaError("Error", e.getMessage());
+                }
+
+        }
+        else if (cbParticipaciones.getSelectionModel().getSelectedItem().equals("Proyecto de Campo")) {
+
+            try {
+
+                Map<String, Object> parametros = new HashMap<>();
+
+                parametros.put("NOMBRE_DOCENTE", proyectoSeleccionado.getNombreDocente());
+                parametros.put("PROYECTO_REALIZADO", proyectoSeleccionado.getProyectoRealizado());
+                parametros.put("DURACION", "6 meses");
+                parametros.put("IMPACTO_OBTENIDO", proyectoSeleccionado.getImpactoObtenido());
+                parametros.put("LUGAR", proyectoSeleccionado.getLugar());
+                parametros.put("NOMBRE_ALUMNOS", proyectoSeleccionado.getNombreAlumnos());
+
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Guardar Constancia");
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+
+                File file = fileChooser.showSaveDialog(btnSolicitar.getScene().getWindow());
+
+                if (file != null) {
+
+                    String rutaSalida = file.getAbsolutePath();
+
+                    generarReporte(
+                            "src/main/resources/plantillas/constancia_proyecto_campo.jasper",
+                            rutaSalida,
+                            parametros
+                    );
+
+                    Alertas.mostrarAlertaInformacion("Éxito", "Constancia generada correctamente");
+
+                    tvProyectos.getSelectionModel().clearSelection();
+                    btnSolicitar.setDisable(true);
+
+                }
+
+            } catch (JRException e) {
+
+                Alertas.mostrarAlertaError("Error", e.getMessage());
+
+            }
+
+        }
+        else if (cbParticipaciones.getSelectionModel().getSelectedItem().equals("Pladea")) {
+
+            try {
+
+                Map<String, Object> parametros = new HashMap<>();
+
+                parametros.put("NOMBRE_DOCENTE", pladeaSeleccionado.getNombreDocente());
+                parametros.put("ACCIONES", pladeaSeleccionado.getAcciones());
+                parametros.put("EJE_ESTRATEGICO", pladeaSeleccionado.getEjeEstrategico());
+                parametros.put("METAS", pladeaSeleccionado.getMetas());
+                parametros.put("OBJETIVOS_GENERALES", pladeaSeleccionado.getObjetivosGenerales());
+                parametros.put("PROGRAMA_ESTRATEGICO", pladeaSeleccionado.getProgramaEstrategico());
+                parametros.put("RESULTADO_OBTENIDO", "Satisfactorio");
+
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Guardar Constancia");
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+
+                File file = fileChooser.showSaveDialog(btnSolicitar.getScene().getWindow());
+
+                if (file != null) {
+
+                    String rutaSalida = file.getAbsolutePath();
+
+                    generarReporte(
+                            "src/main/resources/plantillas/constancia_pladea.jasper",
+                            rutaSalida,
+                            parametros
+                    );
+
+                    Alertas.mostrarAlertaInformacion("Éxito", "Constancia generada correctamente");
+
+                    tvPladeas.getSelectionModel().clearSelection();
+                    btnSolicitar.setDisable(true);
+
+                }
+
+            } catch (JRException e) {
+                Alertas.mostrarAlertaError("Error", e.getMessage());
+            }
+
+        }
+
     }
 
     @FXML
@@ -299,6 +494,14 @@ public class FXMLSolicitarConstancias implements Initializable {
 
             tvImparticiones.setItems(listaImparticiones);
 
+            tvImparticiones.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ImparticionEE>() {
+                @Override
+                public void changed(ObservableValue<? extends ImparticionEE> observable, ImparticionEE oldValue, ImparticionEE newValue) {
+                    imparticionEESeleccionada = newValue;
+                    btnSolicitar.setDisable(false);
+                }
+            });
+
             bpVentana.setCenter(tvImparticiones);
 
             BorderPane.setMargin(
@@ -348,6 +551,14 @@ public class FXMLSolicitarConstancias implements Initializable {
             );
 
             tvJurados.setItems(listaJurados);
+
+            tvJurados.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Jurado>() {
+                @Override
+                public void changed(ObservableValue<? extends Jurado> observable, Jurado oldValue, Jurado newValue) {
+                    juradoSeleccionado = newValue;
+                    btnSolicitar.setDisable(false);
+                }
+            });
 
             bpVentana.setCenter(tvJurados);
 
@@ -402,6 +613,14 @@ public class FXMLSolicitarConstancias implements Initializable {
 
             tvProyectos.setItems(listaProyectos);
 
+            tvProyectos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Proyecto>() {
+                @Override
+                public void changed(ObservableValue<? extends Proyecto> observable, Proyecto oldValue, Proyecto newValue) {
+                    proyectoSeleccionado = newValue;
+                    btnSolicitar.setDisable(false);
+                }
+            });
+
             bpVentana.setCenter(tvProyectos);
 
             BorderPane.setMargin(
@@ -452,6 +671,14 @@ public class FXMLSolicitarConstancias implements Initializable {
             );
 
             tvPladeas.setItems(listaPladeas);
+
+            tvPladeas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pladea>() {
+                @Override
+                public void changed(ObservableValue<? extends Pladea> observable, Pladea oldValue, Pladea newValue) {
+                    pladeaSeleccionado = newValue;
+                    btnSolicitar.setDisable(false);
+                }
+            });
 
             bpVentana.setCenter(tvPladeas);
 
@@ -517,12 +744,28 @@ public class FXMLSolicitarConstancias implements Initializable {
 
                     }
 
+                    btnSolicitar.setDisable(true);
+
                 }
 
             }
         };
 
         cbParticipaciones.getSelectionModel().selectedItemProperty().addListener(listener);
+
+    }
+
+    public void generarReporte(String rutaPlantilla, String rutaSalida, Map<String, Object> parametros) throws JRException {
+
+        JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(rutaPlantilla);
+
+        JRDataSource dataSource = new JREmptyDataSource();
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, dataSource);
+
+        JasperExportManager.exportReportToPdfFile(jasperPrint, rutaSalida);
+
+        System.out.println("Reporte guardado en: " + rutaSalida);
 
     }
 

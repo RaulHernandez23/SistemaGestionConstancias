@@ -161,7 +161,6 @@ public class FXMLMenuDocente implements Initializable {
                 bpSolicitarConstancia.visibleProperty().set(true);
             }
             if (privilegio.contains(usuario.FILTRO_PERSONAL_ADMINISTRATIVO)){
-                bpSolicitarConstancia.visibleProperty().set(true);
                 bpHistorialConstancia.visibleProperty().set(true);
                 bpRegistrarDocente.visibleProperty().set(true);
                 bpRegistrarParticipacion.visibleProperty().set(true);
@@ -169,7 +168,6 @@ public class FXMLMenuDocente implements Initializable {
             if (privilegio.contains(usuario.FILTRO_ADMINISTRADOR)){
                 bpHistorialConstancia.visibleProperty().set(true);
                 bpRegistrarDocente.visibleProperty().set(true);
-                bpSolicitarConstancia.visibleProperty().set(true);
                 bpRegistrarParticipacion.visibleProperty().set(true);
             }
         }
