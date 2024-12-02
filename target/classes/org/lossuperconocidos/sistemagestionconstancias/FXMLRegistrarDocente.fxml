@@ -181,7 +181,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btnRegistrar" mnemonicParsing="false" onAction="#clicRegistrar" prefHeight="26.0" prefWidth="130.0" styleClass="botonRegistrar" text="Registrar" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnRegistrar" defaultButton="true" mnemonicParsing="false" onAction="#clicRegistrar" prefHeight="26.0" prefWidth="130.0" text="Registrar" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <Button fx:id="btnCancelar" layoutX="66.0" layoutY="45.0" mnemonicParsing="false" onAction="#clicCancelar" prefHeight="26.0" prefWidth="130.0" styleClass="botonCancelar" text="Cancelar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
