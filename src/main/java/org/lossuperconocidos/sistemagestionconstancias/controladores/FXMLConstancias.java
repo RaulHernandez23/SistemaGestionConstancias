@@ -43,7 +43,7 @@ public class FXMLConstancias implements Initializable {
     private Usuario usuario;
     private List<ContanciaItem> participacionesOriginales;
     private PeriodoEscolar periodoSeleccionado;
-
+    private boolean esProfesro = true;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -57,13 +57,20 @@ public class FXMLConstancias implements Initializable {
         for (String privilegio : privilegios) {
             if (privilegio.contains(usuario.FILTRO_DOCENTE)) {
                 contieneFiltroDocente = true;
-                break;
+            }
+            if (privilegio.contains(usuario.FILTRO_ADMINISTRADOR)) {
+                contieneFiltroDocente = true;
+            }
+            if (privilegio.contains(usuario.FILTRO_PERSONAL_ADMINISTRATIVO)) {
+                contieneFiltroDocente = true;
             }
         }
         if (contieneFiltroDocente){
             participacionesOriginales = recuperarParticipacionesDocente();
+            esProfesro = true;
         }else {
             participacionesOriginales = recuperarTodasParticipaciones();
+            esProfesro = false;
         }
         cargarParticipaciones(participacionesOriginales);
         inicializarGrupoRadioBoton();
@@ -148,7 +155,7 @@ public class FXMLConstancias implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(Inicio.class.getResource("FXMLConstanciasItem.fxml"));
             VBox anchorPane = fxmlLoader.load();
             FXMLConstanciaItem controller = fxmlLoader.getController();
-            controller.inicializarContanciaItem(item);
+            controller.inicializarContanciaItem(item, esProfesro);
             return anchorPane;
         } catch (IOException e) {
             System.err.println("Error al cargar el item: " + item);
