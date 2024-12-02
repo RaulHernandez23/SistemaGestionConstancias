@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.lossuperconocidos.sistemagestionconstancias.Inicio;
 import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 import org.lossuperconocidos.sistemagestionconstancias.utilidades.Alertas;
@@ -115,6 +116,10 @@ public class FXMLMenuDocente implements Initializable {
             Stage escenario = new Stage();
             escenario.setScene(scene);
             escenario.setTitle("Registrar participación");
+            escenario.initStyle(StageStyle.UNDECORATED);
+            escenario.setResizable(false);
+            FXMLRegistrarParticipacion controlador = loader.getController();
+            controlador.usuario = usuario;
             escenario.show();
 
             Stage ventanaActual = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
