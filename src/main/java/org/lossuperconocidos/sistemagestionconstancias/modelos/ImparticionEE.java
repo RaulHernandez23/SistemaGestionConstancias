@@ -4,6 +4,7 @@ public class ImparticionEE extends Participacion {
     private String experienciaEducativa;
     private String programaEducativo;
     private String bloque;
+    private String nombreDocente;
     private int creditos;
     private int horas;
     private int meses;
@@ -29,6 +30,29 @@ public class ImparticionEE extends Participacion {
         this.meses = meses;
         this.seccion = seccion;
         this.semanas = semanas;
+    }
+
+    public ImparticionEE(String noPersonal,
+                         String nombreDocente,
+                         String periodoEscolar,
+                         String experienciaEducativa,
+                         String programaEducativo,
+                         String bloque,
+                         int creditos,
+                         int horas,
+                         int meses,
+                         int seccion,
+                         int semanas) {
+        super(noPersonal, periodoEscolar);
+        this.experienciaEducativa = experienciaEducativa;
+        this.programaEducativo = programaEducativo;
+        this.bloque = bloque;
+        this.creditos = creditos;
+        this.horas = horas;
+        this.meses = meses;
+        this.seccion = seccion;
+        this.semanas = semanas;
+        this.nombreDocente = nombreDocente;
     }
 
     public String getExperienciaEducativa() {
@@ -94,4 +118,13 @@ public class ImparticionEE extends Participacion {
     public void setSemanas(int semanas) {
         this.semanas = semanas;
     }
+
+    public String getNombreDocente() {
+        return nombreDocente;
+    }
+
+    public void setNombreDocente(String nombreDocente) {
+        this.nombreDocente = nombreDocente;
+    }
+
 }

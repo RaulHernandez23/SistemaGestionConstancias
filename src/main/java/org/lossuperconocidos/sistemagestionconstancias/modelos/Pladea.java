@@ -6,6 +6,7 @@ public class Pladea extends Participacion {
     private String metas;
     private String objetivosGenerales;
     private String programaEstrategico;
+    private String nombreDocente;
 
     public Pladea(String noPersonal,
                   String periodoEscolar,
@@ -20,6 +21,23 @@ public class Pladea extends Participacion {
         this.metas = metas;
         this.objetivosGenerales = objetivosGenerales;
         this.programaEstrategico = programaEstrategico;
+    }
+
+    public Pladea(String noPersonal,
+                  String nombreDocente,
+                  String periodoEscolar,
+                  String acciones,
+                  String ejeEstrategico,
+                  String metas,
+                  String objetivosGenerales,
+                  String programaEstrategico) {
+        super(noPersonal, periodoEscolar);
+        this.acciones = acciones;
+        this.ejeEstrategico = ejeEstrategico;
+        this.metas = metas;
+        this.objetivosGenerales = objetivosGenerales;
+        this.programaEstrategico = programaEstrategico;
+        this.nombreDocente = nombreDocente;
     }
 
     public String getAcciones() {
@@ -60,5 +78,13 @@ public class Pladea extends Participacion {
 
     public void setProgramaEstrategico(String programaEstrategico) {
         this.programaEstrategico = programaEstrategico;
+    }
+
+    public String getNombreDocente() {
+        return nombreDocente;
+    }
+
+    public void setNombreDocente(String nombreDocente) {
+        this.nombreDocente = nombreDocente;
     }
 }

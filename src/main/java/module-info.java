@@ -9,6 +9,7 @@ module org.lossuperconocidos.sistemagestionconstancias {
     requires atlantafx.base;
     requires org.apache.poi.ooxml;
     requires com.aspose.words;
+    requires net.sf.jasperreports.core;
 
     opens org.lossuperconocidos.sistemagestionconstancias to javafx.fxml;
     opens org.lossuperconocidos.sistemagestionconstancias.modelos to javafx.base;

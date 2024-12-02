@@ -5,6 +5,7 @@ public class Proyecto extends Participacion {
     private String impactoObtenido;
     private String lugar;
     private String nombreAlumnos;
+    private String nombreDocente;
 
     public Proyecto(String noPersonal,
                     String periodoEscolar,
@@ -17,6 +18,21 @@ public class Proyecto extends Participacion {
         this.impactoObtenido = impactoObtenido;
         this.lugar = lugar;
         this.nombreAlumnos = nombreAlumnos;
+    }
+
+    public Proyecto(String noPersonal,
+                    String nombreDocente,
+                    String periodoEscolar,
+                    String proyectoRealizado,
+                    String impactoObtenido,
+                    String lugar,
+                    String nombreAlumnos) {
+        super(noPersonal, periodoEscolar);
+        this.proyectoRealizado = proyectoRealizado;
+        this.impactoObtenido = impactoObtenido;
+        this.lugar = lugar;
+        this.nombreAlumnos = nombreAlumnos;
+        this.nombreDocente = nombreDocente;
     }
 
     public String getProyectoRealizado() {
@@ -50,4 +66,13 @@ public class Proyecto extends Participacion {
     public void setNombreAlumnos(String nombreAlumnos) {
         this.nombreAlumnos = nombreAlumnos;
     }
+
+    public String getNombreDocente() {
+        return nombreDocente;
+    }
+
+    public void setNombreDocente(String nombreDocente) {
+        this.nombreDocente = nombreDocente;
+    }
+
 }
