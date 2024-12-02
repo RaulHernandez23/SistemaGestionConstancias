@@ -7,7 +7,6 @@ import org.lossuperconocidos.sistemagestionconstancias.modelos.Usuario;
 
 import java.util.HashMap;
 
-//TODO:PROBAR LOS METODOS QUE HAYA EN DAO Y MODELS
 public class DocenteDAO_test {
 
     //#region registrarDocente

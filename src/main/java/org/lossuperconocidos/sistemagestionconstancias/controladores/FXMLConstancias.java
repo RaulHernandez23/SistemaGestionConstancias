@@ -101,10 +101,6 @@ public class FXMLConstancias implements Initializable {
 
 
     private void cargarParticipaciones(List<ContanciaItem> participaciones) {
-        if (participaciones == null || participaciones.isEmpty()){
-            Alertas.mostrarAlertaInformacion("No se encontraron participaciones", "Por el momento tu usuario no tiene participaciones");
-            return;
-        }
         ObservableList<VBox> dataList = FXCollections.observableArrayList();
 
         for (ContanciaItem item : participaciones) {
@@ -114,6 +110,9 @@ public class FXMLConstancias implements Initializable {
             }
         }
         iniciarListView(dataList);
+        if (participaciones == null || participaciones.isEmpty()){
+            Alertas.mostrarAlertaInformacion("No se encontraron participaciones", "Por el momento tu usuario no tiene participaciones");
+        }
     }
 
     private List<ContanciaItem> recuperarParticipacionesDocente() {

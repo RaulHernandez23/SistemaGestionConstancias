@@ -103,6 +103,7 @@ public class UsuarioDAO {
         return respuesta;
     }
 
+
     public static HashMap<String, Object> consultarTiposContratacion() {
         HashMap<String, Object> respuesta = new HashMap<>();
         respuesta.put(ERROR_KEY, true);

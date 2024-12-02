@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -9,7 +8,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="583.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLConstancias">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lossuperconocidos.sistemagestionconstancias.controladores.FXMLConstancias">
    <children>
       <RadioButton fx:id="rdImparticion" layoutX="245.0" layoutY="84.0" mnemonicParsing="false" text="Contancia de imparticion">
          <toggleGroup>
@@ -31,10 +30,9 @@
          <opaqueInsets>
             <Insets right="10.0" />
          </opaqueInsets></RadioButton>
-      <ListView fx:id="listaContancias" layoutX="60.0" layoutY="116.0" prefHeight="401.0" prefWidth="715.0" />
-      <Button layoutX="145.0" layoutY="527.0" mnemonicParsing="false" onAction="#clicBtnEjemplo" text="EJEMPLO DE CREAR UNA CONSTANCIA" />
-      <ComboBox fx:id="cbPeriodo" layoutX="577.0" layoutY="42.0" prefHeight="26.0" prefWidth="171.0" promptText="Seleciona un periodo" />
-      <Label layoutX="418.0" layoutY="46.0" text="Fecha de participacion">
+      <ListView fx:id="listaContancias"  layoutX="60.0" layoutY="116.0" prefHeight="518.0" prefWidth="1173.0" />
+      <ComboBox fx:id="cbPeriodo" styleClass="alt-icon" layoutX="1043.0" layoutY="80.0" prefHeight="26.0" prefWidth="171.0" promptText="Seleciona un periodo" />
+      <Label layoutX="872.0" layoutY="85.0" text="Fecha de participacion">
          <opaqueInsets>
             <Insets right="10.0" />
          </opaqueInsets></Label>

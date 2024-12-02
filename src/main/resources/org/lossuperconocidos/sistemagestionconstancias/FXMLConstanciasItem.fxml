@@ -33,7 +33,7 @@
    </HBox>
    <HBox>
       <children>
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre: " />
+         <Text fx:id="txtNombre" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre: " />
             <Label fx:id="lbNombre" text="{NombreCompleto}" />
       </children>
       <padding>

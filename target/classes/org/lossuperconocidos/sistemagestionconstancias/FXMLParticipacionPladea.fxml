@@ -88,7 +88,7 @@
             <AnchorPane prefHeight="49.0" prefWidth="879.0" GridPane.rowIndex="2">
                <children>
                   <Button fx:id="btnRegistrar" defaultButton="true" disable="true" layoutX="250.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionRegistrar" text="Registrar" />
-                  <Button cancelButton="true" layoutX="570.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionCancelar" text="Cancelar" />
+                  <Button cancelButton="true" styleClass="danger" layoutX="570.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionCancelar" text="Cancelar" />
                </children>
             </AnchorPane>
          </children>

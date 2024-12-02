@@ -75,7 +75,7 @@
                      </font>
                   </Label>
                   <Button fx:id="btnAnadir" layoutX="455.0" layoutY="122.0" mnemonicParsing="false" onAction="#actionAnadir" text="Añadir" />
-                  <Button fx:id="btnEliminar" layoutX="672.0" layoutY="122.0" mnemonicParsing="false" onAction="#actionEliminar" text="Eliminar" />
+                  <Button fx:id="btnEliminar" styleClass="danger" layoutX="672.0" layoutY="122.0" mnemonicParsing="false" onAction="#actionEliminar" text="Eliminar" />
                   <Label fx:id="lblErrorDocente" layoutX="46.0" layoutY="65.0" text="Mensaje de error" textFill="RED" visible="false">
                      <font>
                         <Font size="11.0" />
@@ -91,7 +91,7 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
                   <Button fx:id="btnRegistrar" defaultButton="true" layoutX="222.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionRegistrar" text="Registrar" />
-                  <Button cancelButton="true" layoutX="538.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionCancelar" text="Cancelar" />
+                  <Button cancelButton="true"  styleClass="danger" layoutX="538.0" layoutY="27.0" mnemonicParsing="false" onAction="#actionCancelar" text="Cancelar" />
                </children>
             </AnchorPane>
          </children>
