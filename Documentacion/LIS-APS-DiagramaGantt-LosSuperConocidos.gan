@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Diagrama Gantt " company="LosSuperConocidos" webLink="" view-date="2024-12-16" view-index="0" gantt-divider-location="568" resource-divider-location="300" version="3.3.3312" locale="es_ES">
+<?xml version="1.0" encoding="UTF-8"?><project name="Diagrama Gantt " company="LosSuperConocidos" webLink="" view-date="2024-08-25" view-index="0" gantt-divider-location="553" resource-divider-location="300" version="3.3.3312" locale="es_MX">
     <description><![CDATA[Desglose de trabajo]]></description>
-    <view zooming-state="default:7" id="gantt-chart">
-        <field id="tpd3" name="Nombre" width="353" order="0"/>
-        <field id="tpd4" name="Fecha de inicio" width="79" order="1"/>
-        <field id="tpd5" name="Fecha de fin" width="120" order="2"/>
-        <field id="tpd15" name="Notas" width="20" order="3"/>
+    <view zooming-state="default:6" id="gantt-chart">
+        <field id="tpd3" name="Name" width="343" order="0"/>
+        <field id="tpd4" name="Begin date" width="77" order="1"/>
+        <field id="tpd5" name="End date" width="117" order="2"/>
+        <field id="tpd15" name="Notes" width="20" order="3"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
         <option id="filter.overdueTasks" value="false"/>
@@ -12,8 +12,8 @@
         <option id="color.recent"><![CDATA[#6699ff #33ccff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nombre" width="210" order="0"/>
-        <field id="1" name="Función" width="86" order="1"/>
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -56,72 +56,39 @@
                 <depend id="6" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
-        <task id="6" uid="227e2ab5a0084512bec71569bde92c0d" name="Requerimientos" meeting="false" start="2024-10-11" duration="8" complete="0" expand="true">
-            <task id="7" uid="5c2a766996ba4696a4e1e0e2481d2d18" name="Definición de Requerimientos Funcionales" meeting="false" start="2024-10-11" duration="4" complete="0" expand="true">
-                <depend id="11" type="2" difference="0" hardness="Strong"/>
-                <depend id="12" type="2" difference="0" hardness="Strong"/>
+        <task id="6" uid="227e2ab5a0084512bec71569bde92c0d" name="Requerimientos" meeting="false" start="2024-10-08" duration="8" complete="0" expand="true">
+            <task id="12" uid="2d7ac70afada435d8c037bf40bdd5856" name="Elaboración de la ERS" meeting="false" start="2024-10-08" duration="8" complete="0" expand="true">
+                <depend id="13" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="8" uid="f9ce07a22ada45089bbd770ca3f32002" name="Definición de Requerimientos No Funcionales" meeting="false" start="2024-10-11" duration="4" complete="0" expand="true">
-                <depend id="12" type="2" difference="0" hardness="Strong"/>
-            </task>
-            <task id="9" uid="aab3dfff7c75411abc00c7f8e61d97e4" name="Definición de Reglas de Negocio" meeting="false" start="2024-10-11" duration="4" complete="0" expand="true">
-                <depend id="12" type="2" difference="0" hardness="Strong"/>
-            </task>
-            <task id="10" uid="d78ee20b906d44fd8a597b6c04a72690" name="Definición de Restricciones" meeting="false" start="2024-10-11" duration="4" complete="0" expand="true">
-                <depend id="12" type="2" difference="0" hardness="Strong"/>
-            </task>
-            <task id="11" uid="9af8e8692f584130a48f5e28660d3bd3" name="Elaboración del Modelo de Casos de Uso" meeting="false" start="2024-10-15" duration="3" complete="0" expand="true"/>
-            <task id="12" uid="2d7ac70afada435d8c037bf40bdd5856" name="Elaboración de la ERS" meeting="false" start="2024-10-15" duration="4" complete="0" expand="true"/>
         </task>
-        <task id="13" uid="07f6295f4c0d453ab816f12a5df45615" name="Analisis" meeting="false" start="2024-10-15" duration="9" complete="0" expand="true">
+        <task id="13" uid="07f6295f4c0d453ab816f12a5df45615" name="Diseño preliminar" meeting="false" start="2024-10-16" duration="6" complete="0" expand="true">
             <depend id="20" type="2" difference="0" hardness="Strong"/>
-            <task id="14" uid="509c122431964b27a80977a19683f038" name="Elaboración de diagrama de clases preliminar" meeting="false" start="2024-10-15" duration="4" complete="0" expand="true">
+            <task id="14" uid="509c122431964b27a80977a19683f038" name="Elaboración de diagrama de clases" meeting="false" start="2024-10-16" duration="3" complete="0" expand="true">
                 <depend id="15" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="15" uid="29818f60de914e82ae912c4c47cdac26" name="Elaboracion de 4 descripciones de caso de uso preliminares" meeting="false" start="2024-10-19" duration="1" complete="0" expand="true">
+            <task id="15" uid="29818f60de914e82ae912c4c47cdac26" name="Elaboracion de 4 descripciones de caso de uso" meeting="false" start="2024-10-19" duration="1" complete="0" expand="true">
                 <depend id="16" type="2" difference="0" hardness="Strong"/>
-                <depend id="18" type="2" difference="0" hardness="Strong"/>
-                <depend id="19" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="16" uid="43753b40f9054f6c932e9e0238ee069b" name="Elaboracion de diagramas de robustez de 4 caso de uso preliminares" meeting="false" start="2024-10-20" duration="1" complete="0" expand="true">
-                <depend id="17" type="2" difference="0" hardness="Strong"/>
-            </task>
-            <task id="17" uid="593f40e8a3b64a6795cec9d211e2c409" name="Diagramas de secuencia de 4 caso de uso preliminar" meeting="false" start="2024-10-21" duration="3" complete="0" expand="true"/>
-            <task id="18" uid="844910043b28452ab06904d08617729d" name="Elaboracion de  prototipos preliminares" meeting="false" start="2024-10-20" duration="3" complete="0" expand="true"/>
-            <task id="19" uid="cb84af40b3de4ed88336d9061a6f8349" name="Elaboracion de  diagrama de comunicación" meeting="false" start="2024-10-20" duration="4" complete="0" expand="true"/>
+            <task id="16" uid="43753b40f9054f6c932e9e0238ee069b" name="Elaboracion de diagramas de robustez de 4 caso de uso" meeting="false" start="2024-10-20" duration="2" complete="0" expand="true"/>
         </task>
-        <task id="20" uid="81b1b3d47103443ba1185dbfb99f75fe" name="Diseño" meeting="false" start="2024-10-24" duration="9" complete="0" expand="true">
+        <task id="20" uid="81b1b3d47103443ba1185dbfb99f75fe" name="Diseño" meeting="false" start="2024-10-23" duration="5" complete="0" expand="true">
             <depend id="28" type="2" difference="0" hardness="Strong"/>
-            <task id="21" uid="fb44ea929534455f94a7a37d8b9c2a5f" name="Elaboración del diagrama de clases" meeting="false" start="2024-10-24" duration="2" complete="0" expand="true">
-                <depend id="22" type="2" difference="0" hardness="Strong"/>
-                <depend id="23" type="2" difference="0" hardness="Strong"/>
-            </task>
-            <task id="22" uid="472525c84bb345fea332d6a38793b02a" name="Elaboración del modelo relacional" meeting="false" start="2024-10-26" duration="7" complete="0" expand="true"/>
-            <task id="23" uid="67bab9c126ec4bb49492ca414e78550a" name="Elaboración de descripciones de casos de uso" meeting="false" start="2024-10-26" duration="1" complete="0" expand="true">
-                <depend id="24" type="2" difference="0" hardness="Strong"/>
-            </task>
-            <task id="24" uid="440751bdd7634c2c943256a7b02e8595" name="Elaboración de diagramas de robustez" meeting="false" start="2024-10-27" duration="1" complete="0" expand="true">
-                <depend id="25" type="2" difference="0" hardness="Strong"/>
-            </task>
-            <task id="25" uid="1936f4a2e5254e2b82ddd5006e50513c" name="Elaboración de diagramas de secuencia" meeting="false" start="2024-10-28" duration="1" complete="0" expand="true"/>
-            <task id="37" uid="84ab8522b9334bb8adb1ba95cb31bb37" name="Elaboración de plan de pruebas" meeting="false" start="2024-10-28" duration="5" complete="0" expand="true"/>
+            <task id="25" uid="1936f4a2e5254e2b82ddd5006e50513c" name="Elaboración de diagramas de secuencia" meeting="false" start="2024-10-23" duration="1" complete="0" expand="true"/>
+            <task id="45" uid="923b9fe5a39e4fe5ad0ad663d75969d1" name="Elaboración del modelo relacional" meeting="false" start="2024-10-25" duration="3" complete="0" expand="true"/>
         </task>
-        <task id="28" uid="a7a18f1fe169427387540e6f3ee5acc5" name="Implementación" meeting="false" start="2024-11-02" duration="30" complete="0" expand="true">
-            <task id="29" uid="bad7bb401c5342dfbfbf3d757c12a719" name="Elaboración del estándar de codificación" meeting="false" start="2024-11-02" duration="1" complete="0" expand="true"/>
-            <task id="30" uid="6cf0d4c9f1ed4cd38ef391827e5e3e68" name="Creación de la base de datos" meeting="false" start="2024-11-02" duration="23" complete="0" expand="true"/>
-            <task id="31" uid="63168d4bfb9e450c91f053f5f40f841b" name="Implementación de los módulos de código" meeting="false" start="2024-11-03" duration="19" complete="0" expand="true">
+        <task id="28" uid="a7a18f1fe169427387540e6f3ee5acc5" name="Implementación" meeting="false" start="2024-10-31" duration="32" complete="0" expand="true">
+            <task id="29" uid="bad7bb401c5342dfbfbf3d757c12a719" name="Elaboración del estándar de codificación" meeting="false" start="2024-10-31" duration="1" complete="0" expand="true"/>
+            <task id="30" uid="6cf0d4c9f1ed4cd38ef391827e5e3e68" name="Creación de la base de datos" meeting="false" start="2024-11-01" duration="21" complete="0" expand="true"/>
+            <task id="31" uid="63168d4bfb9e450c91f053f5f40f841b" name="Implementación de los módulos de código" meeting="false" start="2024-11-03" duration="23" complete="0" expand="true">
                 <depend id="33" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="33" uid="597c0ff8c3834c22be4ccfe8880ca49a" name="Ejecución de pruebas de sistema" meeting="false" start="2024-11-22" duration="5" complete="0" expand="true">
-                <depend id="34" type="2" difference="0" hardness="Strong"/>
-            </task>
-            <task id="34" uid="257526bb170b451297f424fd486b6932" name="Elaboración de reporte de pruebas" meeting="false" start="2024-11-27" duration="2" complete="0" expand="true">
+            <task id="33" uid="597c0ff8c3834c22be4ccfe8880ca49a" name="Ejecución de pruebas de sistema" meeting="false" start="2024-11-26" duration="4" complete="0" expand="true">
                 <depend id="41" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="41" uid="7a519254673044ae8173a86da8fa81a0" name="Correcion de defectos" meeting="false" start="2024-11-29" duration="3" complete="0" expand="true"/>
+            <task id="41" uid="7a519254673044ae8173a86da8fa81a0" name="Correcion de defectos" meeting="false" start="2024-11-30" duration="2" complete="0" expand="true"/>
         </task>
         <task id="44" uid="4a4df1a2f6a94c9fa88a9d94ac9e44c8" name="Entrega" meeting="true" start="2024-12-02" duration="0" complete="0" expand="true"/>
-        <task id="38" uid="6a5edd9004444d25b93f0fd16d4e2400" name="Iteracion 2" meeting="false" start="2024-12-03" duration="100" complete="0" expand="true">
+        <task id="38" uid="6a5edd9004444d25b93f0fd16d4e2400" name="Iteracion 2" meeting="false" start="2024-12-03" duration="100" complete="0" expand="false">
             <task id="39" uid="cf56d9760e0f489e9fe40f440a07bf43" name="Analisis de los casos de uso faltantes" meeting="false" start="2024-12-03" duration="15" complete="0" expand="true">
                 <depend id="36" type="2" difference="0" hardness="Strong"/>
             </task>
@@ -152,9 +119,6 @@
         <allocation task-id="3" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="4" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="5" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="8" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="10" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="24" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="44" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="42" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="2" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
@@ -164,7 +128,6 @@
         <allocation task-id="5" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="0" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="12" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="37" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="44" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="39" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="43" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
@@ -174,18 +137,11 @@
         <allocation task-id="5" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="1" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="0" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="7" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="15" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="17" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="19" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="21" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="22" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="23" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="29" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="30" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="31" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="33" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="34" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="41" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="44" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="36" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
@@ -195,11 +151,8 @@
         <allocation task-id="5" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="1" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="0" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="9" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="11" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="14" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="16" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="18" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="25" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="44" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="40" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
